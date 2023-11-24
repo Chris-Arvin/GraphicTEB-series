@@ -23,7 +23,7 @@ Then please install this project and build it:
 ```
 $ mkdir -p GraphicTEB_ws/src
 $ cd GraphicTEB_ws/src
-$ git clone https://github.com/Chris-Arvin/graphicTEB.git
+$ git clone https://github.com/Chris-Arvin/graphicTEB_Improve-Computing-Efficiency-and-Motion-Safety-by-Analyzing-Environment-With-Graphics.git
 $ cd ..
 $ rosdep install –from-paths src –ignore-src –rosdistro-melodic -y
 $ [set the OpenCV_DIR in src/teb_local_planner/CMakeLists.txt according to the real location of your OpenCV]
