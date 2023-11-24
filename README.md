@@ -7,7 +7,7 @@ This is the source code of the TASE/ICRA2024 paper [**Improve Computing Efficien
 ## Table of Contents
 * [Installation](#1-Installation)
 * [Quick Start](#2-Quick-Start)
-* [Introduction for Parameters](#3-Introduction-for-Key-Parameters-in-"pedsim_simulator.launch")
+* [Introduction for Parameters](#5-acknowledge)
 * [Contributors](#4-Contributors)
 * [Acknowledgement](#5-acknowledge)
 
