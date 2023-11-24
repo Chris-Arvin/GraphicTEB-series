@@ -1,17 +1,15 @@
 # GraphicTEB
 This is the source code of the TASE/ICRA2024 paper [**Improve Computing Efficiency and Motion Safety by Analyzing Environment With Graphics**](https://ieeexplore.ieee.org/document/10210322), an approach to find all the non-homology class trajectories quickly.
 
-[![](https://user-images.githubusercontent.com/36269534/226112301-6a9947d6-79c9-4ed5-a1df-e17ba4848b7b.png)](https://youtu.be/SzZGKdbzH9Q "")
+[![](https://res.cloudinary.com/marcomontalbano/image/upload/v1668649862/video_to_markdown/images/youtube--SzZGKdbzH9Q-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=SzZGKdbzH9Q "")
 
 
 ## Table of Contents
 * [Installation](#1-Installation)
 * [Quick Start](#2-Quick-Start)
-* [Introduction for Key Parameters and Topics](#3-Introduction-for-Key-Parameters-and-Key-Topics)
-* [More Examples](#4-More-Examples)
-* [How to DIY](#5-Instructions-to-DIY)
-* [Contributors](#6-Contributors)
-* [Acknowledgement](#7-Acknowledgement)
+* [Introduction for Parameters](#3-Introduction-for-Key-Parameters-in-"pedsim_simulator.launch")
+* [Contributors](#4-Contributors)
+* [Acknowledgement](#5-Acknowledgement)
 
 
 ## 1. Installation
@@ -63,14 +61,17 @@ $ roslaunch move_base navigation.launch
 * the initial position and orientation of the robot.
 
 
-## 6. Contributors
+## 4. Contributors
 * Qianyi Zhang  arvin.nkzqy@gmail.com
-* Yinuo Song
-* Zhuoran Wang
-* Jiahang WU
+* Shichao Wu
+* Yuhang Jia
+* Yuang xu
 * Jingtai Liu
 
-
-## 7. Acknowledgement
-These packages have been developed from [Pedsim_ros](https://github.com/srl-freiburg/pedsim_ros) and [move_base](https://github.com/ros-planning/navigation). Thanks again to support our work.
+## 5. Acknowledge
+This work is based on several open-source works, thanks for their contribution and inspiration: 
+* [navigation](https://github.com/ros-planning/navigation)
+* [teb_local_planner](https://github.com/rst-tu-dortmund/teb_local_planner)
+* [pedsim_ros](https://github.com/srl-freiburg/pedsim_ros)
+* [hdl_people_tracking](https://github.com/koide3/hdl_people_tracking)
 
