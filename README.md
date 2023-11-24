@@ -17,7 +17,7 @@ The project has been tested on Ubuntu 18.04 (ROS Melodic) and 20.04 (ROS Noetic)
 ```
 $ sudo apt install ros-melodic-navigation
 ```
-Then install OpenCV according the [Chinese reference](https://blog.csdn.net/KIK9973/article/details/118830187) or [English reference](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html):
+Then install OpenCV according the [Chinese reference](https://blog.csdn.net/KIK9973/article/details/118830187) or [English reference](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html)
 
 Then please install this project and build it: 
 ```
