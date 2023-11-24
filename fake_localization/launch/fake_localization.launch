@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="fake_localization" name="fake_localization" type="static_odom_broadcaster.py" output="screen">
+  </node>
+</launch>

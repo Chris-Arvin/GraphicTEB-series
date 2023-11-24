@@ -1,0 +1,4 @@
+<launch>	
+   	<node pkg="teb_local_planner" type="dynamic_obstacle_transform.py" name="dynamic_obstacle_trans" output="screen" />
+</launch>
+

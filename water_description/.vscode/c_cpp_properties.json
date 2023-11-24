@@ -1,0 +1,51 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/arvin/Documents/turtlebot2_ws/devel/include/**",
+        "/home/arvin/Documents/human_aware_navigation/devel/include/**",
+        "/home/arvin/Documents/teb_ws/devel/include/**",
+        "/home/arvin/Documents/turtlebot3_ws/devel/include/**",
+        "/home/arvin/Documents/navigation_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/amcl/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/base_local_planner/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/carrot_planner/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/clear_costmap_recovery/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/costmap_2d/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/dwa_local_planner/include/**",
+        "/home/arvin/Documents/human_aware_navigation/src/dynamic_social_costmap/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/global_planner/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/global_py_api/include/**",
+        "/home/arvin/Documents/turtlebot2_ws/src/kobuki_bumper2pc/include/**",
+        "/home/arvin/Documents/turtlebot2_ws/src/kobuki_gazebo_plugins/include/**",
+        "/home/arvin/Documents/turtlebot2_ws/src/kobuki_keyop/include/**",
+        "/home/arvin/Documents/turtlebot2_ws/src/kobuki_node/include/**",
+        "/home/arvin/Documents/turtlebot2_ws/src/kobuki_safety_controller/include/**",
+        "/home/arvin/Documents/human_aware_navigation/src/lattice_planner/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/map_server/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/move_base/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/move_slow_and_clear/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/nav_core/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/navfn/include/**",
+        "/home/arvin/Documents/human_aware_navigation/src/people_prediction/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/rotate_recovery/include/**",
+        "/home/arvin/Documents/teb_ws/src/teb_local_planner/include/**",
+        "/home/arvin/Documents/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/arvin/Documents/turtlebot3_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/home/arvin/Documents/turtlebot3_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/home/arvin/Documents/turtlebot2_ws/src/turtlebot_apps/turtlebot_actions/include/**",
+        "/home/arvin/Documents/navigation_ws/src/navigation/voxel_grid/include/**",
+        "/home/arvin/Documents/turtlebot2_ws/src/yocs_cmd_vel_mux/include/**",
+        "/home/arvin/Documents/turtlebot2_ws/src/yocs_controllers/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

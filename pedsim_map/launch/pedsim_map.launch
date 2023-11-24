@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="pedsim_map" name="pedsim_fakemap" type="pedsim_map_node" output="screen">
+    <rosparam file="$(find pedsim_map)/params/sim_map.yaml" command="load" />
+  </node>
+</launch>

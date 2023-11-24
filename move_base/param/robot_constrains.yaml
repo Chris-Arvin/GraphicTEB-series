@@ -1,0 +1,11 @@
+# Robot
+max_vel_x: 0.5 # [m/s]
+min_vel_x: -0.5 # [m/s]
+max_vel_x_backwards: -0.5 # [m/s]
+max_vel_y: 0.0 # [m/s]
+max_vel_theta: 1.2 # [rad/s]
+min_vel_theta: -1.2 # [rad/s]
+acc_lim_x: 0.5 # [m/s^2]
+acc_lim_theta: 1.0 # [rad/s^2]
+robot_radius: 0.2 # [m]
+min_turning_radius: 0.0 # diff-drive robot (can turn on place!)

@@ -1,0 +1,3 @@
+  resolution: 0.1
+  frame_id: odom
+  person_diameter: 0.6
