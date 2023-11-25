@@ -13,7 +13,7 @@ This is the source code of the TASE/ICRA2024 paper [**Improve Computing Efficien
 
 
 ## 1. Installation
-The project has been tested on Ubuntu 18.04 (ROS Melodic) and 20.04 (ROS Noetic). To install the repository, please install some dependence firstly (ubuntu 18.04 as example): 
+The project has been tested on Ubuntu 18.04 (ROS Melodic). To install the repository, please install some dependence firstly: 
 ```
 $ sudo apt install ros-melodic-navigation
 ```
