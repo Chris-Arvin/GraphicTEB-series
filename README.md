@@ -16,6 +16,7 @@ This is the source code of the TASE/ICRA2024 paper [**Improve Computing Efficien
 The project has been tested on Ubuntu 18.04 (ROS Melodic). To install the repository, please install some dependence firstly: 
 ```
 $ sudo apt install ros-melodic-navigation
+$ sudo apt install ros-melodic-teb-local-planner
 ```
 Then install OpenCV according the [Chinese reference](https://blog.csdn.net/KIK9973/article/details/118830187) or [English reference](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html)
 
