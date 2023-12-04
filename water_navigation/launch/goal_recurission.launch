@@ -1,0 +1,4 @@
+<launch>	
+   	<node pkg="water_navigation" type="goal_pub.py" name="goal_pub" output="screen" />
+</launch>
+

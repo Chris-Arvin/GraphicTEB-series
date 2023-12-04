@@ -1,0 +1,35 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="map_file" default="$(find water_navigation)/maps/lab118_10cm/map.yaml"/>
+  <!-- <arg name="map_file" default="$(find water_navigation)/maps/lab118_5cm/map.yaml"/> -->
+  <!-- <arg name="map_file" default="$(find water_navigation)/maps/guangxuesuo_5cm/map.yaml"/> -->
+  <!-- <arg name="map_file" default="$(find water_navigation)/maps/erloudating/map.yaml"/> -->
+  <!-- <arg name="map_file" default="$(find water_navigation)/maps/erloudating20221101/dating.yaml"/> -->
+  <!-- <arg name="map_file" default="$(find water_navigation)/maps/erlouzoulang20221103/map.yaml"/> -->
+  <!-- <arg name="map_file" default="$(find water_navigation)/maps/sunyue_temp/map.yaml"/> -->
+  <arg name="open_rviz" default="true"/>
+
+  <!-- Water -->
+  <include file="$(find water_description)/launch/water_all_description.launch"/>
+
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- AMCL -->
+  <include file="$(find water_navigation)/launch/water_amcl.launch"/>
+  <!-- <include file="$(find fake_localization)/launch/fake_localization.launch"/> -->
+
+  <!-- move_base -->
+  <include file="$(find water_navigation)/launch/water_move_base.launch"/>
+
+  <include file="$(find water_navigation)/launch/dynamic_obstacle_trans.launch"/>
+
+  <!-- <include file="$(find object_color_detection_ros_opencv)/launch/color_detection.launch"/> -->
+  <include file="$(find water_navigation)/launch/goal_recurission.launch"/>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find water_navigation)/rviz/water_navigation.rviz"/>
+  </group>
+</launch>

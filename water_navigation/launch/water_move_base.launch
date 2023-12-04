@@ -1,0 +1,46 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="cmd_vel_topic" default="/cmd_vel" />
+  <arg name="odom_topic" default="/water_uavcan_master/odom" />
+
+  <!-- move_base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <!-- dwp -->
+    <!-- <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+    <rosparam file="$(find water_navigation)/param/dwa_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find water_navigation)/param/dynamic_local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find water_navigation)/param/dynamic_global_costmap_params.yaml" command="load" /> -->
+
+    <!-- teb -->
+    <!-- <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <rosparam file="$(find water_navigation)/param/teb_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find water_navigation)/param/dynamic_local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find water_navigation)/param/dynamic_global_costmap_params.yaml" command="load" /> -->
+
+    <!-- api2python -->
+    <!-- <param name="base_local_planner" value="api2python/API2PythonROS" />
+    <rosparam file="$(find water_navigation)/param/static_local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find water_navigation)/param/static_global_costmap_params.yaml" command="load" /> -->
+
+
+    <!-- graphic_teb -->
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <rosparam file="$(find move_base_bridge)/algorithm_param/teb_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find water_description)/param/robot_constrains.yaml" command="load" ns="TebLocalPlannerROS"/>
+    <!-- <rosparam file="$(find move_base_bridge)/param/dynamic_local_costmap_params.yaml" command="load" /> -->
+    <rosparam file="$(find water_navigation)/param/static_local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find water_navigation)/param/dynamic_global_costmap_params.yaml" command="load" />
+    <!-- <rosparam file="$(find move_base_bridge)/param/static_global_costmap_params.yaml" command="load" /> --> -->
+    <rosparam file="$(find water_description)/param/robot_constrains.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find water_description)/param/robot_constrains.yaml" command="load" ns="local_costmap"/>
+    <!-- <rosparam file="$(find move_base_bridge)/param/costmap_converter_params.yaml" command="load" />  -->
+
+
+    <rosparam file="$(find water_navigation)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find water_navigation)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find water_navigation)/param/move_base_params.yaml" command="load" />
+
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+  </node>
+</launch>

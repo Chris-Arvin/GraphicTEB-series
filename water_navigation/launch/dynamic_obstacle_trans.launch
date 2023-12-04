@@ -1,0 +1,4 @@
+<launch>	
+   	<node pkg="water_navigation" type="dynamic_obstacle_transform.py" name="dynamic_obstacle_trans" output="screen" />
+</launch>
+
