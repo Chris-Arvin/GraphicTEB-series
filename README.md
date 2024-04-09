@@ -1,5 +1,5 @@
 # GraphicTEB
-This is the source code of the TASE/ICRA2024 paper [**Improve Computing Efficiency and Motion Safety by Analyzing Environment With Graphics**](https://ieeexplore.ieee.org/document/10210322), an approach to find all the non-homology class trajectories quickly.
+This is the source code of the TASE/ICRA2024 paper [**Improve Computing Efficiency and Motion Safety by Analyzing Environment With Graphics**](https://ieeexplore.ieee.org/document/10210322), an approach to improve Timed Elastic Band (TEB) and find all the non-homology class trajectories quickly.
 
 [![](https://res.cloudinary.com/marcomontalbano/image/upload/v1668649862/video_to_markdown/images/youtube--SzZGKdbzH9Q-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=SzZGKdbzH9Q "")
 
