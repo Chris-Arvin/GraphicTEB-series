@@ -1,7 +1,7 @@
-# GraphicTEB
-This is the source code of the TASE/ICRA2024 paper [**Improve Computing Efficiency and Motion Safety by Analyzing Environment With Graphics**](https://ieeexplore.ieee.org/document/10210322), an approach to improve Timed Elastic Band (TEB) and find all the non-homology class trajectories quickly.
+# GA-TEB
+This is the source code of the GA-TEB (the fourth version of the GraphicTEB series) [**GA-TEB: Goal-Adaptive Framework for Efficient Navigation Based on Goal Lines**](https://arxiv.org/abs/2409.10009), an approach for robot motion planning.
+[![](https://github.com/user-attachments/assets/5943bc15-ec92-4a07-8aaa-a8c866e9eb6e)](https://www.youtube.com/watch?v=1K7Klxig8CU)
 
-[![](https://res.cloudinary.com/marcomontalbano/image/upload/v1668649862/video_to_markdown/images/youtube--SzZGKdbzH9Q-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=SzZGKdbzH9Q "")
 
 
 ## Table of Contents
@@ -22,9 +22,9 @@ Then install OpenCV according the [Chinese reference](https://blog.csdn.net/KIK9
 
 Then please install this project and build it: 
 ```
-$ mkdir -p GraphicTEB_ws/src
-$ cd GraphicTEB_ws/src
-$ git clone https://github.com/Chris-Arvin/graphicTEB_Improve-Computing-Efficiency-and-Motion-Safety-by-Analyzing-Environment-With-Graphics.git
+$ mkdir -p GATEB_ws/src
+$ cd GATEB_ws/src
+$ git clone https://github.com/Chris-Arvin/GraphicTEB-series.git
 $ cd ..
 $ rosdep install –from-paths src –ignore-src –rosdistro-melodic -y
 $ [set the OpenCV_DIR in src/teb_local_planner/CMakeLists.txt according to the real location of your OpenCV]
@@ -33,19 +33,19 @@ $ catkin_make
 
 
 ## 2. Quick Start
-Please open a terminal to launch the pedestrian simulation: 
+See the performance of GA-TEB in preset scenes with numerous obstacles: 
 ```
-$ source GraphicTEB_ws/devel/setup.bash
-$ roslaunch pedsim_simulator pedsim_simulator.launch
+$ source GATEB_ws/devel/setup.bash
+$ roslaunch move_base demo1_navigation.launch
 ```
-Open another terminal to launch the navigation simulation: 
+Or try another demo with multiple pedestrians: 
 ```
-$ source GraphicTEB_ws/devel/setup.bash
-$ roslaunch move_base navigation.launch
+$ source GATEB_ws/devel/setup.bash
+$ roslaunch move_base demo2_navigation.launch
 ```
 
 
-## 3. Introduction for Key Parameters in "pedsim_simulator.launch"
+## 3. Introduction for Key Parameters in "demo1_pedsim_simulator.launch / demo2_pedsim_simulator.launch"
 @param: person_mode
 * 0: drive the pedestrian with data replay
 * 1: drive the pedestrian with extended social force model
@@ -62,7 +62,7 @@ $ roslaunch move_base navigation.launch
 * the initial position and orientation of the robot.
 
 
-## 4. Contributors
+## 4. Contributors along the project
 * Qianyi Zhang  arvin.nkzqy@gmail.com
 * Shichao Wu
 * Yuhang Jia
