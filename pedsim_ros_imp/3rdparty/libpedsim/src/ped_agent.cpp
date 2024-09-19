@@ -36,15 +36,16 @@ Ped::Tagent::Tagent() {
   normal_distribution<double> distribution(1.0, 0.26);
   // 在这里设置人的最大速度
   vmax = distribution(generator);
-  vmax = 0.5;
+  vmax = 0.3;
   // vmax = 1.0;
 
   forceFactorDesired = 1.0;
   forceFactorSocial = 2.1;
-  forceFactorObstacle = 10.0;
+  forceFactorObstacle = 50.0;
   forceSigmaObstacle = 0.8;
-
-  agentRadius = 0.35;
+  // 设置人的半径
+  // agentRadius = 0.35;
+  agentRadius = 0.8;
   relaxationTime = 0.5;
   robotPosDiffScalingFactor = 2;
 
@@ -176,7 +177,8 @@ Ped::Tvector Ped::Tagent::socialForce() const {
   for (const Ped::Tagent* other : neighbors) {
     // don't compute social force to yourself
     if (other->id == id) continue;
-    // if (other->getType() == ROBOT) continue;
+    // 忽略机器人对人的影响，open loop跑
+    if (other->getType() == ROBOT) continue;
 
     // compute difference between both agents' positions
     Tvector diff = other->p - p;

@@ -83,7 +83,15 @@ public:
     ROS_ASSERT_MSG(cfg_ && _measurement, "You must call setTebConfig(), setViaPoint() on EdgeViaPoint()");
     const VertexPose* bandpt = static_cast<const VertexPose*>(_vertices[0]);
 
-    _error[0] = (bandpt->position() - *_measurement).norm();
+    // double p1end1_dis = pow(bandpt->position().x() - end_points_.first.first,2) + pow(bandpt->position().y() - end_points_.first.second,2);
+    // double p2end2_dis = pow(bandpt->position().x() - end_points_.second.first,2) + pow(bandpt->position().y() - end_points_.second.second,2);
+    // double end1end2_dis = pow(end_points_.first.first - end_points_.second.first,2) + pow(end_points_.first.second - end_points_.second.second,2);
+    double p1end1_dis = hypot(bandpt->position().x() - end_points_.first.first, bandpt->position().y() - end_points_.first.second);
+    double p2end2_dis = hypot(bandpt->position().x() - end_points_.second.first, bandpt->position().y() - end_points_.second.second);
+    double end1end2_dis = hypot(end_points_.first.first - end_points_.second.first, end_points_.first.second - end_points_.second.second);
+
+    // _error[0] = std::max(0.0, p1end1_dis + p2end2_dis - end1end2_dis-0.02);
+    _error[0] = std::max(0.0, p1end1_dis + p2end2_dis - end1end2_dis);
 
     ROS_ASSERT_MSG(std::isfinite(_error[0]), "EdgeViaPoint::computeError() _error[0]=%f\n",_error[0]);
   }
@@ -102,15 +110,16 @@ public:
    * @param cfg TebConfig class
    * @param via_point 2D position vector containing the position of the via point
    */ 
-  void setParameters(const TebConfig& cfg, const Eigen::Vector2d* via_point)
+  void setParameters(const TebConfig& cfg, const std::pair<std::pair<double,double>, std::pair<double,double>> end_points)
   {
     cfg_ = &cfg;
-    _measurement = via_point;
+    end_points_ = end_points;
   }
   
 public: 	
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
+private:
+  std::pair<std::pair<double,double>, std::pair<double,double>> end_points_;
 };
   
     

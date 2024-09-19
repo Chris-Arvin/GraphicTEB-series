@@ -9,30 +9,31 @@ TebLocalPlannerROS:
  max_samples: 500
  global_plan_overwrite_orientation: True
  allow_init_with_backwards_motion: False
- max_global_plan_lookahead_dist: 8.0
+ max_global_plan_lookahead_dist: 20.0   # min(this, width of local_costmap*0.99)
  global_plan_viapoint_sep: -1
  global_plan_prune_distance: 1
  exact_arc_length: False
- feasibility_check_no_poses: 5
+ feasibility_check_no_poses: 5    # 往前看几个点，看看是否可行
+ control_look_ahead_poses: 1
  publish_feedback: False
 
  footprint_model:
    type: "point"
 
  # GoalTolerance
- xy_goal_tolerance: 0.2
- yaw_goal_tolerance: 0.1
- free_goal_vel: False
+ xy_goal_tolerance: 0.5
+ yaw_goal_tolerance: 3.0
+ free_goal_vel: False     # 允许机器人以最大速度到达目标点
  complete_global_plan: True
     
  # Obstacles
  min_obstacle_dist: 0.3 # This value must also include our robot radius, since footprint_model is set to "point".
- inflation_dist: 0.6
+ inflation_dist: 0.4
  include_costmap_obstacles: True
  costmap_obstacles_behind_robot_dist: 1.5
  obstacle_poses_affected: 15
 
- dynamic_obstacle_inflation_dist: 0.6
+ dynamic_obstacle_inflation_dist: 0.5
  include_dynamic_obstacles: True
 
  costmap_converter_plugin: ""
@@ -43,38 +44,44 @@ TebLocalPlannerROS:
  graphic_is_limitation: True  # whether limit the DepthFirstSearch in GraphicTEB to accelerate calculation
  graphic_is_hallway: False    # whether is the corridor scene. If so, do not shorten the path related to the wall
  visualize_graphic_exploration: True
+ visualize_graphic_optimizatoin_process: True
 
  # Optimization
- no_inner_iterations: 5
- no_outer_iterations: 4
+ no_inner_iterations: 1
+ no_outer_iterations: 200
+ least_no_outer_iterations: 10
  optimization_activate: True
- optimization_verbose: False
- penalty_epsilon: 0.1
+ optimization_verbose: False  # 是否打印优化过程
+ penalty_epsilon: 0.15         # （动态）障碍物的额外安全缓冲
  obstacle_cost_exponent: 4
  weight_max_vel_x: 2
  weight_max_vel_theta: 1
  weight_acc_lim_x: 1
  weight_acc_lim_theta: 1
  weight_kinematics_nh: 1000
- weight_kinematics_forward_drive: 1000
+ weight_kinematics_forward_drive: 100   # 对倒车的惩罚
  weight_kinematics_turning_radius: 0
- weight_optimaltime: 1 # must be > 0
+ weight_optimaltime: 10 # must be > 0   % 提高这玩意，对轨迹变得更平滑+加速收敛 有奇效！！
  weight_shortest_path: 0
- weight_obstacle: 100
- weight_inflation: 0.2
- weight_dynamic_obstacle: 10
- weight_dynamic_obstacle_inflation: 0.2
- weight_viapoint: 1
+ weight_obstacle: 500
+ weight_inflation: 0
+ weight_dynamic_obstacle: 0  # 这里有个很玄学的问题，在dynamic obstacle的edge中，同样的weight 同样的error，用(0,0)+error[0]就不行，用(1,1)+error[1]进行。。
+ weight_dynamic_obstacle_inflation: 2000
+ weight_viapoint: 1000
  weight_adapt_factor: 2
- weight_gauss: 2
+ weight_gauss: 0
 
  # Homotopy Class Planner
  enable_homotopy_class_planning: True
  enable_multithreading: True
- max_number_classes: 20                     # the max classes considered in TEB
- max_path_explore_number_for_GraphicTEB: -1 # the max paths considered in GraphicTEB
- max_path_remained_for_GraphicTEB: -1       # the max paths considered in GraphicTEB
- selection_cost_hysteresis: 1.0
+ max_path_explore_number_for_GraphicTEB: -1 # the max number of general trajectories initialized during the depthFirst process of GraphicTEB, -1 denotes no limitation
+ max_path_remained_for_GraphicTEB: -1       # the max number of normal trajectories initialized by GraphicTEB
+ max_number_classes: 20                     # the max number of homology trajectories input for TEB optimizer
+ is_cos_limitation: False                    # whether limit the depthFirth with cos
+ is_father_can_visit_limitation: True       # whether limit the depthFIrst with father visting
+ length_limition_during_optimization: 20.0  # the trajectory will be deleted if its length is greater than that during optimizatoin
+ epsilon_for_early_stop: 0.001              # the epsilon for early stop of outer optimization
+ selection_cost_hysteresis: 0.9
  selection_prefer_initial_plan: 0.9
  selection_obst_cost_scale: 100.0
  selection_alternative_time_cost: True
@@ -83,11 +90,13 @@ TebLocalPlannerROS:
  roadmap_graph_area_width: 5
  roadmap_graph_area_length_scale: 1.0
  h_signature_prescaler: 0.5
- h_signature_threshold: 0.1
+ h_signature_threshold: 0.01    # 判断某个h值是否有价值的阈值。如果比它小，说明障碍物离得很远，可以被忽略。
  obstacle_heading_threshold: 0.45
  switching_blocking_period: 0.0
  viapoints_all_candidates: True
- delete_detours_backwards: True
+ delete_detours_backwards: True    # 删除反向绕行轨迹
+ detours_orientation_tolerance: 1.57   # 反向绕行的tolerance
+ length_start_orientation_vector: 0.8  # 删除反向绕行时 往前看的距离
  max_ratio_detours_duration_best_duration: 3.0
  visualize_hc_graph: False
  visualize_with_time_as_z_axis_scale: False

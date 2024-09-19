@@ -1,6 +1,6 @@
 <launch>
   <!-- fake amcl -->
-  <include file="$(find fake_localization)/launch/fake_localization.launch"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="fake_localization" args="0 0 0 0 0 0 1 /map /odom"/>
   <!-- translate topic type -->
   <include file="$(find teb_local_planner)/launch/dynamic_obstacle_trans.launch"/>
   <!-- move_base -->

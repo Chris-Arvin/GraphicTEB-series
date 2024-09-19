@@ -112,6 +112,7 @@ void TebConfig::loadRosParamFromNodeHandle(const ros::NodeHandle& nh)
   // Optimization
   nh.param("no_inner_iterations", optim.no_inner_iterations, optim.no_inner_iterations);
   nh.param("no_outer_iterations", optim.no_outer_iterations, optim.no_outer_iterations);
+  nh.param("least_no_outer_iterations", optim.least_no_outer_iterations, optim.least_no_outer_iterations);
   nh.param("optimization_activate", optim.optimization_activate, optim.optimization_activate);
   nh.param("optimization_verbose", optim.optimization_verbose, optim.optimization_verbose);
   nh.param("penalty_epsilon", optim.penalty_epsilon, optim.penalty_epsilon);
@@ -145,10 +146,15 @@ void TebConfig::loadRosParamFromNodeHandle(const ros::NodeHandle& nh)
   nh.param("graphic_is_limitation", hcp.graphic_is_limitation, hcp.graphic_is_limitation);
   nh.param("graphic_is_hallway", hcp.graphic_is_hallway, hcp.graphic_is_hallway);
   nh.param("visualize_graphic_exploration", hcp.visualize_graphic_exploration, hcp.visualize_graphic_exploration);
+  nh.param("visualize_graphic_optimizatoin_process", hcp.visualize_graphic_optimizatoin_process, hcp.visualize_graphic_optimizatoin_process);
   nh.param("max_number_classes", hcp.max_number_classes, hcp.max_number_classes);
   nh.param("max_path_explore_number_for_GraphicTEB", hcp.max_path_explore_number_for_GraphicTEB, hcp.max_path_explore_number_for_GraphicTEB);
   nh.param("max_path_remained_for_GraphicTEB", hcp.max_path_remained_for_GraphicTEB, hcp.max_path_remained_for_GraphicTEB);
   nh.param("max_number_plans_in_current_class", hcp.max_number_plans_in_current_class, hcp.max_number_plans_in_current_class);
+  nh.param("is_cos_limitation", hcp.is_cos_limitation, hcp.is_cos_limitation);
+  nh.param("is_father_can_visit_limitation", hcp.is_father_can_visit_limitation, hcp.is_father_can_visit_limitation);
+  nh.param("length_limition_during_optimization", hcp.length_limition_during_optimization, hcp.length_limition_during_optimization);
+  nh.param("epsilon_for_early_stop", hcp.epsilon_for_early_stop, hcp.epsilon_for_early_stop);
   nh.param("selection_obst_cost_scale", hcp.selection_obst_cost_scale, hcp.selection_obst_cost_scale);
   nh.param("selection_prefer_initial_plan", hcp.selection_prefer_initial_plan, hcp.selection_prefer_initial_plan);
   nh.param("selection_viapoint_cost_scale", hcp.selection_viapoint_cost_scale, hcp.selection_viapoint_cost_scale);
@@ -271,6 +277,8 @@ void TebConfig::reconfigure(TebLocalPlannerReconfigureConfig& cfg)
   hcp.enable_multithreading = cfg.enable_multithreading;
   hcp.max_number_classes = cfg.max_number_classes; 
   hcp.max_path_explore_number_for_GraphicTEB = cfg.max_path_explore_number_for_GraphicTEB;
+  hcp.is_cos_limitation = cfg.is_cos_limitation;
+  hcp.epsilon_for_early_stop = cfg.epsilon_for_early_stop;
   hcp.max_path_remained_for_GraphicTEB = cfg.max_path_remained_for_GraphicTEB;
   hcp.max_number_plans_in_current_class = cfg.max_number_plans_in_current_class;
   hcp.selection_cost_hysteresis = cfg.selection_cost_hysteresis;

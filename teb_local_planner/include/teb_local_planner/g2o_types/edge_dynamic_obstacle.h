@@ -94,11 +94,30 @@ public:
   {
     ROS_ASSERT_MSG(cfg_ && _measurement && robot_model_, "You must call setTebConfig(), setObstacle() and setRobotModel() on EdgeDynamicObstacle()");
     const VertexPose* bandpt = static_cast<const VertexPose*>(_vertices[0]);
-    
-    double dist = robot_model_->estimateSpatioTemporalDistance(bandpt->pose(), _measurement, t_);
+    // new relationship: 
+    auto human_vel = _measurement->getCentroidVelocity();
+    auto new_human_t = _measurement->getCentroid() + current_alpha_*_measurement->getCentroidVelocity()*t_;
+    auto new_traj_waypoint_at_t = bandpt->pose().position();
+    auto new_human_t_to_traj_t = new_traj_waypoint_at_t - new_human_t;
+    auto new_relationship_along_v = (new_human_t_to_traj_t.x()*human_vel.x() + new_human_t_to_traj_t.y()*human_vel.y())/human_vel.norm();
 
-    _error[0] = penaltyBoundFromBelow(dist, cfg_->obstacles.min_obstacle_dist, cfg_->optim.penalty_epsilon);
-    _error[1] = penaltyBoundFromBelow(dist, cfg_->obstacles.dynamic_obstacle_inflation_dist, 0.0);
+    _error[0] = 0;
+    if (is_detour_front_){
+      if (old_relationship_along_v_ >0 && fabs(old_relationship_vertice_v_)<=radius_human_plus_robot_inflation_){
+        _error[1] = std::max(radius_human_plus_robot_inflation_ - new_relationship_along_v, 0.0);
+      }
+      else{
+        _error[1] = std::max(radius_human_plus_robot_inflation_ - new_human_t_to_traj_t.norm(), 0.0);  
+      }
+    }
+    else{
+      if (old_relationship_along_v_ <0 && fabs(old_relationship_vertice_v_)<=radius_human_plus_robot_inflation_){
+        _error[1] = std::max(radius_human_plus_robot_inflation_ + new_relationship_along_v, 0.0);
+      }
+      else{
+        _error[1] = 0;
+      }
+    }
 
     ROS_ASSERT_MSG(std::isfinite(_error[0]), "EdgeDynamicObstacle::computeError() _error[0]=%f\n",_error[0]);
   }
@@ -135,10 +154,46 @@ public:
     _measurement = obstacle;
   }
 
+  void setDetourDir(const bool& is_detour_front){
+    is_detour_front_ = is_detour_front;
+  }
+
+  void setAlpha(const double current_alpha, const double old_alpha){
+    current_alpha_ = current_alpha;
+    old_alpha_ = old_alpha;    
+  }
+
+  void setAnchor(double anchor_x, double anchor_y)
+  {
+    anchor_ = Eigen::Vector2d(anchor_x, anchor_y);
+  }
+
+  void setGoal(double goal_x, double goal_y){
+    goal_ = Eigen::Vector2d(goal_x, goal_y);
+  }
+
+  void complete(){
+    // 使用dynamic_cast来转换，使得父类可以调用子类函数。【必须保证动态障碍物智能是circular类】
+    CircularObstacle* temp_measurement = dynamic_cast<CircularObstacle*>(const_cast<Obstacle*>(_measurement));
+    auto human_vel = temp_measurement->getCentroidVelocity();
+    radius_human_plus_robot_inflation_ = temp_measurement->radius()+cfg_->obstacles.dynamic_obstacle_inflation_dist + cfg_->optim.penalty_epsilon; // human radius + extended_robot_radius + penalty_epsilon
+    // old relationship:
+    auto old_human_t = temp_measurement->getCentroid() + old_alpha_*temp_measurement->getCentroidVelocity()*t_;
+    auto old_traj_waypoint_at_t = anchor_;
+    auto old_human_t_to_traj_t = old_traj_waypoint_at_t - old_human_t;
+    old_relationship_along_v_ = (old_human_t_to_traj_t.x()*human_vel.x() + old_human_t_to_traj_t.y()*human_vel.y())/human_vel.norm();
+    old_relationship_vertice_v_ = (old_human_t_to_traj_t.x()*human_vel.y() - old_human_t_to_traj_t.y()*human_vel.x())/human_vel.norm();
+  }
+
 protected:
   
   const BaseRobotFootprintModel* robot_model_; //!< Store pointer to robot_model
   double t_; //!< Estimated time until current pose is reached
+  bool is_detour_front_;
+  double current_alpha_, old_alpha_;
+  Eigen::Vector2d anchor_;
+  Eigen::Vector2d goal_;
+  double radius_human_plus_robot_inflation_, old_relationship_along_v_, old_relationship_vertice_v_;
   
 public: 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW

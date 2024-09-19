@@ -79,7 +79,8 @@ public:
     * @param other The other equivalence class to test with
     */
    virtual bool isEqual(const EquivalenceClass& other) const = 0;
-
+   virtual bool isEqual(const std::vector<double>& Hsignature3d_values) const {return false;};
+   virtual std::vector<double> getSignature3DValue()const {return {};};
    /**
     * @brief Check if the equivalence value is detected correctly
     * @return Returns false, if the equivalence class detection failed, e.g. if nan- or inf values occur.

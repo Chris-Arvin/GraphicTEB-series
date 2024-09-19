@@ -64,18 +64,27 @@ void TebVisualization::initialize(ros::NodeHandle& nh, const TebConfig& cfg)
   global_plan_pub_ = nh.advertise<nav_msgs::Path>("global_plan", 1);
   local_plan_pub_ = nh.advertise<nav_msgs::Path>("local_plan",1);
   teb_poses_pub_ = nh.advertise<geometry_msgs::PoseArray>("teb_poses", 100);
-  teb_poses_origin_pub_ = nh.advertise<geometry_msgs::PoseArray>("teb_poses_origin", 100);
   teb_marker_pub_ = nh.advertise<visualization_msgs::Marker>("teb_markers", 1000);
-  feedback_pub_ = nh.advertise<teb_local_planner::FeedbackMsg>("teb_feedback", 10);  
+  feedback_pub_ = nh.advertise<teb_local_planner::FeedbackMsg>("teb_feedback", 10); 
+  teb_during_optimization_pub_ = nh.advertise<visualization_msgs::MarkerArray>("teb_during_optimization", 10);
   
   // register publichser for graphicTEB
-  pub_corner = nh.advertise<visualization_msgs::MarkerArray>("/corners",1);
   pub_obs_group = nh.advertise<visualization_msgs::MarkerArray>("/groups",1);
+  pub_obs_dilate  = nh.advertise<visualization_msgs::MarkerArray>("/groups_dilate",1);
   pub_border = nh.advertise<visualization_msgs::MarkerArray>("/borders",1);
-  pub_connect_inner_obs = nh.advertise<visualization_msgs::MarkerArray>("/connects_inner_obs",1);
-  pub_connect_between_obs_adjecent = nh.advertise<visualization_msgs::MarkerArray>("/connects_outer_obs_adjecent",1);
-  pub_connect_between_obs_all = nh.advertise<visualization_msgs::MarkerArray>("/connects_outer_obs_all",1);
-  pub_homo_paths = nh.advertise<visualization_msgs::MarkerArray>("/homo_paths",1);
+  pub_border_origin = nh.advertise<visualization_msgs::MarkerArray>("/borders_origin",1);
+  pub_corner = nh.advertise<visualization_msgs::MarkerArray>("/corners",1);
+  pub_corner_before_intersection = nh.advertise<visualization_msgs::MarkerArray>("/corners_before_intersection",1);
+  pub_voronoi = nh.advertise<visualization_msgs::MarkerArray>("/voronoi",1);
+  pub_connects = nh.advertise<visualization_msgs::MarkerArray>("/connects",1);
+  pub_connect_graph = nh.advertise<visualization_msgs::MarkerArray>("/connect_graph",1);
+
+  pub_map_boundaries = nh.advertise<visualization_msgs::MarkerArray>("/map_boundaries",1);
+  pub_goal_line = nh.advertise<visualization_msgs::MarkerArray>("/map_goal_lines",1);
+
+  pub_homo_paths_origin = nh.advertise<visualization_msgs::MarkerArray>("/homo_paths_find_by_graphicTEB_origin",1);
+  pub_homo_paths = nh.advertise<visualization_msgs::MarkerArray>("/homo_paths_find_by_graphicTEB",1);
+  pub_homo_paths_pruned = nh.advertise<visualization_msgs::MarkerArray>("/homo_paths_add2teb",1);
   pub_corridor_map = nh.advertise<visualization_msgs::MarkerArray>("/corridor_linetripe",1);
 
   initialized_ = true; 
@@ -96,7 +105,7 @@ void TebVisualization::publishLocalPlan(const std::vector<geometry_msgs::PoseSta
   base_local_planner::publishPlan(local_plan, local_plan_pub_); 
 }
 
-void TebVisualization::publishLocalPlanAndPoses(const TimedElasticBand& teb, const TimedElasticBand& teb_origin) const
+void TebVisualization::publishLocalPlanAndPoses(const TimedElasticBand& teb) const
 {
   if ( printErrorWhenNotInitialized() )
     return;
@@ -126,30 +135,51 @@ void TebVisualization::publishLocalPlanAndPoses(const TimedElasticBand& teb, con
       teb_poses.poses.push_back(pose.pose);
     }
 
-    geometry_msgs::PoseArray teb_poses_origin;
-    teb_poses_origin.header.frame_id = teb_path.header.frame_id;
-    teb_poses_origin.header.stamp = teb_path.header.stamp;
-    
-    // fill path msgs with teb configurations
-    for (int i=0; i < teb_origin.sizePoses(); i++)
-    {
-      geometry_msgs::PoseStamped pose;
-      pose.header.frame_id = teb_path.header.frame_id;
-      pose.header.stamp = teb_path.header.stamp;
-      pose.pose.position.x = teb_origin.Pose(i).x();
-      pose.pose.position.y = teb_origin.Pose(i).y();
-      pose.pose.position.z = 0;
-      // pose.pose.position.z = cfg_->hcp.visualize_with_time_as_z_axis_scale*teb_origin.getSumOfTimeDiffsUpToIdx(i);
-      pose.pose.orientation = tf::createQuaternionMsgFromYaw(teb_origin.Pose(i).theta());
-      teb_poses_origin.poses.push_back(pose.pose);
-    }
-
     local_plan_pub_.publish(teb_path);
-    teb_poses_origin_pub_.publish(teb_poses_origin);
     teb_poses_pub_.publish(teb_poses);
 }
 
-
+void TebVisualization::publishTEBWithinOptimizations(const std::vector<std::vector<std::vector<Eigen::Vector2d>>>& teb_during_optimization) const
+{
+  int idx = 0;
+  // delete old nodes
+  visualization_msgs::MarkerArray marker_array;
+  visualization_msgs::Marker marker;
+  marker.header.frame_id = cfg_->map_frame;
+  marker.header.stamp = ros::Time::now();
+  marker.id = idx++;
+  marker.type = visualization_msgs::Marker::LINE_STRIP;
+  marker.action = visualization_msgs::Marker::DELETE;
+  marker.pose.orientation.w = 1;
+  marker_array.markers.push_back(marker);
+  
+  for (int k=0; k<teb_during_optimization.size(); k++){
+    auto trajectories_in_a_class = teb_during_optimization[k];
+    for (int i=0; i < trajectories_in_a_class.size(); ++i){
+      auto trajectory = trajectories_in_a_class[i];
+      visualization_msgs::Marker marker;
+      marker.header.frame_id = cfg_->map_frame;
+      marker.header.stamp = ros::Time::now();
+      marker.ns = std::to_string(k);
+      marker.id = idx++;
+      marker.type = visualization_msgs::Marker::LINE_STRIP;
+      marker.action = visualization_msgs::Marker::ADD;
+      marker.pose.orientation.w = 1;
+      marker.scale.x = 0.02;
+      marker.color.r = 1.0;
+      marker.color.a = 1.0;
+      for (int j=0; j<trajectory.size(); j++){
+        auto p = trajectory[j];
+        geometry_msgs::Point poi;
+        poi.x = p.x(); poi.y = p.y(); poi.z = i*0.05 + 0.1;
+        marker.points.push_back(poi);
+      }
+      // ROS_INFO("%d, %d %d",k,i,trajectory.size());
+      marker_array.markers.push_back(marker);
+    }
+  }
+  teb_during_optimization_pub_.publish(marker_array);
+}
 
 void TebVisualization::publishRobotFootprintModel(const PoseSE2& current_pose, const BaseRobotFootprintModel& robot_model, const std::string& ns,
                                                   const std_msgs::ColorRGBA &color)
@@ -739,65 +769,191 @@ void TebVisualization::pubMarkerArray(std::map<int, std::vector<Point2D>> points
     markerArray.markers.emplace_back(marker_del);    
     int num=0;
     for (auto points:points_list){
+      if (points.first>=map_obj->getStartID()) continue;
+      visualization_msgs::Marker marker;
+      marker.header.frame_id = "/map";
+      marker.header.stamp = ros::Time::now();
+      marker.ns = std::to_string(num);
+      num++;
+      marker.type = visualization_msgs::Marker::POINTS;
+      marker.action = visualization_msgs::Marker::ADD;
+      marker.pose.orientation.w = 1.0;
+      marker.scale.x = 0.1;
+      marker.scale.y = 0.1;
+      marker.scale.z = 0.1;
+      marker.color.r = 0.0;
+      marker.color.g = 0.0;
+      marker.color.b = 0.0;
+      marker.color.a = 1.0;
+      if (color == 'r')
+        marker.color.r = 1.0f;
+      else if (color == 'g')
+        marker.color.g = 1.0f;
+      else if (color == 'b')
+        marker.color.b = 1.0f;
+      marker.lifetime = ros::Duration();
       double height = 0;
       if (color=='g')
         height = 0.05;
       else if (color=='b')
         height = 0.15;
+      int k=0;
       for (auto point:points.second){
-        visualization_msgs::Marker marker;
-        double wx=point.x;
-        double wy=point.y;
+        double wx, wy;
         map_obj->map2world(point.x,point.y,wx,wy);
-        // Set the frame ID and timestamp.  See the TF tutorials for information on these.
-        marker.header.frame_id = "/map";
-        marker.header.stamp = ros::Time::now();
-    
-        // Set the namespace and id for this marker.  This serves to create a unique ID
-        // Any marker sent with the same namespace and id will overwrite the old one
-        // marker.ns = "basic_shapes";
-        marker.id = num++;
-    
-        // Set the marker type.  Initially this is CUBE, and cycles between that and SPHERE, ARROW, and CYLINDER
-        marker.type = 2;  //points
-    
-        // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
-        marker.action = visualization_msgs::Marker::ADD;
-    
-        // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
-        marker.pose.position.x = wx;
-        marker.pose.position.y = wy;
-        // marker.pose.position.z = height++*0.05;
-        marker.pose.position.z = height;
-        marker.pose.orientation.x = 0.0;
-        marker.pose.orientation.y = 0.0;
-        marker.pose.orientation.z = 0.0;
-        marker.pose.orientation.w = 1.0;
-    
-        // Set the scale of the marker -- 1x1x1 here means 1m on a side
-        marker.scale.x = 0.1;
-        marker.scale.y = 0.1;
-        marker.scale.z = 0.1;
-    
-        // Set the color -- be sure to set alpha to something non-zero!
-        marker.color.r = 0.0;
-        marker.color.g = 0.0;
-        marker.color.b = 0.0;
-        marker.color.a = 1.0;
-        if (color == 'r'){
-          marker.color.r = 1.0f;
-        }
-        else if (color == 'g'){
-          marker.color.g = 1.0f;
-        }
-        else if (color == 'b'){
-          marker.color.b = 1.0f;
-        }
-        marker.lifetime = ros::Duration();
-        markerArray.markers.push_back(marker);
+        geometry_msgs::Point p; p.x=wx; p.y=wy; p.z=height;
+        // geometry_msgs::Point p; p.x=wx; p.y=wy; p.z=height+k++*0.04;
+        marker.points.push_back(p);
       }
+      if (marker.points.size() > 0)
+        markerArray.markers.push_back(marker);
     }
     publisher.publish(markerArray);    
+}
+
+
+void TebVisualization::pubMarkerArray(std::map<std::pair<int,int>, std::vector<Point2D>> connection_list, ros::Publisher publisher, mapProcess* map_obj){
+    int num = 0;
+    float color[3] = {1,0,0};
+    visualization_msgs::MarkerArray markerArray;
+    visualization_msgs::Marker marker_del;
+    marker_del.action = visualization_msgs::Marker::DELETEALL;
+    markerArray.markers.emplace_back(marker_del);
+    for (auto connect:connection_list){
+      // 只打印ID1<ID2的部分
+      if (connect.first.first>connect.first.second) continue;
+      auto points = connect.second;
+      visualization_msgs::Marker marker;
+      marker.header.frame_id = "/map";
+      marker.header.stamp = ros::Time::now();
+      marker.id = num++;
+      marker.type = visualization_msgs::Marker::POINTS;
+      marker.action = visualization_msgs::Marker::ADD;
+      marker.pose.orientation.w = 1.0;
+      marker.scale.x = 0.1;
+      marker.scale.y = 0.1;
+      marker.scale.z = 0.1;
+      marker.color.r = color[0];
+      marker.color.g = color[1];
+      marker.color.b = color[2];
+      marker.color.a = 1.0;
+      marker.lifetime = ros::Duration();
+      for (auto poi:points){
+        double wx, wy;
+        map_obj->map2world(poi.x,poi.y,wx,wy);
+        geometry_msgs::Point p; p.x=wx; p.y=wy;
+        // p.z=num*0.1;
+        marker.points.push_back(p);
+      }
+      markerArray.markers.push_back(marker);
+    }
+    publisher.publish(markerArray);    
+}
+
+
+void TebVisualization::pubMapBoundaries(ros::Publisher publisher, mapProcess* map_obj){
+    visualization_msgs::MarkerArray markerArray;
+    visualization_msgs::Marker marker_del;
+    marker_del.action = visualization_msgs::Marker::DELETEALL;
+    markerArray.markers.emplace_back(marker_del);
+    std::vector<std::string> names={"outer", "inner", "goal_line"};
+    int i=-1;
+    for (auto boundary:map_obj->getMapBoundaries()){
+      i++;
+      visualization_msgs::Marker marker;
+      marker.header.frame_id = "/map";
+      marker.header.stamp = ros::Time::now();
+      // marker.id = num;
+      marker.ns = names[i];
+      marker.type = visualization_msgs::Marker::LINE_STRIP;
+      marker.action = visualization_msgs::Marker::ADD;
+      marker.lifetime = ros::Duration();
+      marker.pose.orientation.w = 1.0;
+      marker.scale.x = 0.1;
+      marker.scale.y = 0.1;
+      marker.scale.z = 0.1;
+      marker.color.r = 0;
+      marker.color.g = 0;
+      marker.color.b = 0;
+      marker.color.a = 0.4;
+      if (i==0)
+        marker.color.r = 1;
+      else if (i==1)
+        marker.color.g = 1;
+      else if (i==2)
+        marker.color.b = 1;
+      for(auto p:boundary){
+        double wx, wy;
+        map_obj->map2worldLarge(p.first, p.second, wx, wy);
+        geometry_msgs::Point p1; p1.x=wx; p1.y=wy; p1.z=i*0.02;
+        marker.points.push_back(p1);
+      }
+      marker.points.push_back(marker.points.front());
+
+      markerArray.markers.push_back(marker);
+    }
+    publisher.publish(markerArray);    
+}
+
+void TebVisualization::pubGoalLineList(ros::Publisher publisher, mapProcess* map_obj){
+    visualization_msgs::MarkerArray markerArray;
+    visualization_msgs::Marker marker_del;
+    marker_del.action = visualization_msgs::Marker::DELETEALL;
+    markerArray.markers.emplace_back(marker_del);
+    int num = 0;
+    for (auto goal_line:map_obj->getGoalLineList()){
+      visualization_msgs::Marker marker;
+      marker.header.frame_id = "/map";
+      marker.header.stamp = ros::Time::now();
+      marker.ns = "goal lines";
+      marker.id = num++;
+      marker.type = visualization_msgs::Marker::POINTS;
+      marker.action = visualization_msgs::Marker::ADD;
+      marker.lifetime = ros::Duration();
+      marker.pose.orientation.w = 1.0;
+      marker.scale.x = 0.1;
+      marker.scale.y = 0.1;
+      marker.scale.z = 0.1;
+      marker.color.r = 1;
+      marker.color.g = 0;
+      marker.color.b = 0;
+      marker.color.a = 1.0;
+      double height = 0.02;
+      for(auto p:goal_line){
+        double wx, wy;
+        map_obj->map2world(p.x, p.y, wx, wy);
+        geometry_msgs::Point p1; p1.x=wx; p1.y=wy; p1.z=height;
+        // height += 0.02;
+        marker.points.push_back(p1); 
+      }
+      markerArray.markers.push_back(marker);
+    }
+
+    visualization_msgs::Marker marker;
+    marker.header.frame_id = "/map";
+    marker.header.stamp = ros::Time::now();
+    marker.ns = "goals";
+    marker.type = visualization_msgs::Marker::POINTS;
+    marker.action = visualization_msgs::Marker::ADD;
+    marker.lifetime = ros::Duration();
+    marker.pose.orientation.w = 1.0;
+    marker.scale.x = 0.3;
+    marker.scale.y = 0.3;
+    marker.scale.z = 0.3;
+    marker.color.r = 0;
+    marker.color.g = 1.0;
+    marker.color.b = 0;
+    marker.color.a = 1.0;
+    double wx, wy;
+    map_obj->map2world(map_obj->getFartherGoal().x, map_obj->getFartherGoal().y, wx, wy);
+    geometry_msgs::Point p1; p1.x=wx; p1.y=wy;
+    marker.points.push_back(p1); 
+    map_obj->map2world(map_obj->getNearGoal().x, map_obj->getNearGoal().y, wx, wy);
+    p1.x=wx; p1.y=wy;
+    marker.points.push_back(p1);
+    markerArray.markers.push_back(marker);
+
+    publisher.publish(markerArray);     
 }
 
 void TebVisualization::pubMarkerArray(std::map<int, std::vector<Point2D>> points_list, ros::Publisher publisher, mapProcess* map_obj){
@@ -811,60 +967,35 @@ void TebVisualization::pubMarkerArray(std::map<int, std::vector<Point2D>> points
     markerArray.markers.emplace_back(marker_del);
     for (auto points:points_list){
       float color[3] = {1,0,0};
-      // for (int j=0; j<3; j++) {
-      //     color[j] = u(e);
-      // }
-      double height = 0;
+      visualization_msgs::Marker marker;
+      marker.header.frame_id = "/map";
+      marker.header.stamp = ros::Time::now();
+      marker.ns = std::to_string(num);
+      num++;
+      marker.type = visualization_msgs::Marker::POINTS;
+      marker.action = visualization_msgs::Marker::ADD;
+      marker.pose.orientation.w = 1.0;
+      marker.scale.x = 0.1;
+      marker.scale.y = 0.1;
+      marker.scale.z = 0.1;
+      marker.color.r = color[0];
+      marker.color.g = color[1];
+      marker.color.b = color[2];
+      marker.color.a = 1.0;
+      marker.lifetime = ros::Duration();
       for (auto point:points.second){
-        visualization_msgs::Marker marker;
-        double wx=point.x;
-        double wy=point.y;
+        double wx, wy;
         map_obj->map2world(point.x,point.y,wx,wy);
-        // Set the frame ID and timestamp.  See the TF tutorials for information on these.
-        marker.header.frame_id = "/map";
-        marker.header.stamp = ros::Time::now();
-    
-        // Set the namespace and id for this marker.  This serves to create a unique ID
-        // Any marker sent with the same namespace and id will overwrite the old one
-        // marker.ns = "basic_shapes";
-        marker.id = num++;
-    
-        // Set the marker type.  Initially this is CUBE, and cycles between that and SPHERE, ARROW, and CYLINDER
-        marker.type = 2;  //points
-    
-        // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
-        marker.action = visualization_msgs::Marker::ADD;
-    
-        // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
-        marker.pose.position.x = wx;
-        marker.pose.position.y = wy;
-        marker.pose.position.z = 0;
-        // marker.pose.position.z = height++*0.05;
-        marker.pose.orientation.x = 0.0;
-        marker.pose.orientation.y = 0.0;
-        marker.pose.orientation.z = 0.0;
-        marker.pose.orientation.w = 1.0;
-    
-        // Set the scale of the marker -- 1x1x1 here means 1m on a side
-        marker.scale.x = 0.1;
-        marker.scale.y = 0.1;
-        marker.scale.z = 0.1;
-    
-        // Set the color -- be sure to set alpha to something non-zero!
-        marker.color.r = color[0];
-        marker.color.g = color[1];
-        marker.color.b = color[2];
-        marker.color.a = 1.0;
-        marker.lifetime = ros::Duration();
-        markerArray.markers.push_back(marker);
+        geometry_msgs::Point p; p.x=wx; p.y=wy;
+        marker.points.push_back(p);
       }
+      markerArray.markers.push_back(marker);
     }
     publisher.publish(markerArray);    
 }
 
 
-
-void TebVisualization::pubLinList(std::vector<std::vector<std::pair<Point2D,Point2D>>> edges_graph, ros::Publisher publisher, mapProcess* map_obj)
+void TebVisualization::pubLinList(std::map<int, std::vector<Point2D>> points_list, ros::Publisher publisher, mapProcess* map_obj)
 {
   visualization_msgs::MarkerArray markerArray;
   visualization_msgs::Marker marker_del;
@@ -873,176 +1004,235 @@ void TebVisualization::pubLinList(std::vector<std::vector<std::pair<Point2D,Poin
   int i=0;
   double wx;
   double wy;
-  std::default_random_engine e;
-  std::uniform_real_distribution<float> u(0.0,1.0); // 左闭右闭区间
-  e.seed(time(0));
 
-  double height = 0;
-  for (int j=0; j<map_obj->getLabelList().size(); j++){
-    for (int k=j+1; k<map_obj->getLabelList().size(); k++){
-      float color[3] = {0,0,0};
-      for (int j=0; j<3; j++) {
-          color[j] = u(e);
-      }
-      auto p = edges_graph[j][k];
-      visualization_msgs::Marker marker;
-      marker.header.frame_id = "/map";
-      marker.header.stamp = ros::Time::now();
-      // marker.ns = "points_and_lins";
-      marker.action = visualization_msgs::Marker::ADD;
-      marker.pose.orientation.w = 1.0;
-      marker.id = i++;
-      marker.type = visualization_msgs::Marker::LINE_LIST;
-      marker.scale.x = 0.1;
-      marker.color.r = color[0];
-      marker.color.g = color[1];
-      marker.color.b = color[2];
-      marker.color.a = 1.0;
+  std::vector<std::vector<float>> colors;
+  colors.push_back({0.7,0.1,0});
+  colors.push_back({0.4,0.3,0});
+  colors.push_back({0.5,0,0.2});
+  colors.push_back({0,0.3,0.4});
+  colors.push_back({1,0.3,0.1});
+  colors.push_back({0.6,0.2,0.3});
+  colors.push_back({0.6,0.3,0.2});
+  colors.push_back({0.2,1,0.4});
+  colors.push_back({0.1,0.2,0.7});
+  colors.push_back({0.9,0.5,0.2});
+  colors.push_back({0.2,0.6,0.1});
+  colors.push_back({0.8,0.3,0.4});
+  colors.push_back({0.3,0.5,0.1});
+  colors.push_back({0.6,0.8,0.4});
+  colors.push_back({0.2,0.4,0.2});
+  std::map<std::pair<int,int>, int> color_count_map;
 
-      geometry_msgs::Point poi;
-      map_obj->map2world(p.first.x,p.first.y,wx,wy);
-      poi.x = wx;
-      poi.y = wy;
-      // poi.z = 0;
-      poi.z = height*0.1;
-      marker.points.push_back(poi);
-
-      map_obj->map2world(p.second.x,p.second.y,wx,wy);
-      poi.x = wx;
-      poi.y = wy;
-      // poi.z = 0;
-      // poi.z = height++*0.1;
-      poi.z = height*0.1;
-      marker.points.push_back(poi);
-      markerArray.markers.push_back(marker);
-    }
-  }
-  publisher.publish(markerArray);
-}
-
-void TebVisualization::pubLinList(std::vector<std::vector<std::vector<int>>> covers_graph, ros::Publisher publisher, mapProcess* map_obj)
-{
-  visualization_msgs::MarkerArray markerArray;
-  visualization_msgs::Marker marker_del;
-  marker_del.action = visualization_msgs::Marker::DELETEALL;
-  markerArray.markers.emplace_back(marker_del);  
-  int num=0;
-  double wx;
-  double wy;
-  Point2D p1,p2;
-  std::default_random_engine e;
-  std::uniform_real_distribution<float> u(0.0,1.0); // 左闭右闭区间
-  e.seed(time(0));
-  
-  float height = 0;
-
-  for (int j=0; j<map_obj->getLabelList().size(); j++){
-    for (int k=j+1; k<map_obj->getLabelList().size(); k++){
-      if (map_obj->getCoversGraph()[j][k].size()==0)
-        continue;
-      height+=0.1;  // 讲不同的piecewise投影到不同的高度
-      float color[3] = {0,0,0};
-      for (int j=0; j<3; j++) {
-          color[j] = u(e);
-      }
-      // 把起点和终点包含在p_list中
-      int start_obs_ID = map_obj->getLabelList()[j];
-      int end_obs_ID = map_obj->getLabelList()[k];
-      auto p_list = covers_graph[j][k];
-      p_list.insert(p_list.begin(),start_obs_ID);
-      p_list.push_back(end_obs_ID);
-
-      for (int i=0; i<p_list.size()-1; i++){
-        auto temp = map_obj->getPathBetweenObs(p_list[i], p_list[i+1]);
-        p1 = temp.first;
-        p2 = temp.second;
-
+  int index = 0;
+  for (auto points:points_list){
+    for (auto poi:points.second){
+      if (poi.candidate_connection.empty()) continue;   // 如果没有和其他障碍物的connection 则跳过)
+      for (auto son:poi.candidate_connection){
+        // 找颜色
+        int son_id = map_obj->getMapBorderLabeled()[son.first][son.second];
+        if (son_id > poi.id) continue;    // 单向可视化
+        auto find_res = color_count_map.find({son_id,poi.id});
+        int color_count;
+        if (find_res!=color_count_map.end())
+          color_count = color_count_map[{son_id,poi.id}];
+        else{
+          index++;
+          color_count = index%(colors.size());
+          color_count_map[{son_id,poi.id}] = color_count;          
+        }
+        
         visualization_msgs::Marker marker;
         marker.header.frame_id = "/map";
         marker.header.stamp = ros::Time::now();
         // marker.ns = "points_and_lins";
         marker.action = visualization_msgs::Marker::ADD;
         marker.pose.orientation.w = 1.0;
-        marker.id = num++;
+        marker.id = i++;
+        marker.ns = "group_between_connects";
         marker.type = visualization_msgs::Marker::LINE_LIST;
-        marker.scale.x = 0.1;
-        marker.color.r = color[0];
-        marker.color.g = color[1];
-        marker.color.b = color[2];
+        marker.scale.x = 0.02;
+        marker.color.r = colors[color_count][0];
+        marker.color.g = colors[color_count][1];
+        marker.color.b = colors[color_count][2];
         marker.color.a = 1.0;
 
-        geometry_msgs::Point poi;
-        map_obj->map2world(p1.x,p1.y,wx,wy);
-        poi.x = wx;
-        poi.y = wy;
-        poi.z = 0;
-        poi.z = height;
-        marker.points.push_back(poi);
+        map_obj->map2world(poi.x,poi.y,wx,wy);
+        geometry_msgs::Point p_self; p_self.x=wx; p_self.y=wy; 
+        if (son_id > poi.id) p_self.z = 0.1;
+        marker.points.push_back(p_self);
 
-        map_obj->map2world(p2.x,p2.y,wx,wy);
-        poi.x = wx;
-        poi.y = wy;
-        poi.z = height;
-        marker.points.push_back(poi);
+        geometry_msgs::Point poi_son;
+        map_obj->map2world(son.first,son.second,wx,wy); poi_son.x = wx; poi_son.y = wy; 
+        if (son_id > poi.id) poi_son.z = 0.1;
+        marker.points.push_back(poi_son);
         markerArray.markers.push_back(marker);
       }
     }
   }
+
+  for (auto points:points_list){
+    for (auto poi:points.second){
+      if (poi.can_connect_goal){
+        visualization_msgs::Marker marker;
+        marker.header.frame_id = "/map";
+        marker.header.stamp = ros::Time::now();
+        // marker.ns = "points_and_lins";
+        marker.action = visualization_msgs::Marker::ADD;
+        marker.pose.orientation.w = 1.0;
+        marker.id = i++;
+        marker.ns = "group_to_goal_connects";
+        marker.type = visualization_msgs::Marker::LINE_LIST;
+        marker.scale.x = 0.02;
+        marker.color.r = 1.0;
+        marker.color.g = 0.0;
+        marker.color.b = 0.0;
+        marker.color.a = 1.0;
+
+        map_obj->map2world(poi.x,poi.y,wx,wy);
+        geometry_msgs::Point p_self; p_self.x=wx; p_self.y=wy; 
+        marker.points.push_back(p_self);
+
+        geometry_msgs::Point poi_son;
+        map_obj->map2world(poi.goal_point.first,poi.goal_point.second,wx,wy); poi_son.x = wx; poi_son.y = wy; 
+        marker.points.push_back(poi_son);
+        markerArray.markers.push_back(marker);
+      }
+    }
+  }
+
   publisher.publish(markerArray);
 }
 
 
+void TebVisualization::pubLinList(std::map<std::pair<int,int>, std::map<std::string, std::pair<Point2D, Point2D>>> connect_graph, ros::Publisher publisher, mapProcess* map_obj)
+{
+  visualization_msgs::MarkerArray markerArray;
+  visualization_msgs::Marker marker_del;
+  marker_del.action = visualization_msgs::Marker::DELETEALL;
+  markerArray.markers.emplace_back(marker_del);  
+  double wx;
+  double wy;
+
+  int index = 0;
+  std::vector<std::string> types = {"clockwise_consistent", "shortest", "counterclockwise_consistent", "clockwise2counterclockwise", "counterclockwise2clockwise"};
+  for (auto pois:connect_graph){
+    // if (pois.first.first > pois.first.second && pois.first.first!=map_obj->startID_) continue;   // 单向可视化
+    // if (pois.first.first>=map_obj->startID_ || pois.first.second>=map_obj->startID_) continue;
+    for (int i=0; i<types.size(); i++){
+      if (pois.second.find(types[i])==pois.second.end()) continue;
+      auto p1 = pois.second[types[i]].first;
+      auto p2 = pois.second[types[i]].second;
+      visualization_msgs::Marker marker;
+      marker.header.frame_id = "/map";
+      marker.header.stamp = ros::Time::now();
+      marker.ns = types[i];
+      marker.action = visualization_msgs::Marker::ADD;
+      marker.pose.orientation.w = 1.0;
+      marker.id = index;
+      marker.type = visualization_msgs::Marker::LINE_LIST;
+      marker.scale.x = 0.02;
+      marker.color.r = 0.0;
+      marker.color.g = 0.0;
+      marker.color.b = 0.0;
+      marker.color.a = 1.0;
+      if (i==0) marker.color.r = 1.0;
+      else if (i==1) marker.color.g = 1.0;
+      else if (i==2) marker.color.b = 1.0;
+      else if (i==3){
+        marker.color.r = 0.8;
+        marker.color.g = 0.5;
+      }
+      else if (i==4){
+        marker.color.r = 1.0;
+        marker.color.g = 0.75;
+        marker.color.b = 0.8;
+      }
+      geometry_msgs::Point p;
+      map_obj->map2world(p1.x,p1.y,wx,wy);
+      p.x=wx; p.y=wy; 
+      p.z=index*0.05;
+      marker.points.push_back(p);
+
+      map_obj->map2world(p2.x,p2.y,wx,wy); 
+      p.x = wx; p.y = wy; 
+      marker.points.push_back(p);
+      markerArray.markers.push_back(marker);
+    }
+    index++;
+  }
+  publisher.publish(markerArray);
+}
+
 void TebVisualization::pubHomoPaths(const std::vector<std::vector<Eigen::Vector2d>>& paths, ros::Publisher publisher){
+  // ROS_INFO("===== pubHomoPaths length: %d", paths.size());
   if (paths.empty())
     return;
+  std::vector<std::vector<float>> colors;
+  colors.push_back({0.7,0.1,0});
+  colors.push_back({0.4,0.3,0});
+  colors.push_back({0.5,0,0.2});
+  colors.push_back({0,0.3,0.4});
+  colors.push_back({1,0.3,0.1});
+  colors.push_back({0.6,0.2,0.3});
+  colors.push_back({0.6,0.3,0.2});
+  colors.push_back({0.2,1,0.4});
+  colors.push_back({0.1,0.2,0.7});
+  colors.push_back({0.9,0.5,0.2});
+  colors.push_back({0.2,0.6,0.1});
+  colors.push_back({0.8,0.3,0.4});
+  colors.push_back({0.3,0.5,0.1});
+  colors.push_back({0.6,0.8,0.4});
+  colors.push_back({0.2,0.4,0.2});
 
   visualization_msgs::MarkerArray markerArray;
   visualization_msgs::Marker marker_del;
   marker_del.action = visualization_msgs::Marker::DELETEALL;
   markerArray.markers.emplace_back(marker_del);  
-  int num=0;
-  Point2D p1,p2;
-  std::default_random_engine e;
-  std::uniform_real_distribution<float> u(0.0,1.0); // 左闭右闭区间
-  e.seed(time(0));
 
-  float height = 0;
-
-
-  for (auto path:paths){
-    height+=0.1;  // 将不同的piecewise投影到不同的高度
-    float color[3] = {0,0,0};
-    for (int j=0; j<3; j++) {
-        color[j] = u(e);
-    }    
+  for (int num=0; num<paths.size(); num++){
+    auto path = paths[num];
+    visualization_msgs::Marker marker;
+    marker.header.frame_id = "/map";
+    marker.header.stamp = ros::Time::now();
+    marker.action = visualization_msgs::Marker::ADD;
+    marker.type = visualization_msgs::Marker::LINE_STRIP;
+    marker.pose.orientation.w = 1.0;
+    marker.ns = std::to_string(num);
+    marker.scale.x = 0.03;
+    marker.scale.y = 0.03;
+    marker.scale.z = 0.03;      
+    marker.color.r = colors[num%colors.size()][0];
+    marker.color.g = colors[num%colors.size()][1];
+    marker.color.b = colors[num%colors.size()][2];
+    marker.color.a = 1.0;
+    marker.lifetime = ros::Duration();
+    int index = 0;
     for (auto p:path){
-      visualization_msgs::Marker marker;
-      marker.header.frame_id = "/map";
-      marker.header.stamp = ros::Time::now();
-      // marker.ns = "points_and_lins";
-      marker.action = visualization_msgs::Marker::ADD;
-      marker.pose.orientation.w = 1.0;
-      marker.id = num++;
-      marker.type = 2;
-      marker.scale.x = 0.1;
-      marker.scale.y = 0.1;
-      marker.scale.z = 0.1;      
-      marker.color.r = color[0];
-      marker.color.g = color[1];
-      marker.color.b = color[2];
-      marker.color.a = 1.0;
-
-      marker.pose.position.x = p.x();
-      marker.pose.position.y = p.y();
-      marker.pose.position.z = height;
-      marker.pose.orientation.x = 0.0;
-      marker.pose.orientation.y = 0.0;
-      marker.pose.orientation.z = 0.0;
-      marker.pose.orientation.w = 1.0;
-
-      marker.lifetime = ros::Duration();
-      markerArray.markers.push_back(marker);
+      geometry_msgs::Point p1;
+      p1.x = p[0];
+      p1.y = p[1];
+      p1.z = (paths.size()-num)*0.02+0.013;
+      // p1.z = num*0.1+index++*0.05+0.03;
+      marker.points.push_back(p1);
     }
+    markerArray.markers.push_back(marker);
+
+    marker.type = visualization_msgs::Marker::POINTS;
+    marker.ns = std::to_string(num)+"_point";
+    marker.scale.x = 0.1;
+    marker.scale.y = 0.1;
+    marker.scale.z = 0.1;      
+    marker.points.clear();
+    index = 0;
+    for (auto p:path){
+      geometry_msgs::Point p1;
+      p1.x = p[0];
+      p1.y = p[1];
+      p1.z = (paths.size()-num)*0.02+0.013;
+      // p1.z = num*0.1+index++*0.05+0.03;
+      marker.points.push_back(p1);
+    }
+    markerArray.markers.push_back(marker);
   }
   publisher.publish(markerArray);
 }

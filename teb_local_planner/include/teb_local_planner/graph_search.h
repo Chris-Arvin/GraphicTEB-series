@@ -58,6 +58,7 @@
 #include <Eigen/Core>
 
 #include <geometry_msgs/Twist.h>
+#include <geometry_msgs/PoseStamped.h>
 
 #include <teb_local_planner/equivalence_relations.h>
 #include <teb_local_planner/pose_se2.h>
@@ -116,8 +117,9 @@ class GraphSearchInterface
 {
 public:
 
-  virtual void createGraph(const PoseSE2& start, const PoseSE2& goal, costmap_2d::Costmap2D* costmap2d, double dist_to_obst, double obstacle_heading_threshold, const geometry_msgs::Twist* start_velocity, bool free_goal_vel = false) = 0;
+  virtual void createGraph(const PoseSE2& start, const PoseSE2& goal, const std::vector<geometry_msgs::PoseStamped>& local_plan, costmap_2d::Costmap2D* costmap2d, double dist_to_obst, double obstacle_heading_threshold, const geometry_msgs::Twist* start_velocity, bool free_goal_vel = false, std::pair<double,double> global_goal={0,0}) = 0;
   virtual void updateDynamicObstacle(std::vector<std::vector<double>> dynamic_obstacle){};
+  virtual void addPaths(const PoseSE2& start, const PoseSE2& goal, const std::vector<geometry_msgs::PoseStamped>& local_plan, costmap_2d::Costmap2D* costmap2d, double dist_to_obst, double obstacle_heading_threshold, const geometry_msgs::Twist* start_velocity, bool free_goal_vel){};
   /**
    * @brief Clear any existing graph of the homotopy class search
    */
@@ -133,23 +135,8 @@ protected:
    */
   GraphSearchInterface(const TebConfig& cfg, HomotopyClassPlanner* hcp) : cfg_(&cfg), hcp_(hcp){}
 
-  /**
-   * @brief Depth First Search implementation to find all paths between the start and the specified goal vertex.
-   *
-   * Complete paths are stored to the internal path container.
-   * @sa http://www.technical-recipes.com/2011/a-recursive-algorithm-to-find-all-paths-between-two-given-nodes/
-   * @param g Graph on which the depth first should be performed
-   * @param visited A container that stores visited vertices (pass an empty container, it will be filled inside during recursion).
-   * @param goal Desired goal vertex
-   * @param start_orientation Orientation of the first trajectory pose, required to initialize the trajectory/TEB
-   * @param goal_orientation Orientation of the goal trajectory pose, required to initialize the trajectory/TEB
-   * @param start_velocity start velocity (optional)
-   * @param free_goal_vel if \c true, a nonzero final velocity at the goal pose is allowed, otherwise the final velocity will be zero (default: false)
-   */
-  void DepthFirst(HcGraph& g, std::vector<HcGraphVertexType>& visited, const HcGraphVertexType& goal, double start_orientation, double goal_orientation, const geometry_msgs::Twist* start_velocity, bool free_goal_vel = false);
 public:
   mapProcess* getMapProcess() {return &map_cv_obj_;};
-
 
 protected:
     const TebConfig* cfg_; //!< Config class that stores and manages all related parameters
@@ -161,67 +148,6 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-
-
-class lrKeyPointGraph : public GraphSearchInterface
-{
-public:
-  lrKeyPointGraph(const TebConfig& cfg, HomotopyClassPlanner* hcp) : GraphSearchInterface(cfg, hcp){}
-
-  virtual ~lrKeyPointGraph(){}
-
-  /**
-   * @brief Create a graph containing points in the global frame that can be used to explore new possible paths between start and goal.
-   *
-   * This version of the graph creation places a keypoint on the left and right side of each obstacle w.r.t to the goal heading. \n
-   * All feasible paths between start and goal point are extracted using a Depth First Search afterwards. \n
-   * This version works very well for small point obstacles. For more complex obstacles call the createProbRoadmapGraph()
-   * method that samples keypoints in a predefined area and hopefully finds all relevant alternative paths.
-   *
-   * @see createProbRoadmapGraph
-   * @param start Start pose from wich to start on (e.g. the current robot pose).
-   * @param goal Goal pose to find paths to (e.g. the robot's goal).
-   * @param dist_to_obst Allowed distance to obstacles: if not satisfying, the path will be rejected (note, this is not the distance used for optimization).
-   * @param obstacle_heading_threshold Value of the normalized scalar product between obstacle heading and goal heading in order to take them (obstacles) into account [0,1]
-   * @param start_velocity start velocity (optional)
-   * @param free_goal_vel if \c true, a nonzero final velocity at the goal pose is allowed, otherwise the final velocity will be zero (default: false)
-   */
-  virtual void createGraph(const PoseSE2& start, const PoseSE2& goal, costmap_2d::Costmap2D* costmap2d, double dist_to_obst, double obstacle_heading_threshold, const geometry_msgs::Twist* start_velocity, bool free_goal_vel = false);
-};
-
-
-
-
-class ProbRoadmapGraph : public GraphSearchInterface
-{
-public:
-  ProbRoadmapGraph(const TebConfig& cfg, HomotopyClassPlanner* hcp) : GraphSearchInterface(cfg, hcp){}
-
-  virtual ~ProbRoadmapGraph(){}
-
-
-  /**
-   * @brief Create a graph and sample points in the global frame that can be used to explore new possible paths between start and goal.
-   *
-   * This version of the graph samples keypoints in a predefined area (config) in the current frame between start and goal. \n
-   * Afterwards all feasible paths between start and goal point are extracted using a Depth First Search. \n
-   * Use the sampling method for complex, non-point or huge obstacles. \n
-   * You may call createGraph() instead.
-   *
-   * @see createGraph
-   * @param start Start pose from wich to start on (e.g. the current robot pose).
-   * @param goal Goal pose to find paths to (e.g. the robot's goal).
-   * @param dist_to_obst Allowed distance to obstacles: if not satisfying, the path will be rejected (note, this is not the distance used for optimization).
-   * @param no_samples number of random samples
-   * @param obstacle_heading_threshold Value of the normalized scalar product between obstacle heading and goal heading in order to take them (obstacles) into account [0,1]
-   * @param start_velocity start velocity (optional)
-   * @param free_goal_vel if \c true, a nonzero final velocity at the goal pose is allowed, otherwise the final velocity will be zero (default: false)
-   */
-  virtual void createGraph(const PoseSE2& start, const PoseSE2& goal, costmap_2d::Costmap2D* costmap2d, double dist_to_obst, double obstacle_heading_threshold, const geometry_msgs::Twist* start_velocity, bool free_goal_vel = false);
-private:
-    boost::random::mt19937 rnd_generator_; //!< Random number generator used by createProbRoadmapGraph to sample graph keypoints.
-
-};
 
 class graphicProcess : public GraphSearchInterface
 {
@@ -246,7 +172,8 @@ public:
    * @param start_velocity start velocity (optional)
    * @param free_goal_vel if \c true, a nonzero final velocity at the goal pose is allowed, otherwise the final velocity will be zero (default: false)
    */
-  virtual void createGraph(const PoseSE2& start, const PoseSE2& goal, costmap_2d::Costmap2D* costmap2d, double dist_to_obst, double obstacle_heading_threshold, const geometry_msgs::Twist* start_velocity, bool free_goal_vel = false);
+  virtual void createGraph(const PoseSE2& start, const PoseSE2& goal, const std::vector<geometry_msgs::PoseStamped>& local_plan, costmap_2d::Costmap2D* costmap2d, double dist_to_obst, double obstacle_heading_threshold, const geometry_msgs::Twist* start_velocity, bool free_goal_vel = false, std::pair<double,double> global_goal={0,0});
+  virtual void addPaths(const PoseSE2& start, const PoseSE2& goal, const std::vector<geometry_msgs::PoseStamped>& local_plan, costmap_2d::Costmap2D* costmap2d, double dist_to_obst, double obstacle_heading_threshold, const geometry_msgs::Twist* start_velocity, bool free_goal_vel);
 
 private:
   costmap_2d::Costmap2D* costmap2d_;

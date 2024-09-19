@@ -249,10 +249,8 @@ bool Scene::hasStarted() const { return (sceneTime == 0); }
 void Scene::dissolveClusters() {
   foreach (AgentCluster* cluster, agentClusters) {
     QList<Agent*> newAgents = cluster->dissolve();
-
     // divide agents into groups
     QList<AgentGroup*> newGroups = AgentGroup::divideAgents(newAgents);
-
     // apply group forces
     foreach (AgentGroup* currentGroup, newGroups) {
       if (currentGroup->memberCount() == 1) {
@@ -262,18 +260,17 @@ void Scene::dissolveClusters() {
         // keep track of groups
         agentGroups.append(currentGroup);
       }
-
       // add group's agents to the scene
+      // ROS_INFO("len: %d", currentGroup->getMembers().size());
       foreach (Agent* currentAgent, currentGroup->getMembers()) {
         currentAgent->setWaypoints(cluster->getWaypoints());
-
         if (currentGroup->memberCount() > 1) {
           currentAgent->setGroup(currentGroup);
           // → Gaze Force
           // 一个与agent的当前方向相反或相同的力，大小为该agent与群组的中心距离
-          GroupGazeForce* gazeForce = new GroupGazeForce(currentAgent);
-          gazeForce->setGroup(currentGroup);
-          currentAgent->addForce(gazeForce);
+          // GroupGazeForce* gazeForce = new GroupGazeForce(currentAgent);
+          // gazeForce->setGroup(currentGroup);
+          // currentAgent->addForce(gazeForce);
 
           // → Coherence Force
           // 一个指向群组中心的力，大小与距离成正比
@@ -291,7 +288,6 @@ void Scene::dissolveClusters() {
         }
       }
     }
-
     // finally remove cluster
     delete cluster;
   }

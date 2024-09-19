@@ -158,7 +158,7 @@ public:
    *		      otherwise the final velocity will be zero (default: false)
    * @return \c true if planning was successful, \c false otherwise
    */
-  virtual bool plan(const std::vector<geometry_msgs::PoseStamped>& initial_plan, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false);
+  virtual bool plan(const std::vector<geometry_msgs::PoseStamped>& initial_plan, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false, std::pair<double,double> global_goal={0,0});
   
   /**
    * @brief Plan a trajectory between a given start and goal pose (tf::Pose version)
@@ -176,7 +176,7 @@ public:
    *		      otherwise the final velocity will be zero (default: false)
    * @return \c true if planning was successful, \c false otherwise
    */
-  virtual bool plan(const tf::Pose& start, const tf::Pose& goal, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false);
+  virtual bool plan(const tf::Pose& start, const tf::Pose& goal, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false, std::pair<double,double> global_goal={0,0});
   
   /**
    * @brief Plan a trajectory between a given start and goal pose
@@ -194,7 +194,7 @@ public:
    *		      otherwise the final velocity will be zero (default: false)
    * @return \c true if planning was successful, \c false otherwise
    */
-  virtual bool plan(const PoseSE2& start, const PoseSE2& goal, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false);
+  virtual bool plan(const PoseSE2& start, const PoseSE2& goal, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false, std::pair<double,double> global_goal={0,0});
   
   
   /**
@@ -244,7 +244,10 @@ public:
   /** @name Desired initial and final velocity */
   //@{
   
-  
+  std::vector<std::vector<Eigen::Vector2d>> getTEBWithOptimizationProcess(){
+    return teb_within_optimization_process_;
+  }
+
   /**
    * @brief Set the initial velocity at the trajectory's start pose (e.g. the robot's velocity) [twist overload].
    * @remarks Calling this function is not neccessary if the initial velocity is passed via the plan() method
@@ -441,9 +444,7 @@ public:
    * or by calling optimizeTEB with enabled cost flag.
    * @return const reference to the TebCostVec.
    */
-  double getCurrentCost() const {return cost_;}
-  double getCurrentCostOrigin() const {return cost_origin_;};
-  
+  double getCurrentCost() const {return cost_;}  
     
   /**
    * @brief Extract the velocity from consecutive poses and a time difference (including strafing velocity for holonomic robots)
@@ -514,6 +515,10 @@ public:
   //@}
 
   double get2DAsyGaussValue(double wxo, double wyo, double vx, double vy, double wx, double wy);
+  void setEndpointAppended() {endpoint_appended_ = true;};
+  void unsetEndpointAppended() {endpoint_appended_ = false;};
+  bool getEndpointAppended() {return endpoint_appended_;};
+  void setEndLines (std::pair<std::pair<double,double>, std::pair<double,double>> goal_endpoints) {goal_endpoints_=goal_endpoints;};
 
 protected:
   
@@ -532,7 +537,7 @@ protected:
    *                          Currently, only obstacle collision weights are considered.
    * @return \c true, if the graph was created successfully, \c false otherwise.
    */
-  bool buildGraph(double weight_multiplier=1.0);
+  bool buildGraph(std::vector<double>& dynamic_obstacle_current_alpha, std::vector<double>& dynamic_obstacle_old_alpha, const std::vector<bool>& detour_dynamic_obstacle_metho={}, double weight_multiplier=1.0);
   
   /**
    * @brief Optimize the previously constructed hyper-graph to deform / optimize the TEB.
@@ -640,7 +645,7 @@ protected:
    * @param weight_multiplier Specify an additional weight multipler (in addition to the the config weight)
 
    */
-  void AddEdgesDynamicObstacles(double weight_multiplier=1.0);
+  void AddEdgesDynamicObstacles(std::vector<double>& dynamic_obstacle_current_alpha, std::vector<double>& dynamic_obstacle_old_alpha, const std::vector<bool>& detour_dynamic_obstacle_method={}, double weight_multiplier=1.0);
 
   /**
    * @brief Add all edges (local cost functions) for satisfying kinematic constraints of a differential drive robot
@@ -691,12 +696,12 @@ protected:
   std::vector<ObstContainer> obstacles_per_vertex_; //!< Store the obstacles associated with the n-1 initial vertices
   
   double cost_; //!< Store cost value of the current hyper-graph
-  double cost_origin_;
   RotType prefer_rotdir_; //!< Store whether to prefer a specific initial rotation in optimization (might be activated in case the robot oscillates)
   
   // internal objects (memory management owned)
   TebVisualizationPtr visualization_; //!< Instance of the visualization class
   TimedElasticBand teb_; //!< Actual trajectory object
+  std::vector<std::vector<Eigen::Vector2d>> teb_within_optimization_process_;
   RobotFootprintModelPtr robot_model_; //!< Robot model
   boost::shared_ptr<g2o::SparseOptimizer> optimizer_; //!< g2o optimizer for trajectory optimization
   std::pair<bool, geometry_msgs::Twist> vel_start_; //!< Store the initial velocity at the start pose
@@ -707,6 +712,12 @@ protected:
   
   costmap_2d::Costmap2D* costmap2d_;
   std::vector<std::vector<int>> obs_map_labeled_;
+
+  std::vector<bool> detour_dynamic_obstacle_method_; // 区分轨迹和各个人的关系。true表示从人前方绕行。长度应等于动态障碍物数量
+  std::vector<double> dynamic_obstacle_current_alpha_;        // 记录每个人的alpha值
+  std::vector<double> dynamic_obstacle_old_alpha_;        // 记录每个人的alpha值
+  bool endpoint_appended_;
+  std::pair<std::pair<double,double>, std::pair<double,double>> goal_endpoints_;
 
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW    

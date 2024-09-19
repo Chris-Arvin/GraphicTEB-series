@@ -157,10 +157,8 @@ void Simulator::runSimulation() {
 
     if (!paused_) {
       publishGaze();
-
       updateRobotPositionFromTF();
       SCENE.moveAllAgents();
-
       publishAgents();
       publishGroups();
       publishRobotPosition();

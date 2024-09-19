@@ -8,8 +8,8 @@ local_costmap:
 
   # static_map: false
   rolling_window: true
-  width: 15
-  height: 15
+  width: 20
+  height: 20
   resolution: 0.1
   plugins:
     - { name: static_layer, type: "costmap_2d::StaticLayer" }

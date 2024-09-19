@@ -96,7 +96,7 @@ public:
    *        otherwise the final velocity will be zero (default: false)
    * @return \c true if planning was successful, \c false otherwise
    */
-  virtual bool plan(const std::vector<geometry_msgs::PoseStamped>& initial_plan, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false) = 0;
+  virtual bool plan(const std::vector<geometry_msgs::PoseStamped>& initial_plan, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false, std::pair<double,double> global_goal={0,0}) = 0;
   
   /**
    * @brief Plan a trajectory between a given start and goal pose (tf::Pose version).
@@ -109,7 +109,7 @@ public:
    *        otherwise the final velocity will be zero (default: false)
    * @return \c true if planning was successful, \c false otherwise
    */
-  virtual bool plan(const tf::Pose& start, const tf::Pose& goal, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false) = 0;
+  virtual bool plan(const tf::Pose& start, const tf::Pose& goal, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false, std::pair<double,double> global_goal={0,0}) = 0;
   
   /**
    * @brief Plan a trajectory between a given start and goal pose.
@@ -122,7 +122,7 @@ public:
    *        otherwise the final velocity will be zero (default: false)
    * @return \c true if planning was successful, \c false otherwise
    */
-  virtual bool plan(const PoseSE2& start, const PoseSE2& goal, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false) = 0;
+  virtual bool plan(const PoseSE2& start, const PoseSE2& goal, const geometry_msgs::Twist* start_vel = NULL, bool free_goal_vel=false, std::pair<double,double> global_goal={0,0}) = 0;
   
   /**
    * @brief Get the velocity command from a previously optimized plan to control the robot at the current sampling interval.
@@ -160,7 +160,10 @@ public:
   virtual void visualize()
   {
   }
-  
+  virtual void visualizeGraphicTEB(){
+    
+  }
+
   virtual void updateRobotModel(RobotFootprintModelPtr robot_model)
   {
   }
@@ -205,7 +208,20 @@ public:
    * @brief Returns true if the planner has diverged.
    */
   virtual bool hasDiverged() const = 0;
-                
+
+  virtual void setHsignature3DValue(const std::vector<double>& old_3d_signature){
+    old_3d_signature_.clear();
+    for (auto p:old_3d_signature)
+      old_3d_signature_.push_back(p);
+  };
+
+  virtual std::vector<double> getHsignature3DValue(){return old_3d_signature_;};
+
+  virtual void setEndpointAppended(){};
+  virtual void unsetEndpointAppended(){};
+
+protected:  
+  std::vector<double> old_3d_signature_;
 };
 
 //! Abbrev. for shared instances of PlannerInterface or it's subclasses 

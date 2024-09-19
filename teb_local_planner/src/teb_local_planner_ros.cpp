@@ -139,17 +139,13 @@ void TebLocalPlannerROS::initialize(std::string name, tf2_ros::Buffer* tf, costm
     {
       try
       {
-        std::cout<<1<<std::endl;
         costmap_converter_ = costmap_converter_loader_.createInstance(cfg_.obstacles.costmap_converter_plugin);
-        std::cout<<2<<std::endl;
         std::string converter_name = costmap_converter_loader_.getName(cfg_.obstacles.costmap_converter_plugin);
-        std::cout<<3<<std::endl;
         // replace '::' by '/' to convert the c++ namespace to a NodeHandle namespace
         boost::replace_all(converter_name, "::", "/");
         costmap_converter_->setOdomTopic(cfg_.odom_topic);
         costmap_converter_->initialize(ros::NodeHandle(nh, "costmap_converter/" + converter_name));
         costmap_converter_->setCostmap2D(costmap_);
-        std::cout<<4<<std::endl;
         
         costmap_converter_->startWorker(ros::Rate(cfg_.obstacles.costmap_converter_rate), costmap_, cfg_.obstacles.costmap_converter_spin_thread);
         ROS_INFO_STREAM("Costmap conversion plugin " << cfg_.obstacles.costmap_converter_plugin << " loaded.");        
@@ -256,7 +252,7 @@ uint32_t TebLocalPlannerROS::computeVelocityCommands(const geometry_msgs::PoseSt
     message = "teb_local_planner has not been initialized";
     return mbf_msgs::ExePathResult::NOT_INITIALIZED;
   }
-
+  auto t = ros::Time::now();
   static uint32_t seq = 0;
   cmd_vel.header.seq = seq++;
   cmd_vel.header.stamp = ros::Time::now();
@@ -377,7 +373,7 @@ uint32_t TebLocalPlannerROS::computeVelocityCommands(const geometry_msgs::PoseSt
 //   bool success = planner_->plan(robot_pose_, robot_goal_, robot_vel_, cfg_.goal_tolerance.free_goal_vel); // straight line init
   planner_->updateCostmap(costmap_ros_->getCostmap());
   planner_->updateDynamicObs(dynamic_obs_list_);
-  bool success = planner_->plan(transformed_plan, &robot_vel_, cfg_.goal_tolerance.free_goal_vel);
+  bool success = planner_->plan(transformed_plan, &robot_vel_, cfg_.goal_tolerance.free_goal_vel, {global_goal.pose.position.x, global_goal.pose.position.y});
   if (!success)
   {
     planner_->clearPlanner(); // force reinitialization for next time
@@ -389,6 +385,8 @@ uint32_t TebLocalPlannerROS::computeVelocityCommands(const geometry_msgs::PoseSt
     message = "teb_local_planner was not able to obtain a local plan";
     return mbf_msgs::ExePathResult::NO_VALID_CMD;
   }
+
+  planner_->visualizeGraphicTEB();
 
   // 这个分支是啥意思。。
   // Check for divergence
@@ -447,6 +445,9 @@ uint32_t TebLocalPlannerROS::computeVelocityCommands(const geometry_msgs::PoseSt
   saturateVelocity(cmd_vel.twist.linear.x, cmd_vel.twist.linear.y, cmd_vel.twist.angular.z,
                    cfg_.robot.max_vel_x, cfg_.robot.max_vel_y, cfg_.robot.max_vel_theta, cfg_.robot.max_vel_x_backwards);
 
+  // stop
+  // cmd_vel.twist.linear.x = cmd_vel.twist.linear.y = cmd_vel.twist.angular.z = 0;
+
   // convert rot-vel to steering angle if desired (carlike robot).
   // The min_turning_radius is allowed to be slighly smaller since it is a soft-constraint
   // and opposed to the other constraints not affected by penalty_epsilon. The user might add a safety margin to the parameter itself.
@@ -478,6 +479,7 @@ uint32_t TebLocalPlannerROS::computeVelocityCommands(const geometry_msgs::PoseSt
   visualization_->publishObstacles(obstacles_);
   visualization_->publishViaPoints(via_points_);
   visualization_->publishGlobalPlan(global_plan_);
+  ROS_INFO("time for motion planning: [%f] s", (ros::Time::now()-t).toSec() );
   return mbf_msgs::ExePathResult::SUCCESS;
 }
 
@@ -652,7 +654,9 @@ void TebLocalPlannerROS::updateObstacleForGraphicTEB(){
   boost::mutex::scoped_lock l(dynamic_obs_mutex_);
   dynamic_obs_list_.clear();
   for (auto p:dynamic_obs_msg_.poses){
-    dynamic_obs_list_.push_back({p.position.x, p.position.y, p.orientation.x, p.orientation.y, p.position.z});
+    // 只考虑local_costmap内的行人
+    if (hypot(robot_pose_.x()-p.position.x, robot_pose_.y()-p.position.y) <= costmap_->getSizeInMetersX()/2.0)
+      dynamic_obs_list_.push_back({p.position.x, p.position.y, p.orientation.x, p.orientation.y, p.position.z});
   }
 }
 
@@ -762,7 +766,7 @@ bool TebLocalPlannerROS::transformGlobalPlan(const tf2_ros::Buffer& tf, const st
     //we'll discard points on the plan that are outside the local costmap
     double dist_threshold = std::max(costmap.getSizeInCellsX() * costmap.getResolution() / 2.0,
                                      costmap.getSizeInCellsY() * costmap.getResolution() / 2.0);
-    dist_threshold *= 0.85; // just consider 85% of the costmap size to better incorporate point obstacle that are
+    dist_threshold *= 0.99; // just consider 85% of the costmap size to better incorporate point obstacle that are
                            // located on the border of the local costmap
     
 

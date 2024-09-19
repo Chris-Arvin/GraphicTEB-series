@@ -107,6 +107,7 @@ void TebOptimalPlanner::initialize(const TebConfig& cfg, ObstContainer* obstacle
   vel_goal_.second.linear.y = 0;
   vel_goal_.second.angular.z = 0;
   initialized_ = true;
+  endpoint_appended_ = true;
 }
 
 
@@ -120,7 +121,7 @@ void TebOptimalPlanner::visualize()
   if (!visualization_)
     return;
  
-  visualization_->publishLocalPlanAndPoses(teb_, teb_);
+  visualization_->publishLocalPlanAndPoses(teb_);
   
   if (teb_.sizePoses() > 0)
     visualization_->publishRobotFootprintModel(teb_.Pose(0), *robot_model_);
@@ -201,38 +202,198 @@ bool TebOptimalPlanner::optimizeTEB(int iterations_innerloop, int iterations_out
   //                 however, we have not tested this mode intensively yet, so we keep
   //                 the legacy fast mode as default until we finish our tests.
   bool fast_mode = !cfg_->obstacles.include_dynamic_obstacles;
-  // 外部循环优化iteractions_outerloop次
-  for(int i=0; i<iterations_outerloop; ++i)
+
+  // 初始化对应轨迹和每个动态障碍物（人）的关系
+  detour_dynamic_obstacle_method_.clear(); // 区分轨迹和各个人的关系。true表示从人前方绕行。长度应等于动态障碍物数量
+  dynamic_obstacle_old_alpha_.clear();        // 记录每个人的alpha值
+  dynamic_obstacle_current_alpha_.clear();    // 记录每个人的alpha值
+  teb_within_optimization_process_.clear();
+  if (cfg_->hcp.visualize_graphic_optimizatoin_process){
+    std::vector<Eigen::Vector2d> current_teb;
+    for(int i=0; i<teb_.sizePoses(); ++i)
+      current_teb.push_back(teb_.Pose(i).position());
+    teb_within_optimization_process_.push_back(current_teb);
+  }
+  teb_.autoResize(cfg_->trajectory.dt_ref, cfg_->trajectory.dt_hysteresis, cfg_->trajectory.min_samples, cfg_->trajectory.max_samples, fast_mode);
+  // std::cout<<"== "<<teb_.sizePoses()<<std::endl;
+  if (cfg_->hcp.visualize_graphic_optimizatoin_process){
+    std::vector<Eigen::Vector2d> current_teb;
+    for(int i=0; i<teb_.sizePoses(); ++i)
+      current_teb.push_back(teb_.Pose(i).position());
+    teb_within_optimization_process_.push_back(current_teb);
+  }
+
+  // 根据相邻点的时间间隔（距离），对路径进行remove和insert
+  for (ObstContainer::const_iterator obst = obstacles_->begin(); obst != obstacles_->end(); ++obst)
   {
+    if (!(*obst)->isDynamic())
+      continue;
+
+    // 计算 以obst的中心指向其速度方向的向量 和 以obst的中心指向teb_包含的点的数值
+    double max_cos_angle = -1.1;
+    double len_of_the_connection = 1.0;
+    Eigen::Vector2d obs_vel = (*obst)->getCentroidVelocity();
+    double max_intersection_len = obs_vel.norm() * teb_.getSumOfTimeDiffsUpToIdx(teb_.sizePoses()-1);
+    for (int i=0; i<teb_.sizePoses(); i++)
+    {
+      // 计算obst和teb_的相对位置
+      Eigen::Vector2d obs2traj = teb_.Pose(i).position() - (*obst)->getCentroid();
+      // 计算两个向量的cos值
+      double cos_angle = obs2traj.dot(obs_vel) / (obs2traj.norm() * obs_vel.norm());
+      if (cos_angle>max_cos_angle){
+        max_cos_angle = cos_angle;
+        len_of_the_connection = obs2traj.norm();
+      }
+    }
+    // 如果是从人前方绕行，则max_cos_angle应该为1。但考虑到轨迹点的连续性，此处使用轨迹点到人速度的距离<点间最大时间 * v
+    // std::cout<<"== ("<<teb_.sizePoses()<<"): ("<<max_cos_angle<<"): ("<<len_of_the_connection*sqrt(1-pow(max_cos_angle, 2))<<","<<cfg_->trajectory.dt_ref*0.5<<"): ";
+    if (max_cos_angle > 0 && len_of_the_connection*sqrt(1-pow(max_cos_angle, 2)) <= cfg_->trajectory.dt_ref*1.0){
+     detour_dynamic_obstacle_method_.push_back(true);
+      dynamic_obstacle_old_alpha_.push_back(0);
+      dynamic_obstacle_current_alpha_.push_back(0);
+    }
+    else{
+      detour_dynamic_obstacle_method_.push_back(false);
+      dynamic_obstacle_old_alpha_.push_back(1);
+      dynamic_obstacle_current_alpha_.push_back(1);
+    }
+    // std::cout<<detour_dynamic_obstacle_method_.back()<<std::endl;
+  }
+
+  // 外部循环优化iteractions_outerloop次
+  int outer_loop_count = 0;
+  int all_alpha_complete_count = 999;
+  double dt_build=0, dt_optimize=0;
+  while(true)
+  {
+    optimized_ = false;
+    outer_loop_count ++;
     if (cfg_->trajectory.teb_autosize)
     {
       // 根据相邻点的时间间隔（距离），对路径进行remove和insert
-      //teb_.autoResize(cfg_->trajectory.dt_ref, cfg_->trajectory.dt_hysteresis, cfg_->trajectory.min_samples, cfg_->trajectory.max_samples);
       teb_.autoResize(cfg_->trajectory.dt_ref, cfg_->trajectory.dt_hysteresis, cfg_->trajectory.min_samples, cfg_->trajectory.max_samples, fast_mode);
-
+      if (cfg_->hcp.visualize_graphic_optimizatoin_process){
+        std::vector<Eigen::Vector2d> current_teb;
+        for(int j=0; j<teb_.sizePoses(); ++j)
+          current_teb.push_back(teb_.Pose(j).position());
+        teb_within_optimization_process_.push_back(current_teb);      
+      }
     }
-    success = buildGraph(weight_multiplier);
+    // ROS_INFO("length: [%d], [%f]", teb_.sizePoses(), teb_.getAccumulatedDistance());
+    auto old_length = teb_.getAccumulatedDistance();
+    // 增大alpha
+    int obs_idx = 0;
+    for (ObstContainer::const_iterator obst = obstacles_->begin(); obst != obstacles_->end(); ++obst)
+    {
+      if (!(*obst)->isDynamic())
+        continue;
+      // 保存old alpha
+      if (detour_dynamic_obstacle_method_[obs_idx]==true){
+        dynamic_obstacle_old_alpha_[obs_idx] = dynamic_obstacle_current_alpha_[obs_idx];
+        // 更新新alpha，步长是 0.1
+        double tim_of_nearest_waypoint=0;
+        double nearest_dis = 99999999.9;
+        CircularObstacle* temp_obst = dynamic_cast<CircularObstacle*>(const_cast<Obstacle*>(obst->get()));
+        // double increament_dis = 0.05;
+        double increament_dis = 0.1;
+        for (int i=1; i < teb_.sizePoses() - 1; ++i){
+          double tim = teb_.getSumOfTimeDiffsUpToIdx(i);
+          Eigen::Vector2d pos = temp_obst->getCentroid() + temp_obst->getCentroidVelocity()*tim*dynamic_obstacle_old_alpha_[obs_idx];
+          double dis = (teb_.PoseVertex(i)->position() - pos).norm();
+          if (dis < nearest_dis){
+            nearest_dis = dis;
+            tim_of_nearest_waypoint = tim;
+          }
+        }
+        double dv = increament_dis / tim_of_nearest_waypoint;
+        double d_alpha = dv / temp_obst->getCentroidVelocity().norm();
+        dynamic_obstacle_current_alpha_[obs_idx] = dynamic_obstacle_current_alpha_[obs_idx] + d_alpha;
+        // std::cout<<dynamic_obstacle_current_alpha_[obs_idx]<<std::endl;
+        dynamic_obstacle_current_alpha_[obs_idx] = std::min(1.0, dynamic_obstacle_current_alpha_[obs_idx]);
+        // ROS_INFO("iterationIndex: %d, obsID: %d, d_alpha: %f, alpha: [%f/%f]", outer_loop_count, obs_idx, d_alpha, dynamic_obstacle_current_alpha_[obs_idx], 1.0);
+      }
+      obs_idx++;
+    }
+    auto t1 = ros::Time::now();
+    // auto t = ros::Time::now();
+    success = buildGraph(dynamic_obstacle_current_alpha_, dynamic_obstacle_old_alpha_, detour_dynamic_obstacle_method_, weight_multiplier);
+    // ROS_INFO("-time to build graph: [%f]", (ros::Time::now() - t).toSec());
     if (!success) 
     {
         clearGraph();
         return false;
     }
+    auto t2 = ros::Time::now();
+    dt_build += (t2-t1).toSec();
+    // t = ros::Time::now();
     success = optimizeGraph(iterations_innerloop, false);
+    // ROS_INFO("+time to optimize graph: [%f]", (ros::Time::now() - t).toSec());
     if (!success) 
     {
         clearGraph();
         return false;
     }
-    optimized_ = true;
-    
-    if (compute_cost_afterwards && i==iterations_outerloop-1) // compute cost vec only in the last iteration
-      computeCurrentCost(obst_cost_scale, viapoint_cost_scale, alternative_time_cost);
-      
+    auto t3 = ros::Time::now();
+    dt_optimize += (t3-t2).toSec();
+    // 提前结束optimization的条件：轨迹长度基本不发生变化
+    bool early_stop = false;
+    auto new_length = teb_.getAccumulatedDistance();
+    // // ROS_INFO("[%d] current path length: [%f], [%f]", i, old_length, new_length);
+    if (obs_idx==0 && fabs(new_length - old_length) < cfg_->hcp.epsilon_for_early_stop){
+      // ROS_INFO("early stop convergence: [%d]/[%d]", outer_loop_count, iterations_outerloop);
+      early_stop = true;
+    }
+    // 提前结束optimization的条件：所有人的alpha均达到1
+    if (all_alpha_complete_count==999){
+      bool all_alpha_complete = true;
+      for(auto p:dynamic_obstacle_current_alpha_){
+        if (p!=1.0){
+          all_alpha_complete = false;
+          break;
+        }
+      }
+      if (all_alpha_complete)
+        all_alpha_complete_count = outer_loop_count;
+    }
+    // 迭代结束的有两个情景
+    // Case1（错误退出）： 轨迹超出了最大距离
+    if (teb_.getAccumulatedDistance() > cfg_->hcp.length_limition_during_optimization){
+      ROS_INFO("        Outer_loop fail at: %d because it is too long", outer_loop_count);
+      optimized_ = false;
+      return false;
+    }
+    // Case2（错误退出）： 超出了最大迭代次数
+    if (outer_loop_count>=cfg_->optim.no_outer_iterations){
+      ROS_INFO("        Outer_loop fail at: %d because it reaches the max iteration time", outer_loop_count);
+      optimized_ = false;
+      return false;
+    }    
+    // Case3（成功退出）： 迭代次数超过最小次数 且 所有人的alpha都到1
+    // if(outer_loop_count>cfg_->optim.least_no_outer_iterations &&( outer_loop_count > all_alpha_complete_count+20)){
+    if(outer_loop_count > all_alpha_complete_count+cfg_->optim.least_no_outer_iterations){
+      if (compute_cost_afterwards){
+        computeCurrentCost(obst_cost_scale, viapoint_cost_scale, alternative_time_cost);
+      }
+      ROS_INFO("        Outer_loop success at: %d normally", outer_loop_count);
+      clearGraph();
+      optimized_ = true;
+      // ROS_INFO("Time for build graph: [%f] s; Time for optimize graph: [%f]", dt_build, dt_optimize);
+      return true;
+    }
+    // Case4 (成功退出)： 相邻optimization间的轨迹变化很小 且 （无动态障碍物 或 所有的alpha都到1了）
+    if (early_stop && (obs_idx==0 || outer_loop_count>all_alpha_complete_count+cfg_->optim.least_no_outer_iterations)){
+      if (compute_cost_afterwards){
+        computeCurrentCost(obst_cost_scale, viapoint_cost_scale, alternative_time_cost);
+      }
+      ROS_INFO("        Outer_loop success at: [%d] because of early stop convergence", outer_loop_count);
+      clearGraph();
+      optimized_ = true;
+      return true;
+    }
+
     clearGraph();
-    
     weight_multiplier *= cfg_->optim.weight_adapt_factor; //yaml里默认为2
   }
-
   return true;
 }
 
@@ -250,86 +411,27 @@ void TebOptimalPlanner::setVelocityGoal(const geometry_msgs::Twist& vel_goal)
   vel_goal_.second = vel_goal;
 }
 
-bool TebOptimalPlanner::plan(const std::vector<geometry_msgs::PoseStamped>& initial_plan, const geometry_msgs::Twist* start_vel, bool free_goal_vel)
+bool TebOptimalPlanner::plan(const std::vector<geometry_msgs::PoseStamped>& initial_plan, const geometry_msgs::Twist* start_vel, bool free_goal_vel, std::pair<double,double> global_goal)
 {    
-  ROS_ASSERT_MSG(initialized_, "Call initialize() first.");
-  if (!teb_.isInit())
-  {
-    teb_.initTrajectoryToGoal(initial_plan, cfg_->robot.max_vel_x, cfg_->robot.max_vel_theta, cfg_->trajectory.global_plan_overwrite_orientation,
-      cfg_->trajectory.min_samples, cfg_->trajectory.allow_init_with_backwards_motion);
-  }
-  else // warm start
-  {
-    PoseSE2 start_(initial_plan.front().pose);
-    PoseSE2 goal_(initial_plan.back().pose);
-    // 更新起点，prune teb内存的轨迹的机器人已经走过的部分
-    if (teb_.sizePoses()>0
-        && (goal_.position() - teb_.BackPose().position()).norm() < cfg_->trajectory.force_reinit_new_goal_dist
-        && fabs(g2o::normalize_theta(goal_.theta() - teb_.BackPose().theta())) < cfg_->trajectory.force_reinit_new_goal_angular) // actual warm start!
-      teb_.updateAndPruneTEB(start_, goal_, cfg_->trajectory.min_samples); // update TEB
-    // 已经初始化过了，但目标和当前位置离得太远了，重新初始化个目标点~
-    else // goal too far away -> reinit
-    {
-      ROS_DEBUG("New goal: distance to existing goal is higher than the specified threshold. Reinitalizing trajectories.");
-      teb_.clearTimedElasticBand();
-      teb_.initTrajectoryToGoal(initial_plan, cfg_->robot.max_vel_x, cfg_->robot.max_vel_theta, cfg_->trajectory.global_plan_overwrite_orientation,
-        cfg_->trajectory.min_samples, cfg_->trajectory.allow_init_with_backwards_motion);
-    }
-  }
-  if (start_vel)
-    setVelocityStart(*start_vel);
-  if (free_goal_vel)
-    setVelocityGoalFree();
-  else
-    vel_goal_.first = true; // we just reactivate and use the previously set velocity (should be zero if nothing was modified)
-  
-  // now optimize
-  return optimizeTEB(cfg_->optim.no_inner_iterations, cfg_->optim.no_outer_iterations);
+  return false;
 }
 
 
-bool TebOptimalPlanner::plan(const tf::Pose& start, const tf::Pose& goal, const geometry_msgs::Twist* start_vel, bool free_goal_vel)
+bool TebOptimalPlanner::plan(const tf::Pose& start, const tf::Pose& goal, const geometry_msgs::Twist* start_vel, bool free_goal_vel, std::pair<double,double> global_goal)
 {
-  PoseSE2 start_(start);
-  PoseSE2 goal_(goal);
-  return plan(start_, goal_, start_vel);
+  return false;
 }
 
-bool TebOptimalPlanner::plan(const PoseSE2& start, const PoseSE2& goal, const geometry_msgs::Twist* start_vel, bool free_goal_vel)
+bool TebOptimalPlanner::plan(const PoseSE2& start, const PoseSE2& goal, const geometry_msgs::Twist* start_vel, bool free_goal_vel, std::pair<double,double> global_goal)
 {	
-  ROS_ASSERT_MSG(initialized_, "Call initialize() first.");
-  if (!teb_.isInit())
-  {
-    // init trajectory
-    teb_.initTrajectoryToGoal(start, goal, 0, cfg_->robot.max_vel_x, cfg_->trajectory.min_samples, cfg_->trajectory.allow_init_with_backwards_motion); // 0 intermediate samples, but dt=1 -> autoResize will add more samples before calling first optimization
-  }
-  else // warm start
-  {
-    if (teb_.sizePoses() > 0
-        && (goal.position() - teb_.BackPose().position()).norm() < cfg_->trajectory.force_reinit_new_goal_dist
-        && fabs(g2o::normalize_theta(goal.theta() - teb_.BackPose().theta())) < cfg_->trajectory.force_reinit_new_goal_angular) // actual warm start!
-      teb_.updateAndPruneTEB(start, goal, cfg_->trajectory.min_samples);
-    else // goal too far away -> reinit
-    {
-      ROS_DEBUG("New goal: distance to existing goal is higher than the specified threshold. Reinitalizing trajectories.");
-      teb_.clearTimedElasticBand();
-      teb_.initTrajectoryToGoal(start, goal, 0, cfg_->robot.max_vel_x, cfg_->trajectory.min_samples, cfg_->trajectory.allow_init_with_backwards_motion);
-    }
-  }
-  if (start_vel)
-    setVelocityStart(*start_vel);
-  if (free_goal_vel)
-    setVelocityGoalFree();
-  else
-    vel_goal_.first = true; // we just reactivate and use the previously set velocity (should be zero if nothing was modified)
-      
-  // now optimize
-  return optimizeTEB(cfg_->optim.no_inner_iterations, cfg_->optim.no_outer_iterations);
+  return false;
 }
 
 
-bool TebOptimalPlanner::buildGraph(double weight_multiplier)
+bool TebOptimalPlanner::buildGraph(std::vector<double>& dynamic_obstacle_current_alpha, std::vector<double>& dynamic_obstacle_old_alpha, const std::vector<bool>& detour_dynamic_obstacle_method, double weight_multiplier)
 {
+  // auto t=ros::Time::now();
+  // auto t_start=ros::Time::now();
   if (!optimizer_->edges().empty() || !optimizer_->vertices().empty())
   {
     ROS_WARN("Cannot build graph, because it is not empty. Call graphClear()!");
@@ -337,18 +439,26 @@ bool TebOptimalPlanner::buildGraph(double weight_multiplier)
   }
 
   optimizer_->setComputeBatchStatistics(cfg_->recovery.divergence_detection_enable);
-  
+  // ROS_INFO("1 Time to build: %f", (ros::Time::now()-t).toSec());
+  // t=ros::Time::now();
   // add TEB vertices。即把所有的点和dt添加到优化器中
   AddTEBVertices();
+  // ROS_INFO("2 Time to build: %f", (ros::Time::now()-t).toSec());
+  // t=ros::Time::now();  
   // add Edges (local cost functions)
   if (cfg_->obstacles.legacy_obstacle_association)    // 默认false
     AddEdgesObstaclesLegacy(weight_multiplier);
   else
     AddEdgesObstacles(weight_multiplier);   // 对teb中的每个pose点，找到离它左侧和右侧最近的障碍物点，然后把他们添加到需要考虑的obs中
-
-  if (cfg_->obstacles.include_dynamic_obstacles)    // 对动态障碍物，添加time戳，在xyt空间下，teb考虑同一time时的避障
-    AddEdgesDynamicObstacles();
-  // 实际上，这个viapoints没有被调用。。
+  // ROS_INFO("3 Time to build: %f", (ros::Time::now()-t).toSec());
+  // t=ros::Time::now();  
+  // 对动态障碍物，添加time戳，在xyt空间下，teb考虑同一time时的避障
+  if (cfg_->obstacles.include_dynamic_obstacles){
+    AddEdgesDynamicObstacles(dynamic_obstacle_current_alpha, dynamic_obstacle_old_alpha, detour_dynamic_obstacle_method, 1.0);
+  }
+  // ROS_INFO("4 Time to build: %f", (ros::Time::now()-t).toSec());
+  // t=ros::Time::now();
+  // TODO 改成了goal constrain
   AddEdgesViaPoints();
 
   AddEdgesVelocity();
@@ -367,6 +477,7 @@ bool TebOptimalPlanner::buildGraph(double weight_multiplier)
 
   if (cfg_->optim.weight_velocity_obstacle_ratio > 0)
     AddEdgesVelocityObstacleRatio();
+  // ROS_INFO("Time to build: %f", (ros::Time::now()-t_start).toSec());
   return true;  
 }
 
@@ -684,9 +795,9 @@ void TebOptimalPlanner::AddEdgesObstaclesLegacy(double weight_multiplier)
 
 // 动态障碍物就没有静态那么麻烦了，不用酸左右或者是不是最近了，统统添加就好了。。
 // 这里也体现了一个点是，只要把障碍物设置成dynamic，那么teb会在xyt空间，针对同一个time，进行距离的计算了。。
-void TebOptimalPlanner::AddEdgesDynamicObstacles(double weight_multiplier)
+void TebOptimalPlanner::AddEdgesDynamicObstacles(std::vector<double>& dynamic_obstacle_current_alpha, std::vector<double>& dynamic_obstacle_old_alpha, const std::vector<bool>& detour_dynamic_obstacle_method, double weight_multiplier)
 {
-  if (cfg_->optim.weight_obstacle==0 || weight_multiplier==0 || obstacles_==NULL )
+  if (cfg_->optim.weight_dynamic_obstacle==0 && cfg_->optim.weight_dynamic_obstacle_inflation==0 || weight_multiplier==0 || obstacles_==NULL )
     return; // if weight equals zero skip adding edges!
 
   Eigen::Matrix<double,2,2> information;
@@ -694,19 +805,28 @@ void TebOptimalPlanner::AddEdgesDynamicObstacles(double weight_multiplier)
   information(1,1) = cfg_->optim.weight_dynamic_obstacle_inflation;
   information(0,1) = information(1,0) = 0;
   
+  int dynamic_obstacle_index = -1;
   for (ObstContainer::const_iterator obst = obstacles_->begin(); obst != obstacles_->end(); ++obst)
   {
     if (!(*obst)->isDynamic())
       continue;
-
+    ++dynamic_obstacle_index;
     // Skip first and last pose, as they are fixed
     double time = teb_.TimeDiff(0);
     for (int i=1; i < teb_.sizePoses() - 1; ++i)
     {
+      if (hypot(teb_.PoseVertex(i)->x()-obst->get()->getCentroid().x(), teb_.PoseVertex(i)->y()-obst->get()->getCentroid().y()) > 2.0)    // todo 1.0是机器人+人的半径？
+        continue;
       EdgeDynamicObstacle* dynobst_edge = new EdgeDynamicObstacle(time);
       dynobst_edge->setVertex(0,teb_.PoseVertex(i));
+      dynobst_edge->setAnchor(teb_.PoseVertex(i)->x(), teb_.PoseVertex(i)->y());
+      // std::cout<<"a a a "<<detour_dynamic_obstacle_method[dynamic_obstacle_index]<<", "<<i<<": "<<teb_.PoseVertex(i)->x()<<","<<teb_.PoseVertex(i)->y()<<"; "<<obst->get()->getCentroid().x()<<","<<obst->get()->getCentroid().y()<<std::endl;
       dynobst_edge->setInformation(information);
+      dynobst_edge->setDetourDir(detour_dynamic_obstacle_method[dynamic_obstacle_index]); //设置绕行策略和alpha
+      dynobst_edge->setAlpha(dynamic_obstacle_current_alpha[dynamic_obstacle_index], dynamic_obstacle_old_alpha[dynamic_obstacle_index]);
       dynobst_edge->setParameters(*cfg_, robot_model_.get(), obst->get());
+      dynobst_edge->setGoal(teb_.PoseVertex(teb_.sizePoses() - 1)->x(), teb_.PoseVertex(teb_.sizePoses() - 1)->y());
+      dynobst_edge->complete();
       optimizer_->addEdge(dynobst_edge);
       time += teb_.TimeDiff(i); // we do not need to check the time diff bounds, since we iterate to "< sizePoses()-1".
     }
@@ -715,46 +835,15 @@ void TebOptimalPlanner::AddEdgesDynamicObstacles(double weight_multiplier)
 
 void TebOptimalPlanner::AddEdgesViaPoints()
 {
-  if (cfg_->optim.weight_viapoint==0 || via_points_==NULL || via_points_->empty() )
-    return; // if weight equals zero skip adding edges!
-
-  int start_pose_idx = 0;
+  assert( (cfg_->optim.weight_viapoint!=0) );
+  Eigen::Matrix<double,1,1> information;
+  information.fill(cfg_->optim.weight_viapoint);    // 默认：1
   
-  int n = teb_.sizePoses();
-  if (n<3) // we do not have any degrees of freedom for reaching via-points
-    return;
-  
-  for (ViaPointContainer::const_iterator vp_it = via_points_->begin(); vp_it != via_points_->end(); ++vp_it)
-  {
-    int index = teb_.findClosestTrajectoryPose(*vp_it, NULL, start_pose_idx);
-    if (cfg_->trajectory.via_points_ordered)
-      start_pose_idx = index+2; // skip a point to have a DOF inbetween for further via-points
-     
-    // check if point conicides with goal or is located behind it
-    if ( index > n-2 ) 
-      index = n-2; // set to a pose before the goal, since we can move it away!
-    // check if point coincides with start or is located before it
-    if ( index < 1)
-    {
-      if (cfg_->trajectory.via_points_ordered)
-      {
-        index = 1; // try to connect the via point with the second (and non-fixed) pose. It is likely that autoresize adds new poses inbetween later.
-      }
-      else
-      {
-        ROS_DEBUG("TebOptimalPlanner::AddEdgesViaPoints(): skipping a via-point that is close or behind the current robot pose.");
-        continue; // skip via points really close or behind the current robot pose
-      }
-    }
-    Eigen::Matrix<double,1,1> information;
-    information.fill(cfg_->optim.weight_viapoint);    // 默认：1
-    
-    EdgeViaPoint* edge_viapoint = new EdgeViaPoint;
-    edge_viapoint->setVertex(0,teb_.PoseVertex(index));
-    edge_viapoint->setInformation(information);
-    edge_viapoint->setParameters(*cfg_, &(*vp_it));
-    optimizer_->addEdge(edge_viapoint);   
-  }
+  EdgeViaPoint* edge_viapoint = new EdgeViaPoint;
+  edge_viapoint->setVertex(0,teb_.PoseVertex(teb_.sizePoses()-1));
+  edge_viapoint->setInformation(information);
+  edge_viapoint->setParameters(*cfg_, goal_endpoints_);
+  optimizer_->addEdge(edge_viapoint);   
 }
 
 void TebOptimalPlanner::AddEdgesVelocity()
@@ -1086,7 +1175,7 @@ void TebOptimalPlanner::computeCurrentCost(double obst_cost_scale, double viapoi
   {
     // here the graph is build again, for time efficiency make sure to call this function 
     // between buildGraph and Optimize (deleted), but it depends on the application
-    buildGraph();	
+    buildGraph(dynamic_obstacle_current_alpha_, dynamic_obstacle_old_alpha_, detour_dynamic_obstacle_method_);	
     optimizer_->initializeOptimization();
   }
   else
@@ -1097,12 +1186,10 @@ void TebOptimalPlanner::computeCurrentCost(double obst_cost_scale, double viapoi
   optimizer_->computeInitialGuess();
   
   cost_ = 0;
-  cost_origin_ = 0;
 
   if (alternative_time_cost)
   {
     cost_ += teb_.getSumOfAllTimeDiffs();
-    cost_origin_ += teb_.getSumOfAllTimeDiffs();
     // TEST we use SumOfAllTimeDiffs() here, because edge cost depends on number of samples, which is not always the same for similar TEBs,
     // since we are using an AutoResize Function with hysteresis.
   }
@@ -1130,26 +1217,27 @@ void TebOptimalPlanner::computeCurrentCost(double obst_cost_scale, double viapoi
     // cost_ += cur_cost;
   }
 
-  double time = 0;
-  double cost_gauss = 0;
-  for (int i=0; i<teb_.sizePoses()-1; i++){
-    auto p = teb_.PoseVertex(i);
-    // std::cout<<"("<<p->x()<<","<<p->y()<<","<<time<<") ";
-    double current_cost_gauss = 0;
-    for (auto dynamic_obs:*obstacles_){
-      if (!dynamic_obs->isDynamic())
-        continue;
-      auto po = dynamic_obs->getCentroid() + time*dynamic_obs->getCentroidVelocity();
-      auto vo = dynamic_obs->getCentroidVelocity();
-      // std::cout<<"relative: ("<<po.x()<<","<<po.y()<<"), ("<<vo.x()<<","<<vo.y()<<"), ("<<p->x()<<","<<p->y()<<")"<<std::endl;
-      current_cost_gauss += get2DAsyGaussValue(po.x(), po.y(), vo.x(), vo.y(), p->x(), p->y());
+  if (cfg_->optim.weight_gauss!=0){
+    double time = 0;
+    double cost_gauss = 0;
+    for (int i=0; i<teb_.sizePoses()-1; i++){
+      auto p = teb_.PoseVertex(i);
+      // std::cout<<"("<<p->x()<<","<<p->y()<<","<<time<<") ";
+      double current_cost_gauss = 0;
+      for (auto dynamic_obs:*obstacles_){
+        if (!dynamic_obs->isDynamic())
+          continue;
+        auto po = dynamic_obs->getCentroid() + time*dynamic_obs->getCentroidVelocity();
+        auto vo = dynamic_obs->getCentroidVelocity();
+        // std::cout<<"relative: ("<<po.x()<<","<<po.y()<<"), ("<<vo.x()<<","<<vo.y()<<"), ("<<p->x()<<","<<p->y()<<")"<<std::endl;
+        current_cost_gauss += get2DAsyGaussValue(po.x(), po.y(), vo.x(), vo.y(), p->x(), p->y());
 
+      }
+      cost_gauss = std::max(cost_gauss,current_cost_gauss);
+      time += teb_.TimeDiff(i);
     }
-    cost_gauss = std::max(cost_gauss,current_cost_gauss);
-    time += teb_.TimeDiff(i);
+    cost_ += cfg_->optim.weight_gauss *cost_gauss;
   }
-  // std::cout<<"cost: "<<cost_<<", "<<cost_gauss<<std::endl;
-  cost_ += cfg_->optim.weight_gauss *cost_gauss;
 
   // delete temporary created graph
   if (!graph_exist_flag) 

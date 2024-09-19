@@ -1,17 +1,13 @@
 <launch>
   <!-- select a mode: how to drive persons. [opt: 0: data replay;  1: social force;  2: manually control with interface keyboard] -->
-  <arg name="person_mode" default="1"/>
+  <arg name="person_mode" default="2"/>
   <!-- select a mode: how to drive the robot. [opt: 0: controlled by move_base, listen to the topic /cmd_vel;  2: manually control with interface keyboard] -->
   <arg name="robot_mode" default="0"/>
-  <!-- select a simulation scene, [note: you are suggested to activate the former three scenes with person_mode=1, while the latter two scenes with person_mode=0] -->
-  <arg name="scene_file" default="$(find pedsim_simulator)/scenes/complex_demo_static_obs.xml"/>
-  <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/complex_demo_square.xml"/> -->
-  <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/complex_demo_corridor.xml"/> -->
-  <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/simple_test_corridor.xml"/>   -->
-  <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/simple_test_square.xml"/>   -->
+  <!-- select a simulation scene, [note: preset the scene in pedsim_simulator/scenes as a .xml file] -->
+  <arg name="scene_file" default="$(find pedsim_simulator)/scenes/demo1_static_env.xml"/>
 
   <!-- set the initial pose of the robot -->
-  <arg name="pose_initial_x" default="-5.0"/>
+  <arg name="pose_initial_x" default="-15.0"/>
   <arg name="pose_initial_y" default="0.0"/>
   <arg name="pose_initial_theta" default="0.0"/>
 
@@ -36,7 +32,7 @@
     <param name="person_mode" value="$(arg person_mode)" type="int"/>
   </node>
 
-  <!-- Fake map_sever -->>
+  <!-- Fake map_sever -->
   <include file="$(find pedsim_map)/launch/pedsim_map.launch"/>
 
   <!-- Robot controller -->
@@ -50,7 +46,7 @@
   <!-- Open interface_teleop if person_mode==2-->
   <include file="$(find pedsim_simulator)/launch/interface_teleop.launch"/>
 
-  <!-- Description for the robot "Water"-->>
+  <!-- Description for the robot "Water"-->
   <include file="$(find water_description)/launch/water_description.launch"/>
 
   <!-- Visualizer -->

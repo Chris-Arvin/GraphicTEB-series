@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!-- Static obstacles -->
+    <obstacle x1="-25" y1="-25" x2="-25" y2="25" type="line"/>
+    <obstacle x1="25" y1="-25" x2="25" y2="25" type="line"/>
+    <obstacle x1="-25" y1="-25" x2="25" y2="-25" type="line"/>
+    <obstacle x1="-25" y1="25" x2="25" y2="25" type="line"/>  
+
+    <!-- rec,rec,rec -->
+    <obstacle x="12" y="4.0" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="13" y="1.5" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="14" y="-1.0" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+
+
+    <!-- rec,c,c -->
+    <obstacle x="9.5" y="3.5" xHalfLength="0.5" yHalfLength="0.2" type="rectangle"/>
+
+    <obstacle x1="11" y1="-2.1" x2="11" y2="2.0" type="line"/>
+    <obstacle x1="11" y1="-2.0" x2="10" y2="-2.0" type="line"/>
+    <obstacle x1="11" y1="-1.2" x2="10.4" y2="-1.2" type="line"/>
+    <obstacle x1="11" y1="0.0" x2="10.2" y2="0.0" type="line"/>
+    <obstacle x1="11" y1="-0.5" x2="10.0" y2="0.8" type="line"/>
+    <obstacle x1="11" y1="1.2" x2="9.5" y2="1.2" type="line"/>
+    <obstacle x1="11" y1="2.0" x2="10" y2="2.0" type="line"/>
+
+    <obstacle x1="8.5" y1="-2.0" x2="8.5" y2="-3.9" type="line"/>
+    <obstacle x1="8.5" y1="-3.6" x2="12.5" y2="-3.6" type="line"/>
+    <obstacle x1="12.5" y1="-1.0" x2="12.5" y2="-4.0" type="line"/>
+
+
+
+    <!-- 2 shan -->
+    <obstacle x="6.5" y="-2.5" xHalfLength="0.1" yHalfLength="1.2" type="rectangle"/>
+    <obstacle x="5.8" y="-1.4" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="5.8" y="-3.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="6.1" y="-2.5" xHalfLength="0.4" yHalfLength="0.1" type="rectangle"/>
+
+    <obstacle x="6.5" y="2.5" xHalfLength="0.1" yHalfLength="1.2" type="rectangle"/>
+    <obstacle x="5.8" y="1.4" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="5.8" y="3.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="6.1" y="2.5" xHalfLength="0.4" yHalfLength="0.1" type="rectangle"/>
+
+
+    <!-- 3 obs -->
+    <!-- <obstacle x="3.5" y="-0.8" xHalfLength="0.1" yHalfLength="0.7" type="rectangle"/> -->
+    <obstacle x1="3.5" y1="-0.1" x2="3.0" y2="-1.5" type="line"/>
+    <obstacle x1="3.2" y1="2.5" x2="3.8" y2="1.6" type="line"/>
+    <obstacle x="2.5" y="-4.0" xHalfLength="0.6" yHalfLength="0.1" type="rectangle"/>    
+
+    <!-- line -->
+    <obstacle x1="1.5" y1="2" x2="1.0" y2="1" type="line"/>
+
+    <!-- 工 -->
+    <obstacle x1="0.6" y1="-1.3" x2="1.4" y2="-0.8" type="line"/>
+    <obstacle x1="1.0" y1="-1.8" x2="0.2" y2="-0.8" type="line"/>
+
+
+    <!-- x -->
+    <obstacle x1="-3.2" y1="-1.1" x2="-1.1" y2="1.0" type="line"/>
+    <obstacle x1="-1.2" y1="-1.1" x2="-3.1" y2="1.0" type="line"/>
+    <!-- obs -->
+    <obstacle x1="-2.2" y1="1.7" x2="-2.2" y2="2.6" type="line"/>
+    <!-- c -->    
+    <obstacle x="-1.8" y="-3.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x1="-1.1" y1="-3.5" x2="-1.1" y2="-2.5" type="line"/>
+    <obstacle x1="-2.5" y1="-3.5" x2="-2.5" y2="-3.0" type="line"/>
+
+    <!-- 斜线 -->
+    <obstacle x1="-4" y1="5" x2="-5" y2="0.0" type="line"/>
+    <obstacle x1="-4" y1="3" x2="-5.5" y2="7.0" type="line"/>
+
+    <!-- rectangle -->
+    <obstacle x="-8.2" y="4.0" xHalfLength="1.2" yHalfLength="0.3" type="rectangle"/>
+    <!-- x -->
+    <obstacle x1="-8.0" y1="2.0" x2="-9.0" y2="0.5" type="line"/>
+    <obstacle x1="-8.0" y1="0.5" x2="-9.0" y2="2.0" type="line"/>
+    <!-- // -->
+    <obstacle x1="-8.5" y1="-1.0" x2="-6.0" y2="-2.0" type="line"/>
+    <obstacle x1="-8.5" y1="-2.5" x2="-6.0" y2="-3.5" type="line"/>
+
+
+    <!-- 山 -->    
+    <obstacle x="-12.5" y="1.0" xHalfLength="0.2" yHalfLength="1.6" type="rectangle"/>
+    <obstacle x1="-12.5" y1="1.0" x2="-11." y2="1.0" type="line"/>
+    <obstacle x1="-12.5" y1="-0.5" x2="-11.5" y2="-0.5" type="line"/>
+    <obstacle x1="-12.5" y1="2.5" x2="-11.5" y2="2.5" type="line"/>
+    <!-- L -->
+    <obstacle x="-11.5" y="-2.5" xHalfLength="1.0" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-10.5" y="-2.0" xHalfLength="0.1" yHalfLength="0.6" type="rectangle"/>
+
+    <!-- Waypoints required for social force -->
+    <waypoint id="p1" x="9" y="-1" r="2"/>
+    <waypoint id="p2" x="6" y="4" r="2"/>
+    <!-- Add pedestrians -->
+    <agent x="6" y="20" n="1" dx="0" dy="0" type="1">
+        <addwaypoint id="p1"/>
+        <addwaypoint id="p2"/>
+    </agent>
+    <waypoint id="robot_goal" x="15" y="0" r="0.5"/>
+    <!-- Add robot (type=2): all the parameters are invalid. The robot pose is aligned with the parameters in pedsim_simulator.launch -->
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="robot_goal"/>
+    </agent>
+
+</scenario>
+
+

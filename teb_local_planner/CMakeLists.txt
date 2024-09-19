@@ -195,6 +195,9 @@ add_library(teb_local_planner
    src/teb_local_planner_ros.cpp
    src/graph_search.cpp
    src/map_process.cpp
+   src/map_process_utilizes.cpp
+   src/bucketedqueue.cpp
+   src/dynamicvoronoi.cpp   
 )
 
 # Dynamic reconfigure: make sure configure headers are built before any node using them

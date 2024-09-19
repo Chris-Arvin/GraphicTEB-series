@@ -184,14 +184,14 @@ void Agent::move(double h) {
       Ped::Tagent::setForceFactorObstacle(35);
       Ped::Tagent::setForceFactorDesired(4.2);
 
-      Ped::Tagent::setVmax(1.0);
+      Ped::Tagent::setVmax(0.3);
       Ped::Tagent::SetRadius(0.4);
       Ped::Tagent::move(h);
     }
   } else {
     if (getType() == Ped::Tagent::ELDER) {
       // Old people slow!
-      Ped::Tagent::setVmax(0.5);
+      Ped::Tagent::setVmax(0.3);
       Ped::Tagent::setForceFactorDesired(0.5);
     }
     if (CONFIG.person_mode == PersonMode::SOCIAL_DRIVE){

@@ -15,84 +15,122 @@
 #include <ctime>
 #include <cassert>
 #include <costmap_2d/costmap_2d.h>
+#include <teb_local_planner/dynamicvoronoi.h>
 
 class mapProcess{
   public:
     /**  main functions  **/
-    // 1. initialize maps derived from costmap
     mapProcess(){};
-    mapProcess(const nav_msgs::OccupancyGrid::ConstPtr& msg);
-    mapProcess(costmap_2d::Costmap2D* costmap, const teb_local_planner::PoseSE2& start, const teb_local_planner::PoseSE2& goal, const std::vector<std::vector<double>>& dynamic_obstacle);
+    // 0. form goal lines
+    std::vector<std::vector<Point2D>> findGoalLineGroups(costmap_2d::Costmap2D* costmap, const std::vector<geometry_msgs::PoseStamped>& local_plan, std::pair<double,double> global_goal);
+    // 1. initialize maps derived from costmap
+    void initialize(costmap_2d::Costmap2D* costmap, const teb_local_planner::PoseSE2& start, const teb_local_planner::PoseSE2& goal, const std::vector<geometry_msgs::PoseStamped>& local_plan, const std::vector<std::vector<double>>& dynamic_obstacle, std::pair<double,double> global_goal);
     // 2. cluster all points into several group of obstacles by iterating the whole map to and calling addObsConnect()
     std::map<int, std::vector<Point2D>> clusterObs();
     // 2.1. merge the point (x,y) to the nearby obs group, or create a new obs group
     void addObsConnect(int x, int y);
+    void addObsConnect(int x, int y, std::vector<std::vector<int>>& map_obs_labeled, std::map<int, std::vector<Point2D>>& obs_list, int& label_index, const int& width, const int& height);
     // 3. outline the border ponits of obs group by comparing the original obs group and the dilated one
     std::map<int, std::vector<Point2D>> borderIdentify();
     bool deepSearchForFindingBorders(Point2D current, std::vector<std::vector<bool>>& map_is_visited_temp, const std::vector<Point2D>& kernel, const Point2D& start, const int& label);
     // 4. extract corner points which are the key points among border points 
     std::map<int, std::vector<Point2D>> cornerIdentify();
-    // 5. find paths between obs group by iterating all the two obs groups and calling findPathBetweenObs()
-    std::vector<std::vector<std::pair<Point2D, Point2D>>> createPathBetweenObs();
-    bool isVisited(int ID1, int ID2);
-    void setVisited(int ID1, int ID2);
-    // 5.1. find all the path between two given obs groups
-    std::vector<int> findPathBetweenObs(int obsID1, int obsID2);
-    void setCoverObs(int ID1, int ID2, std::vector<int> covers);
-    std::vector<int> getCoverObs(int ID1, int ID2);
-    void setPath(std::pair<Point2D, Point2D> path);
+    // 5. find paths between obs group
+    void createPathBetweenObs();
     // 6. find all non-homo paths, first finding general paths, then deriving several normal paths
-    std::vector<std::vector<Eigen::Vector2d>> findHomoPaths(const teb_local_planner::PoseSE2 &start, const teb_local_planner::PoseSE2 &goal, const int& max_path_explore_number_for_GraphicTEB, const int& max_path_remained_for_GraphicTEB, const bool& is_limitation, const bool& is_hallway);
+    std::vector<std::vector<Eigen::Vector2d>> findHomoPaths(std::vector<std::pair<std::pair<double, double>, std::pair<double, double>>>& goal_endpoints_list);
     // 6.1. find general paths, each general path consists of several obs-group-IDs
-    bool depthFirst(std::vector<int>& visited, int goal_index, std::vector<std::vector<int>>& res);
-    // 6.2. find the line-shaped path between obs group ID1 and group ID2, this path is the normal path consisting of several points (x,y)
-    std::pair<Point2D, Point2D> getPathBetweenObs(int ID1, int ID2);
-    // 6.3. find the normal path around the obs group obsID, starting at P_start and ending at P_target
-    std::pair<std::vector<Point2D>,std::vector<Point2D>> getPathAlongsideObs(int obsID, Point2D P_start, Point2D P_target);
-    // 6.4. shorten the normal path 
-    std::vector<Point2D> shortenPath (std::vector<Point2D> path);
-    // 7. do the same things like borderIdentify()
+    bool depthFirst(std::vector<int>& visited, std::vector<std::vector<int>>& res);
+    // 6.2. find the normal path around the obs group obsID, starting at P_start and ending at P_target
+    std::vector<Point2D> getPathAlongsideObs(int obsID, std::string traj_type, Point2D P_start, Point2D P_target);
+    // 6.3. shorten the normal path 
+    std::vector<Point2D_float> shortenPath (std::vector<Point2D> path, bool& is_delete);
+    // 7. do the same things like borderIdentify(), generate obstacle boundaries for TEB
     std::map<int, std::vector<std::pair<double,double>>> getStaticObsIdentificationInWorld();
     bool deepSearchForFindingBorders(std::map<int, std::vector<Point2D>>& border_list_temp, std::vector<std::vector<int>>& map_border_labeled_temp, Point2D current, std::vector<std::vector<bool>>& map_is_visited_temp, const std::vector<Point2D>& kernel, const Point2D& start, const int& label);
+    void add_to_homo_paths_pruned(std::vector<Eigen::Vector2d> path);
+    std::pair<std::pair<double,double>, std::pair<double,double>> getGoalLineEnds(Point2D goal);
 
-    /**  utilities  **/
+    /**  utilities  defined in map_process_utilizes.cpp **/
+    void setParams(const int& max_path_explore_number_for_GraphicTEB, const int& max_path_remained_for_GraphicTEB, const bool& is_hallway, const bool& is_cos_limitation, const bool& is_father_visit_limitation, const double& epsilon_for_early_stop);
     cv::Mat convertVector2Mat(const std::vector<uint8_t>& v, int channels, int rows);
     void map2world(int mx, int my, double& wx, double& wy);
+    void map2world(float mx, float my, double& wx, double& wy);
+    void map2worldLarge(int mx, int my, double& wx, double& wy);
     void world2map(int& mx, int& my, double wx, double wy);
     std::vector<Eigen::Vector2d> transPoint2DinMapToVector2dinWorld(std::vector<Point2D> points);
+    std::vector<Eigen::Vector2d> transPoint2DinMapToVector2dinWorld(std::vector<Point2D_float> points);
     std::vector<Point2D> Bresenham (const Point2D& p1, const Point2D& p2);
+    std::vector<Point2D_float> Bresenham (const Point2D_float& p1, const Point2D_float& p2);
+    std::vector<Point2D_float> BresenhamDirect (const Point2D_float& p1, const Point2D_float& p2);
     bool checkInMap(int x, int y);
-    std::pair<Point2D, Point2D> checkCoverBorder(const Point2D& p1, const Point2D& p2);
+    bool checkInMap(int x, int y, int width, int height);
     bool checkCollision (const Point2D& p1, const Point2D& p2);
-    int findNearestCornerFromBorder (const Point2D& p);
+    bool checkCollision (const std::vector<Point2D>& vec_line, const int& ID1, const int& ID2);
+    bool checkCollision (const std::vector<Point2D>& vec_line, const int& ID);
+    bool checkCollision (const std::vector<Point2D>& vec_line);
+    bool checkCollisionOnlyObs (const std::vector<Point2D>& vec_line);
+    bool checkCollisionOnlyObs (const std::vector<Point2D_float>& vec_line);
+    bool checkCollisionOnlyObsAlignedWithBresenham(const Point2D& p1, const Point2D& p2);
+    bool checkCollisionOnlyObsAlignedWithBresenhamDirect(const Point2D_float& p1, const Point2D_float& p2);
+    bool checkCollisionNotSelfBorder (const std::vector<Point2D>& vec_line, const int& ID1, const int& ID2);
     void printVector(std::vector<Point2D> obj);
     void printVectorSegmented(std::vector<Point2D> obj);
-    void clearSelf();
+    int getMod(const int& input, const int& length);
 
     /**  access to outside  **/
-    std::vector<int> getLabelList(){return label_list_;};
+    std::map<int, std::vector<Point2D>> getTempList() {return temp_list_;};
+    std::map<std::pair<int,int>, std::map<std::string, std::pair<Point2D, Point2D>>> getConnectGraph() {return connection_graph_;};
+    std::vector<std::vector<std::pair<int,int>>> getMapBoundaries(){return map_boundaries_;};
+    class std::vector<std::vector<Point2D>> getGoalLineList(){return goal_line_lists_;};
+    Point2D getFartherGoal(){return farther_goal_;};
+    Point2D getNearGoal() {return near_goal_;};
+    int getStartID() {return startID_;};
     std::map<int, std::vector<Point2D>> getObsList(){return obs_list_;};
     std::map<int, std::vector<Point2D>> getBorderList(){return border_list_;};
+    std::map<int, std::vector<Point2D>> getOriginBorderList(){return border_origin_list_;};
     std::map<int, std::vector<Point2D>> getCornerList(){return corner_list_;};
-    std::vector<std::vector<std::pair<Point2D,Point2D>>> getEdgesGraph(){return edges_graph_;};
-    std::vector<std::vector<std::vector<int>>> getCoversGraph() {return covers_graph_;};
+    std::map<int, std::vector<Point2D>> getDilateObsList(){return dilated_obs_list_;};
+    std::map<int, std::vector<Point2D>> getCornerBeforeIntersectionList(){return corner_before_intersection_list_;};
+    std::map<std::pair<int,int>, std::vector<Point2D>> getVoronoiList(){return voronoi_list_;};
     std::vector<std::vector<Eigen::Vector2d>> getHomoPaths() {return homo_paths_;};
-    std::vector<std::vector<Eigen::Vector2d>> getHomoPathsPruned() {return homo_paths_pruned_;};
-    std::vector<std::vector<int>> getMapObsLabeled();
+    std::vector<std::vector<Eigen::Vector2d>> getHomoPathsOrigin() {return homo_paths_origin_;};
+    std::vector<std::vector<Eigen::Vector2d>> getHomoPathsPruned() {return homo_paths_add_to_TEB_;};
+    std::vector<std::vector<int>> getMapObsLabeled() {return map_obs_shrinked_labeled_;};
+    std::vector<std::vector<int>> getMapBorderLabeled() {return map_border_labeled_;};
     std::vector<std::vector<double>> getDynamicObsIdentificationInWorld(){return dynamic_obstacle_;};
-    void add_to_homo_paths_pruned(std::vector<Eigen::Vector2d> path);
+    std::pair<Point2D, Point2D> getShortestPathBetweenObs(int ID1, int ID2);
+    std::pair<Point2D, Point2D> getClockwiseConsistentPathBetweenObs(int ID1, int ID2);
+    std::pair<Point2D, Point2D> getCounterClockwiseConsistentPathBetweenObs(int ID1, int ID2);
+    std::pair<Point2D, Point2D> getClockwise2CounterClockwisePathBetweenObs(int ID1, int ID2);
+    std::pair<Point2D, Point2D> getCounterClockwise2ClockwisePathBetweenObs(int ID1, int ID2);
+
+  public:
+    int width_large_;
+    int height_large_;
+    double resolution_large_;
+    double origin_x_large_;
+    double origin_y_large_;
+    int shrink_dis_;
+
+    std::map<std::pair<int,int>, std::vector<Point2D>> voronoi_list_;
+    std::map<std::pair<int,int>, std::map<std::string, std::pair<Point2D, Point2D>>> connection_graph_;   // {ID1 -> ID2}: connectionType:{pointFromID1, pointFromID2}
+    std::map<int, std::vector<Point2D>> temp_list_;
+    Point2D farther_goal_;
+    Point2D near_goal_;
+    std::vector<std::vector<std::pair<int,int>>> map_boundaries_;
 
 
-  private:
     // parameters related to costmap
     costmap_2d::Costmap2D* costmap_;
     uint32_t width_, height_;
     double origin_x_, origin_y_;
     float resolution_;
     int start_in_map_x_, start_in_map_y_, startID_, startIndex_;
-    int goal_in_map_x_, goal_in_map_y_, goalID_, goalIndex_;    
+    int goal_in_map_x_, goal_in_map_y_, goalID_start_, goalIndex_start_;    
     double obs_radius_, rob_radius_, length_in_map_;
     std::vector<std::vector<double>> dynamic_obstacle_;   // save the state of pedestrians {x,y,vx,vy,r}
+    std::vector<std::vector<Point2D>> goal_line_lists_;
     // maps derived from costmap
     std::vector<int8_t> map_vector_;      // 1D char map
     std::vector<uint8_t> map_int_;        // 1D int map
@@ -103,6 +141,8 @@ class mapProcess{
     std::vector<std::vector<int>> map_obs_shrinked_labeled_;    // 2D pure map without dilation by the robot radius
     // map generated in clusterObs() and addObsConnect()
     std::vector<std::vector<int>> map_obs_labeled_;   // a 2D map labeling obs points by groupID
+    std::vector<std::vector<bool>> map_is_dynamic_;   // where the point (mx, my) is a point from dynamic pedestrian
+    std::vector<std::vector<bool>> map_obs_occupied_without_ignore_;
     std::map<int, std::vector<Point2D>> obs_list_;    // group ID: obs points
     std::vector<int> label_list_;                     // projection from index to group ID
     int label_index_;                                 // to-be assigned label ID
@@ -112,15 +152,23 @@ class mapProcess{
     // map saving corner points which are outlined from map_border_labeled_
     std::vector<std::vector<int>> map_corner_labeled_;  // a 2D map labeling corner points by groupID
     std::map<int, std::vector<Point2D>> corner_list_;   // group ID: corner points
+    
+    std::map<int, std::vector<Point2D>> dilated_obs_list_;
+    std::map<int, std::vector<Point2D>> border_origin_list_;
+    std::map<int, std::vector<Point2D>> corner_before_intersection_list_;
+
     // 2D data map to save the connections between two obs groups
-    std::vector<std::vector<bool>> visited_;                              // whether the connection between two IDs has been visited (assigned)
-    std::vector<std::vector<std::pair<Point2D,Point2D>>>  edges_graph_;   // save the specific points through which two groups can be connected directly
-    std::vector<std::vector<std::vector<int>>>  covers_graph_;            // save the specific paths when connecting two obs groups
+    std::vector<std::vector<Eigen::Vector2d>> homo_paths_origin_;
     std::vector<std::vector<Eigen::Vector2d>> homo_paths_;                // non-homo paths before H-signature examination
     std::vector<double> length_approximate_;                              // a vector with each data indicating the length of the related path
-    std::vector<std::vector<Eigen::Vector2d>> homo_paths_pruned_;         // non-homo paths after H-signature examination
+    std::vector<std::vector<Eigen::Vector2d>> homo_paths_add_to_TEB_;     // non-homo paths after H-signature examination
     int max_path_explore_number_for_GraphicTEB_;                          // the preset threshold of the  DepthFirst Search
+    int max_path_remained_for_GraphicTEB_;
+    bool is_hallway_;
+    bool is_cos_limitation_;
+    bool is_father_visit_limitation_;
     bool is_limitation_;                                                  // a preset parameter, if true, only obs groups visible to each other will be connected during homo DepthFirst Search
+    double epsilon_for_early_stop_;
 };
 
 #endif

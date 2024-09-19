@@ -4,6 +4,7 @@ import pygame
 import rospy
 import math
 from geometry_msgs.msg import Twist
+from std_srvs.srv import Empty, EmptyRequest
 import robot_teleop
 
 class Person:
@@ -101,12 +102,17 @@ MAX_LINE_NUM = 6.0
 keyboard_list = [['w','x','a','d','s'],['t','b','f','h','g'],['i','m','j','l','k'], ['8','2','4','6','5']]
 topic_list = ["/people{}/keyboard".format(i) for i in range(len(keyboard_list))]
 n = len(keyboard_list)
+pause_simulation = rospy.ServiceProxy('/pedsim_simulator/pause_simulation', Empty)
+unpause_simulation = rospy.ServiceProxy('/pedsim_simulator/unpause_simulation', Empty)
+pause_simulation2 = rospy.ServiceProxy('/simulate_diff_drive_robot/pause_simulation', Empty)
+unpause_simulation2 = rospy.ServiceProxy('/simulate_diff_drive_robot/unpause_simulation', Empty)
 
 if __name__=="__main__":
     rospy.init_node('interface_keyboard_publisher', anonymous=True)
     person_mode = rospy.get_param('/pedsim_simulator/person_mode')
     robot_mode = rospy.get_param('/pedsim_simulator/robot_mode')
     unit_list = []
+    is_pause = False;
 
     if person_mode != 2 and robot_mode!=2:
         exit(0)
@@ -171,6 +177,16 @@ if __name__=="__main__":
                 key = chr(event.key)
                 for unit in unit_list:
                     unit.key_up(key)
+            
+            if event.type == pygame.KEYDOWN:
+                if (event.key == pygame.K_SPACE and not is_pause):
+                    is_pause = True
+                    pause_simulation(EmptyRequest())
+                    pause_simulation2(EmptyRequest())
+                elif (event.key == pygame.K_SPACE and is_pause):
+                    is_pause = False
+                    unpause_simulation(EmptyRequest())
+                    unpause_simulation2(EmptyRequest())
 
         for unit in unit_list:
             if unit.id == 'robot':

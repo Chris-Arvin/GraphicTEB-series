@@ -64,6 +64,7 @@
 #include <nav_msgs/Path.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/PoseArray.h>
+#include <geometry_msgs/Point.h>
 #include <std_msgs/ColorRGBA.h>
 #include <tf/transform_datatypes.h>
 #include <nav_msgs/Odometry.h>
@@ -131,8 +132,10 @@ public:
    * and the pose sequence to  \e ../../teb_poses.
    * @param teb const reference to a Timed_Elastic_Band
    */
-  void publishLocalPlanAndPoses(const TimedElasticBand& teb, const TimedElasticBand& teb_origin) const;
+  void publishLocalPlanAndPoses(const TimedElasticBand& teb) const;
   
+  void publishTEBWithinOptimizations(const std::vector<std::vector<std::vector<Eigen::Vector2d>>>& teb_during_optimization) const;
+
   /**
    * @brief Publish the visualization of the robot model
    * 
@@ -249,13 +252,17 @@ public:
   
   // publishes of graphicTEB
   void pubMarker(int wx, int wy, char color, ros::Publisher publisher, mapProcess* map_obj);
+  void pubMarkerArray(std::map<std::pair<int,int>, std::vector<Point2D>> connection_list, ros::Publisher publisher, mapProcess* map_obj);
   void pubMarkerArray(std::vector<Point2D> points, char color, ros::Publisher publisher, mapProcess* map_obj);
   void pubMarkerArray(std::vector<std::vector<Point2D>> points_list, char color, ros::Publisher publisher, mapProcess* map_obj);
   void pubMarkerArray(std::map<int, std::vector<Point2D>> points_list, char color, ros::Publisher publisher, mapProcess* map_objd);
   void pubMarkerArray(std::map<int, std::vector<Point2D>> points_list, ros::Publisher publisher, mapProcess* map_obj);
-  void pubLinList(std::vector<std::vector<std::pair<Point2D,Point2D>>> points_list, ros::Publisher publisher, mapProcess* map_obj);
-  void pubLinList(std::vector<std::vector<std::vector<int>>> points_list, ros::Publisher publisher, mapProcess* map_obj);
+  void pubLinList(std::map<std::pair<int,int>, std::map<std::string, std::pair<Point2D, Point2D>>> connect_graph, ros::Publisher publisher, mapProcess* map_obj);
+  void pubLinList(std::map<int, std::vector<Point2D>> points_list, ros::Publisher publisher, mapProcess* map_obj);
   void pubHomoPaths(const std::vector<std::vector<Eigen::Vector2d>>& paths, ros::Publisher publisher);
+
+  void pubMapBoundaries(ros::Publisher publisher, mapProcess* map_obj);
+  void pubGoalLineList(ros::Publisher publisher, mapProcess* map_obj);
 
 
 protected:
@@ -269,21 +276,29 @@ protected:
   ros::Publisher global_plan_pub_; //!< Publisher for the global plan
   ros::Publisher local_plan_pub_; //!< Publisher for the local plan
   ros::Publisher teb_poses_pub_; //!< Publisher for the trajectory pose sequence
-  ros::Publisher teb_poses_origin_pub_;
   ros::Publisher teb_marker_pub_; //!< Publisher for visualization markers
   ros::Publisher feedback_pub_; //!< Publisher for the feedback message for analysis and debug purposes
+  ros::Publisher teb_during_optimization_pub_;
   const TebConfig* cfg_; //!< Config class that stores and manages all related parameters  
   bool initialized_; //!< Keeps track about the correct initialization of this class
 
 // publishers for graphicTEB
 public:
   ros::Publisher pub_obs_group;
+  ros::Publisher pub_obs_dilate;
   ros::Publisher pub_border;
+  ros::Publisher pub_border_origin;
   ros::Publisher pub_corner;
-  ros::Publisher pub_connect_inner_obs;    
-  ros::Publisher pub_connect_between_obs_adjecent;
-  ros::Publisher pub_connect_between_obs_all;
+  ros::Publisher pub_corner_before_intersection;
+  ros::Publisher pub_voronoi;
+  ros::Publisher pub_connects;
+  ros::Publisher pub_connect_graph;
+  ros::Publisher pub_map_boundaries;
+  ros::Publisher pub_goal_line;
+
+  ros::Publisher pub_homo_paths_origin;
   ros::Publisher pub_homo_paths;
+  ros::Publisher pub_homo_paths_pruned;
   ros::Publisher pub_corridor_map;
 
     
