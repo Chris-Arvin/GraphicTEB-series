@@ -7,9 +7,10 @@ This is the source code of the GA-TEB (the fourth version of the GraphicTEB seri
 ## Table of Contents
 * [Installation](#1-Installation)
 * [Quick Start](#2-Quick-Start)
-* [Introduction for Parameters](#5-acknowledge)
+* [Introduction for Parameters](#3-Introduction-for-Key-Parameters)
 * [Contributors](#4-Contributors)
-* [Acknowledgement](#5-acknowledge)
+* [Previous Versions](#5-Previous-Versions)
+* [Acknowledgement](#6-Acknowledge)
 
 
 ## 1. Installation
@@ -64,14 +65,22 @@ demo1_pedsim_simulator.launch / demo2_pedsim_simulator.launch:
 * the initial position and orientation of the robot.
 
 
-## 4. Contributors along the project
+## 4. Contributors
 * Qianyi Zhang  arvin.nkzqy@gmail.com
+* Zeqing Zhu
+* Zhengxi Hu
+* Yinuo Song
+* Yifan Yang
 * Shichao Wu
-* Yuhang Jia
-* Yuang xu
-* Jingtai Liu
 
-## 5. Acknowledge
+
+## 5. Previous Versions
+* The first version, <a href="https://ieeexplore.ieee.org/document/10210322">Graphic-TEB</a>, proposes a framework that groups obstacles with computer graphics.
+* The second version, <a href="https://github.com/Chris-Arvin/STC-TEB">STC-TEB</a>, adds incremental optimization to this framework.
+* In parallel, another version, <a href="https://ieeexplore.ieee.org/document/10161222">CG3</a>, introduces the human gaze to make the robot keep safe distance with human beings adaptively. 
+
+
+## 6. Acknowledge
 This work is based on several open-source works, thanks for their contribution and inspiration: 
 * [navigation](https://github.com/ros-planning/navigation)
 * [teb_local_planner](https://github.com/rst-tu-dortmund/teb_local_planner)
