@@ -45,7 +45,9 @@ $ roslaunch move_base demo2_navigation.launch
 ```
 
 
-## 3. Introduction for Key Parameters in "demo1_pedsim_simulator.launch / demo2_pedsim_simulator.launch"
+## 3. Introduction for Key Parameters
+
+demo1_pedsim_simulator.launch / demo2_pedsim_simulator.launch: 
 @param: person_mode
 * 0: drive the pedestrian with data replay
 * 1: drive the pedestrian with extended social force model
