@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!--Obstacles-->
+    <obstacle x1="-20" y1="-20" x2="-20" y2="20" type="line"/>
+    <obstacle x1="20" y1="-20" x2="20" y2="20" type="line"/>
+    <obstacle x1="-20" y1="-20" x2="20" y2="-20" type="line"/>  
+    <obstacle x1="-20" y1="20" x2="20" y2="20" type="line"/>  
+
+    <!--Waypoints (incl. WaitingQueues)-->
+    <waypoint id="goal1" x="8" y="0" r="2"/>
+    <waypoint id="goal2" x="-1" y="-8" r="2"/>
+    <waypoint id="goal3" x="3" y="8" r="2"/>
+    <waypoint id="goal4" x="0" y="2" r="2"/>
+    <waypoint id="goal5" x="-5" y="-5" r="2"/>
+
+    <!-- Robot-->
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="goal1"/>
+    </agent>
+
+    <obstacle x="2" y="1"  radius="0.2" type="circle"/>
+    <obstacle x="0" y="2"  radius="0.3" type="circle"/>
+    <obstacle x="0" y="-1"  radius="0.3" type="circle"/>
+    <obstacle x="-2" y="0"  radius="0.2" type="circle"/>
+
+    <!--AgentClusters-->    
+    <agent x="-1.0" y="5" n="3" dx="5" dy="5" type="1">
+        <addwaypoint id="goal2"/>
+    </agent>
+
+    <agent x="3.0" y="-5" n="5" dx="4" dy="4" type="1">
+        <addwaypoint id="goal3"/>
+    </agent>
+
+    <agent x="0.0" y="-1" n="5" dx="2" dy="8" type="1">
+        <addwaypoint id="goal4"/>
+    </agent>
+
+    <agent x="3.0" y="4" n="5" dx="5" dy="4" type="1">
+        <addwaypoint id="goal5"/>
+    </agent>
+
+</scenario>
+
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!-- Static obstacles -->
+    <obstacle x1="-20" y1="-20" x2="-20" y2="20" type="line"/>
+    <obstacle x1="20" y1="-20" x2="20" y2="20" type="line"/>
+    <obstacle x1="-20" y1="-20" x2="20" y2="-20" type="line"/>
+    <obstacle x1="-20" y1="20" x2="20" y2="20" type="line"/>  
+
+    <!-- 3 obs -->
+    <obstacle x="3.5" y="0" xHalfLength="0.1" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="3.5" y="-2.0" xHalfLength="0.1" yHalfLength="0.2" type="rectangle"/>    
+    <obstacle x1="3.2" y1="2.5" x2="3.8" y2="1.6" type="line"/>
+
+    <!-- c -->
+    <obstacle x="0.7" y="3" xHalfLength="0.8" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x1="1.5" y1="3" x2="1.5" y2="1" type="line"/>
+    <obstacle x1="-0.1" y1="3" x2="-0.1" y2="2" type="line"/>
+    <!-- gong -->
+    <obstacle x1="0.3" y1="-1.8" x2="0.3" y2="-0.8" type="line"/>
+    <obstacle x1="0.3" y1="-1.3" x2="1.2" y2="-1.3" type="line"/>
+    <obstacle x1="1.2" y1="-1.8" x2="1.2" y2="-0.8" type="line"/>
+
+    <!-- x -->
+    <obstacle x1="-3.2" y1="-1.1" x2="-1.1" y2="1.0" type="line"/>
+    <obstacle x1="-1.2" y1="-1.1" x2="-3.0" y2="0.9" type="line"/>
+    <!-- obs -->
+    <!-- <obstacle x1="-2.2" y1="1.7" x2="-2.2" y2="2.6" type="line"/> -->
+    <!-- obs -->
+    <obstacle x="-2.5" y="-3"  radius="0.1" type="circle"/>
+
+    <!-- obs -->
+    <obstacle x="-4" y="3"  radius="0.2" type="circle"/>
+
+
+    <!-- Waypoints required for social force -->
+    <waypoint id="start" x="25" y="10" r="2"/>
+    <waypoint id="middle" x="13" y="11" r="2"/>
+    <waypoint id="target" x="-1" y="10" r="2"/>
+    <waypoint id="robot_goal" x="25" y="10" r="0.5"/>
+    <!-- Add robot (type=2): all the parameters are invalid. The robot pose is aligned with the parameters in pedsim_simulator.launch -->
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="robot_goal"/>
+    </agent>
+    <!-- Add pedestrians -->
+    <agent x="6.0" y="9.5" n="1" dx="0" dy="0" type="1">
+        <addwaypoint id="middle"/>
+        <addwaypoint id="target"/>
+    </agent>
+</scenario>
+
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!-- Static obstacles -->
+    <obstacle x1="-20" y1="-20" x2="-20" y2="20" type="line"/>
+    <obstacle x1="20" y1="-20" x2="20" y2="20" type="line"/>
+    <obstacle x1="-20" y1="-20" x2="20" y2="-20" type="line"/>
+    <obstacle x1="-20" y1="20" x2="20" y2="20" type="line"/>  
+
+
+    <!-- x -->
+    <obstacle x1="0.0" y1="-4" x2="2.0" y2="-4" type="line"/>
+    <obstacle x1="1.0" y1="-3" x2="1.0" y2="-4.6" type="line"/>
+
+
+    <!-- 丰 -->
+    <obstacle x1="-2.0" y1="-0.5" x2="-2.0" y2="2.5" type="line"/>
+    <obstacle x1="-3.0" y1="-0.5" x2="-3.0" y2="2.5" type="line"/>
+    <obstacle x1="-3.0" y1="1" x2="-2.0" y2="1" type="line"/>
+
+    <!-- x added1 -->
+    <!-- <obstacle x1="-1.1" y1="1" x2="0.4" y2="1" type="line"/> -->
+    <!-- <obstacle x1="-0.35" y1="2.0" x2="-0.35" y2="0.4" type="line"/> -->
+    <!-- x added2 -->
+    <obstacle x1="-1.2" y1="1" x2="0.3" y2="1" type="line"/>
+    <obstacle x1="-0.45" y1="2.0" x2="-0.45" y2="0.4" type="line"/>
+
+    <!-- Waypoints required for social force -->
+    <waypoint id="start" x="25" y="10" r="2"/>
+    <waypoint id="middle" x="13" y="11" r="2"/>
+    <waypoint id="target" x="-1" y="10" r="2"/>
+    <waypoint id="robot_goal" x="25" y="10" r="0.5"/>
+    <!-- Add robot (type=2): all the parameters are invalid. The robot pose is aligned with the parameters in pedsim_simulator.launch -->
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="robot_goal"/>
+    </agent>
+    <!-- Add pedestrians -->
+    <!-- <agent x="-25" y="3" n="1" dx="0" dy="0" type="1">
+        <addwaypoint id="middle"/>
+        <addwaypoint id="target"/>
+    </agent> -->
+    <agent x="-5" y="3" n="1" dx="0" dy="0" type="1">
+        <addwaypoint id="middle"/>
+        <addwaypoint id="target"/>
+    </agent>    
+</scenario>
+
+

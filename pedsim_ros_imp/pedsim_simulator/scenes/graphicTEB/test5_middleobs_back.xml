@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!--Obstacles-->
+    <obstacle x1="-8" y1="-1.5" x2="8" y2="-1.5" type="line"/>
+    <obstacle x1="-8" y1="1.5" x2="8" y2="1.5" type="line"/>
+    <obstacle x1="-8" y1="-1.5" x2="-8" y2="1.5" type="line"/>
+    <obstacle x1="8" y1="-1.5" x2="8" y2="1.5" type="line"/>
+
+    <obstacle x="0" y="0" xHalfLength="0.6" yHalfLength="0.3" type="rectangle"/>
+    
+    <!--Waypoints (incl. WaitingQueues)-->
+    <waypoint id="start" x="25" y="10" r="2"/>
+    <waypoint id="middle1" x="11" y="9" r="2"/>
+    <waypoint id="middle2" x="11" y="11" r="2"/>
+    <waypoint id="target" x="0" y="10" r="2"/>
+    <waypoint id="robot_goal" x="25" y="10" r="0.5"/>
+
+    <!--AgentClusters-->
+    <agent x="5" y="0" n="1" dx="0" dy="0" type="1">
+        <addwaypoint id="middle1"/>
+        <addwaypoint id="target"/>
+    </agent>
+
+    <!-- Robot-->>
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="middle2"/>
+        <addwaypoint id="robot_goal"/>
+    </agent>
+
+</scenario>

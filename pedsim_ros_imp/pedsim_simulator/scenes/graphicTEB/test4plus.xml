@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!--Obstacles-->
+    <obstacle x1="-20" y1="-20" x2="-20" y2="20" type="line"/>
+    <obstacle x1="20" y1="-20" x2="20" y2="20" type="line"/>
+    <obstacle x1="-20" y1="-20" x2="20" y2="-20" type="line"/>  
+    <obstacle x1="-20" y1="20" x2="20" y2="20" type="line"/>  
+
+
+    <obstacle x="-2" y="4" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-2" y="2" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-2" y="0" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-2" y="-2" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-2" y="-4" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+
+
+
+    <obstacle x="1" y="4" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="1" y="2" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="1" y="0" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="1" y="-2" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="1" y="-4" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+
+
+
+    <!-- <obstacle x="-10" y="6" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/> -->
+    <obstacle x="-10" y="4" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-10" y="2" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-10" y="0" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-10" y="-2" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-10" y="-4" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/>
+    <!-- <obstacle x="-10" y="-6" xHalfLength="0.2" yHalfLength="0.2" type="rectangle"/> -->
+
+
+    
+    <agent x="6.0" y="9.5" n="1" dx="0" dy="0" type="1">
+        <addwaypoint id="middle"/>
+        <addwaypoint id="target"/>
+    </agent>
+
+    <!-- Robot-->>
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="middle"/>
+        <addwaypoint id="robot_goal"/>
+    </agent>
+
+</scenario>
+
+
