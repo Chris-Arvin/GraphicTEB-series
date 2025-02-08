@@ -53,7 +53,7 @@ class AgentCluster : public ScenarioElement {
 
   // Methods
  public:
-  QList<Agent*> dissolve();
+  QList<Agent*> dissolve(bool is_mutual_control);
 
   int getId() const;
   int getCount() const;

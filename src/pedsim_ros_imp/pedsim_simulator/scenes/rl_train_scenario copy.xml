@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!-- Env boundary -->
+    <obstacle x1="-105" y1="-105" x2="-105" y2="105" type="line"/>
+    <obstacle x1="105" y1="-105" x2="105" y2="105" type="line"/>
+    <obstacle x1="-105" y1="-105" x2="105" y2="-105" type="line"/>  
+    <obstacle x1="-105" y1="105" x2="105" y2="105" type="line"/>  
+
+    <!-- Robot-->
+    <waypoint id="robot_goal" x="8" y="0" r="3"/>
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="robot_goal"/>
+    </agent>
+
+    <!-- Scenario 1 [static]: center shift (-75, -75) -->
+    <!-- Static obstacles -->
+    <obstacle x1="-100.0" y1="-100.0" x2="-100.0" y2="-50.0" type="line"/>
+    <obstacle x1="-50.0" y1="-100.0" x2="-50.0" y2="-50.0" type="line"/>
+    <obstacle x1="-100.0" y1="-100.0" x2="-50.0" y2="-100.0" type="line"/>
+    <obstacle x1="-100.0" y1="-50.0" x2="-50.0" y2="-50.0" type="line"/>
+    <!-- rec,rec,rec -->
+    <obstacle x="-63.0" y="-71.0" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-62.0" y="-73.5" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-61.0" y="-76.0" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <!-- rec1,c7,c3 -->
+    <obstacle x="-65.5" y="-71.5" xHalfLength="0.5" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x1="-64.0" y1="-77.1" x2="-64.0" y2="-73.0" type="line"/>
+    <obstacle x1="-64.0" y1="-77.0" x2="-65.0" y2="-77.0" type="line"/>
+    <obstacle x1="-64.0" y1="-76.2" x2="-64.6" y2="-76.2" type="line"/>
+    <obstacle x1="-64.0" y1="-75.0" x2="-64.8" y2="-75.0" type="line"/>
+    <obstacle x1="-64.0" y1="-75.5" x2="-65.0" y2="-74.2" type="line"/>
+    <obstacle x1="-64.0" y1="-73.8" x2="-65.5" y2="-73.8" type="line"/>
+    <obstacle x1="-64.0" y1="-73.0" x2="-65.0" y2="-73.0" type="line"/>
+    <obstacle x1="-66.5" y1="-77.0" x2="-66.5" y2="-78.9" type="line"/>
+    <obstacle x1="-66.5" y1="-78.6" x2="-62.5" y2="-78.6" type="line"/>
+    <obstacle x1="-62.5" y1="-76.0" x2="-62.5" y2="-79.0" type="line"/>
+    <!-- shan4, shan4 -->
+    <obstacle x="-68.5" y="-77.5" xHalfLength="0.1" yHalfLength="1.2" type="rectangle"/>
+    <obstacle x="-69.2" y="-76.4" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-69.2" y="-78.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-68.9" y="-77.5" xHalfLength="0.4" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-68.5" y="-72.5" xHalfLength="0.1" yHalfLength="1.2" type="rectangle"/>
+    <obstacle x="-69.2" y="-73.6" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-69.2" y="-71.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-68.9" y="-72.5" xHalfLength="0.4" yHalfLength="0.1" type="rectangle"/>
+    <!-- 3 obs -->
+    <obstacle x1="-71.5" y1="-75.1" x2="-72.0" y2="-76.5" type="line"/>
+    <obstacle x1="-71.8" y1="-72.5" x2="-71.2" y2="-73.4" type="line"/>
+    <obstacle x="-72.5" y="-79.0" xHalfLength="0.6" yHalfLength="0.1" type="rectangle"/>
+    <!-- line -->
+    <obstacle x1="-73.5" y1="-73.0" x2="-74.0" y2="-74.0" type="line"/>
+    <!-- 工 -->
+    <obstacle x1="-74.4" y1="-76.3" x2="-73.6" y2="-75.8" type="line"/>
+    <obstacle x1="-74.0" y1="-76.8" x2="-74.8" y2="-75.8" type="line"/>
+    <!-- x -->
+    <obstacle x1="-78.2" y1="-76.1" x2="-76.1" y2="-74.0" type="line"/>
+    <obstacle x1="-76.2" y1="-76.1" x2="-78.1" y2="-74.0" type="line"/>
+    <!-- obs -->
+    <obstacle x1="-77.2" y1="-73.3" x2="-77.2" y2="-72.4" type="line"/>
+    <!-- c -->    
+    <obstacle x="-76.8" y="-78.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x1="-76.1" y1="-78.5" x2="-76.1" y2="-77.5" type="line"/>
+    <obstacle x1="-77.5" y1="-78.5" x2="-77.5" y2="-78.0" type="line"/>
+    <!-- 斜线 -->
+    <obstacle x1="-79.0" y1="-70.0" x2="-80.0" y2="-75.0" type="line"/>
+    <obstacle x1="-79.0" y1="-72.0" x2="-80.5" y2="-68.0" type="line"/>
+    <!-- rectangle -->
+    <obstacle x="-83.2" y="-71.0" xHalfLength="1.2" yHalfLength="0.3" type="rectangle"/>
+    <!-- x -->
+    <obstacle x1="-83.0" y1="-73.0" x2="-84.0" y2="-74.5" type="line"/>
+    <obstacle x1="-83.0" y1="-74.5" x2="-84.0" y2="-73.0" type="line"/>
+    <!-- // -->
+    <obstacle x1="-83.5" y1="-76.0" x2="-81.0" y2="-77.0" type="line"/>
+    <obstacle x1="-83.5" y1="-77.5" x2="-81.0" y2="-78.5" type="line"/>
+    <!-- 山 -->
+    <obstacle x="-87.5" y="-74.0" xHalfLength="0.2" yHalfLength="1.6" type="rectangle"/>
+    <obstacle x1="-87.5" y1="-74.0" x2="-86.0" y2="-74.0" type="line"/>
+    <obstacle x1="-87.5" y1="-75.5" x2="-86.5" y2="-75.5" type="line"/>
+    <obstacle x1="-87.5" y1="-72.5" x2="-86.5" y2="-72.5" type="line"/>
+    <!-- L -->
+    <obstacle x="-86.5" y="-77.5" xHalfLength="1.0" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-85.5" y="-77.0" xHalfLength="0.1" yHalfLength="0.6" type="rectangle"/>
+
+
+
+
+
+
+
+
+
+    <!-- Scenario 9 [dynamic]: center shift (25, -75) -->
+
+    <!--Obstacles-->
+    <obstacle x1="0" y1="-100" x2="0" y2="-50" type="line"/>
+    <obstacle x1="50" y1="-100" x2="50" y2="-50" type="line"/>
+    <obstacle x1="0" y1="-100" x2="50" y2="-100" type="line"/>  
+    <obstacle x1="0" y1="-50" x2="50" y2="-50" type="line"/>  
+
+    <!--AgentClusters-->    
+    <waypoint id="goal9_1_1" x="24" y="-83" r="3"/>
+    <waypoint id="goal9_1_2" x="24" y="-73" r="3"/>
+    <agent x="24.0" y="-73" n="5" dx="6" dy="8" type="1">
+        <addwaypoint id="goal9_1_1"/>
+        <addwaypoint id="goal9_1_2"/>
+    </agent>
+
+    <waypoint id="goal9_2_1" x="28" y="-67" r="3"/>
+    <waypoint id="goal9_2_2" x="28" y="-78" r="3"/>
+    <agent x="28.0" y="-78" n="5" dx="6" dy="8" type="1">
+        <addwaypoint id="goal9_2_1"/>
+        <addwaypoint id="goal9_2_2"/>
+    </agent>
+
+    <waypoint id="goal9_3_1" x="32" y="-81" r="3"/>
+    <waypoint id="goal9_3_2" x="32" y="-71" r="3"/>
+    <agent x="32.0" y="-71" n="5" dx="6" dy="8" type="1">
+        <addwaypoint id="goal9_3_1"/>
+        <addwaypoint id="goal9_3_2"/>
+    </agent>
+
+    <waypoint id="goal9_4_1" x="35" y="-81" r="3"/>
+    <waypoint id="goal9_4_2" x="43" y="-81" r="3"/>
+    <agent x="43.2" y="-81" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_4_1"/>
+        <addwaypoint id="goal9_4_2"/>
+    </agent>
+
+    <waypoint id="goal9_5_1" x="35" y="-79.5" r="3"/>
+    <waypoint id="goal9_5_2" x="43" y="-79.5" r="3"/>
+    <agent x="43.0" y="-79.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_5_1"/>
+        <addwaypoint id="goal9_5_2"/>
+    </agent>
+
+    <waypoint id="goal9_6_1" x="35" y="-78" r="3"/>
+    <waypoint id="goal9_6_2" x="43" y="-78" r="3"/>
+    <agent x="43.3" y="-78" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_6_1"/>
+        <addwaypoint id="goal9_6_2"/>
+    </agent>
+
+    <waypoint id="goal9_7_1" x="35" y="-76.5" r="3"/>
+    <waypoint id="goal9_7_2" x="43" y="-76.5" r="3"/>
+    <agent x="43.0" y="-76.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_7_1"/>
+        <addwaypoint id="goal9_7_2"/>
+    </agent>
+
+    <waypoint id="goal9_8_1" x="35" y="-75" r="3"/>
+    <waypoint id="goal9_8_2" x="43" y="-75" r="3"/>
+    <agent x="42.8" y="-75" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_8_1"/>
+        <addwaypoint id="goal9_8_2"/>
+    </agent>
+
+    <waypoint id="goal9_9_1" x="35" y="-73.5" r="3"/>
+    <waypoint id="goal9_9_2" x="43" y="-73.5" r="3"/>
+    <agent x="43.0" y="-73.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_9_1"/>
+        <addwaypoint id="goal9_9_2"/>
+    </agent>
+
+    <waypoint id="goal9_10_1" x="35" y="-72" r="3"/>
+    <waypoint id="goal9_10_2" x="43" y="-72" r="3"/>
+    <agent x="43.4" y="-72" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_10_1"/>
+        <addwaypoint id="goal9_10_2"/>
+    </agent>
+
+    <waypoint id="goal9_11_1" x="35" y="-70.5" r="3"/>
+    <waypoint id="goal9_11_2" x="43" y="-70.5" r="3"/>
+    <agent x="43.0" y="-70.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_11_1"/>
+        <addwaypoint id="goal9_11_2"/>
+    </agent>
+
+    <waypoint id="goal9_12_1" x="35" y="-69" r="3"/>
+    <waypoint id="goal9_12_2" x="43" y="-69" r="3"/>
+    <agent x="43.0" y="-69" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_12_1"/>
+        <addwaypoint id="goal9_12_2"/>
+    </agent>
+
+
+    <!-- Scenario 10 [dynamic]: center shift (25, -25) -->
+
+    <!--Obstacles-->
+    <obstacle x1="0" y1="-50" x2="0" y2="0" type="line"/>
+    <obstacle x1="50" y1="-50" x2="50" y2="0" type="line"/>
+    <obstacle x1="0" y1="-50" x2="50" y2="-50" type="line"/>  
+    <obstacle x1="0" y1="0" x2="50" y2="0" type="line"/>  
+
+    <!-- Add pedestrians -->
+    <waypoint id="goal10_1_1" x="10" y="-30" r="2"/>
+    <waypoint id="goal10_1_2" x="10" y="-20" r="2"/>
+    <agent x="10.0" y="-20" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_1_1"/>
+        <addwaypoint id="goal10_1_2"/>
+    </agent>
+
+    <waypoint id="goal10_2_1" x="13" y="-29" r="2"/>
+    <waypoint id="goal10_2_2" x="13" y="-21" r="2"/>
+    <agent x="13.0" y="-21" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_2_1"/>
+        <addwaypoint id="goal10_2_2"/>
+    </agent>
+
+    <waypoint id="goal10_3_1" x="16" y="-20" r="2"/>
+    <waypoint id="goal10_3_2" x="16" y="-29.5" r="2"/>
+    <agent x="16.0" y="-30" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_3_1"/>
+        <addwaypoint id="goal10_3_2"/>
+    </agent>
+
+    <waypoint id="goal10_4_1" x="19" y="-29.2" r="2"/>
+    <waypoint id="goal10_4_2" x="19" y="-21" r="2"/>
+    <agent x="19.0" y="-21" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_4_1"/>
+        <addwaypoint id="goal10_4_2"/>
+    </agent>
+
+    <waypoint id="goal10_5_1" x="22" y="-20.3" r="2"/>
+    <waypoint id="goal10_5_2" x="22" y="-29.5" r="2"/>
+    <agent x="22.0" y="-29.5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_5_1"/>
+        <addwaypoint id="goal10_5_2"/>
+    </agent>
+
+    <waypoint id="goal10_6_1" x="25" y="-29" r="2"/>
+    <waypoint id="goal10_6_2" x="25" y="-20.2" r="2"/>
+    <agent x="25.0" y="-22" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_6_1"/>
+        <addwaypoint id="goal10_6_2"/>
+    </agent>
+
+    <waypoint id="goal10_7_1" x="28" y="-30" r="2"/>
+    <waypoint id="goal10_7_2" x="28" y="-19" r="2"/>
+    <agent x="28.0" y="-18" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_7_1"/>
+        <addwaypoint id="goal10_7_2"/>
+    </agent>    
+
+    <waypoint id="goal10_8_1" x="31" y="-20.4" r="2"/>
+    <waypoint id="goal10_8_2" x="31" y="-30" r="2"/>
+    <agent x="31.0" y="-30" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_8_1"/>
+        <addwaypoint id="goal10_8_2"/>
+    </agent>
+
+    <waypoint id="goal10_9_1" x="34" y="-29.3" r="2"/>
+    <waypoint id="goal10_9_2" x="34" y="-20.2" r="2"/>
+    <agent x="34.0" y="-20.5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_9_1"/>
+        <addwaypoint id="goal10_9_2"/>
+    </agent>
+
+    <waypoint id="goal10_10_1" x="37" y="-20.0" r="2"/>
+    <waypoint id="goal10_10_2" x="37" y="-29.3" r="2"/>
+    <agent x="37.0" y="-30.2" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_10_1"/>
+        <addwaypoint id="goal10_10_2"/>
+    </agent>
+
+    <waypoint id="goal10_11_1" x="40" y="-30" r="2"/>
+    <waypoint id="goal10_11_2" x="40" y="-20.2" r="2"/>
+    <agent x="40.0" y="-20.4" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_11_1"/>
+        <addwaypoint id="goal10_11_2"/>
+    </agent>
+
+    <!-- -x <-> +x, -y -->
+    <waypoint id="goal10_12_1" x="20" y="-40" r="2"/>
+    <waypoint id="goal10_12_2" x="10" y="-40" r="2"/>
+    <agent x="10.0" y="-40" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_12_1"/>
+        <addwaypoint id="goal10_12_2"/>
+    </agent>
+
+    <waypoint id="goal10_13_1" x="12.1" y="-38.5" r="2"/>
+    <waypoint id="goal10_13_2" x="19" y="-38.5" r="2"/>
+    <agent x="19.0" y="-38.5" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_13_1"/>
+        <addwaypoint id="goal10_13_2"/>
+    </agent>
+
+    <waypoint id="goal10_14_1" x="19.6" y="-36" r="2"/>
+    <waypoint id="goal10_14_2" x="12" y="-36" r="2"/>
+    <agent x="10.0" y="-36" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_14_1"/>
+        <addwaypoint id="goal10_14_2"/>
+    </agent>
+
+    <waypoint id="goal10_15_1" x="10" y="-34.5" r="2"/>
+    <waypoint id="goal10_15_2" x="21" y="-34.5" r="2"/>
+    <agent x="21" y="-34.5" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_15_1"/>
+        <addwaypoint id="goal10_15_2"/>
+    </agent>
+
+    <waypoint id="goal10_16_1" x="20" y="-33" r="2"/>
+    <waypoint id="goal10_16_2" x="11" y="-33" r="2"/>
+    <agent x="10.0" y="-33" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_16_1"/>
+        <addwaypoint id="goal10_16_2"/>
+    </agent>
+
+    <!-- -x <-> +x, -y -->
+    <waypoint id="goal10_17_1" x="30" y="-40" r="2"/>
+    <waypoint id="goal10_17_2" x="20" y="-40" r="2"/>
+    <agent x="20.0" y="-40" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_17_1"/>
+        <addwaypoint id="goal10_17_2"/>
+    </agent>
+
+    <waypoint id="goal10_18_1" x="22.1" y="-38.5" r="2"/>
+    <waypoint id="goal10_18_2" x="29" y="-38.5" r="2"/>
+    <agent x="29.0" y="-38.5" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_18_1"/>
+        <addwaypoint id="goal10_18_2"/>
+    </agent>
+
+    <waypoint id="goal10_19_1" x="29.6" y="-36" r="2"/>
+    <waypoint id="goal10_19_2" x="22" y="-36" r="2"/>
+    <agent x="20.0" y="-36" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_19_1"/>
+        <addwaypoint id="goal10_19_2"/>
+    </agent>
+
+    <waypoint id="goal10_20_1" x="20" y="-34.5" r="2"/>
+    <waypoint id="goal10_20_2" x="31" y="-34.5" r="2"/>
+    <agent x="31" y="-34.5" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_20_1"/>
+        <addwaypoint id="goal10_20_2"/>
+    </agent>
+
+    <waypoint id="goal10_21_1" x="30" y="-33" r="2"/>
+    <waypoint id="goal10_21_2" x="21" y="-33" r="2"/>
+    <agent x="20.0" y="-33" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_21_1"/>
+        <addwaypoint id="goal10_21_2"/>
+    </agent>
+
+    <!-- -x <-> +x, -y -->
+    <waypoint id="goal10_22_1" x="30" y="-40" r="2"/>
+    <waypoint id="goal10_22_2" x="40" y="-40" r="2"/>
+    <agent x="30.0" y="-40" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_22_1"/>
+        <addwaypoint id="goal10_22_2"/>
+    </agent>
+
+    <waypoint id="goal10_23_1" x="31" y="-35" r="2"/>
+    <waypoint id="goal10_23_2" x="40" y="-35" r="2"/>
+    <agent x="31.0" y="-35" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_23_1"/>
+        <addwaypoint id="goal10_23_2"/>
+    </agent>
+
+    <waypoint id="goal10_24_1" x="39.6" y="-31" r="2"/>
+    <waypoint id="goal10_24_2" x="31" y="-31" r="2"/>
+    <agent x="30.0" y="-31" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_24_1"/>
+        <addwaypoint id="goal10_24_2"/>
+    </agent>
+
+    <!-- -x <-> +x, +y -->
+    <waypoint id="goal10_25_1" x="15" y="-15" r="2"/>
+    <waypoint id="goal10_25_2" x="10" y="-10" r="2"/>
+    <agent x="10.0" y="-10" n="1" dx="2" dy="2" type="1">
+        <addwaypoint id="goal10_25_1"/>
+        <addwaypoint id="goal10_25_2"/>
+    </agent>
+
+    <waypoint id="goal10_26_1" x="15" y="-10" r="2"/>
+    <waypoint id="goal10_26_2" x="10" y="-15" r="2"/>
+    <agent x="10" y="-15" n="1" dx="2" dy="2" type="1">
+        <addwaypoint id="goal10_26_1"/>
+        <addwaypoint id="goal10_26_2"/>
+    </agent>
+
+    <!-- -x <-> +x, +y -->
+    <waypoint id="goal10_27_1" x="23" y="-20" r="2"/>
+    <waypoint id="goal10_27_2" x="15" y="-10" r="2"/>
+    <agent x="15.0" y="-10" n="4" dx="5" dy="5" type="1">
+        <addwaypoint id="goal10_27_1"/>
+        <addwaypoint id="goal10_27_2"/>
+    </agent>
+
+    <waypoint id="goal10_28_1" x="33" y="-20" r="2"/>
+    <waypoint id="goal10_28_2" x="25" y="-10" r="2"/>
+    <agent x="25.0" y="-10" n="4" dx="5" dy="5" type="1">
+        <addwaypoint id="goal10_28_1"/>
+        <addwaypoint id="goal10_28_2"/>
+    </agent>
+
+    <waypoint id="goal10_29_1" x="41" y="-20" r="2"/>
+    <waypoint id="goal10_29_2" x="33" y="-10" r="2"/>
+    <agent x="33.0" y="-10" n="4" dx="5" dy="5" type="1">
+        <addwaypoint id="goal10_29_1"/>
+        <addwaypoint id="goal10_29_2"/>
+    </agent>
+
+
+
+
+
+
+
+    <!-- Scenario 11 [dynamic]: center shift (25, 25) -->
+
+    <!-- Static obstacles -->
+    <obstacle x1="0" y1="0" x2="0" y2="50" type="line"/>
+    <obstacle x1="0" y1="50" x2="50" y2="50" type="line"/>      
+    <obstacle x1="50" y1="50" x2="50" y2="0" type="line"/>
+    <obstacle x1="50" y1="0" x2="0" y2="0" type="line"/>  
+    
+
+    <!-- Add pedestrians -->
+    <waypoint id="goal11_1_1" x="13" y="17" r="2"/>
+    <waypoint id="goal11_1_2" x="25" y="33" r="2"/>
+    <agent x="25.0" y="33" n="3" dx="2" dy="2" type="1">
+        <addwaypoint id="goal11_1_1"/>
+        <addwaypoint id="goal11_1_2"/>
+    </agent>
+
+    <waypoint id="goal11_2_1" x="13" y="33" r="2"/>
+    <waypoint id="goal11_2_2" x="25" y="17" r="2"/>
+    <agent x="25.0" y="17" n="3" dx="2" dy="2" type="1">
+        <addwaypoint id="goal11_2_1"/>
+        <addwaypoint id="goal11_2_2"/>
+    </agent>
+
+    <waypoint id="goal11_3_1" x="27" y="17" r="2"/>
+    <waypoint id="goal11_3_2" x="15" y="33" r="2"/>
+    <agent x="15.0" y="33" n="3" dx="2" dy="2" type="1">
+        <addwaypoint id="goal11_3_1"/>
+        <addwaypoint id="goal11_3_2"/>
+    </agent>
+
+    <waypoint id="goal11_4_1" x="27" y="33" r="2"/>
+    <waypoint id="goal11_4_2" x="15" y="17" r="2"/>
+    <agent x="15.0" y="17" n="3" dx="2" dy="2" type="1">
+        <addwaypoint id="goal11_4_1"/>
+        <addwaypoint id="goal11_4_2"/>
+    </agent>
+
+    <waypoint id="goal11_5_1" x="40" y="25" r="2"/>
+    <waypoint id="goal11_5_2" x="30" y="25" r="2"/>
+    <agent x="30.0" y="25" n="3" dx="0" dy="5" type="1">
+        <addwaypoint id="goal11_5_1"/>
+        <addwaypoint id="goal11_5_2"/>
+    </agent>
+
+    <waypoint id="goal11_6_1" x="30" y="25" r="2"/>
+    <waypoint id="goal11_6_2" x="40" y="25" r="2"/>
+    <agent x="40.0" y="25" n="3" dx="0" dy="3" type="1">
+        <addwaypoint id="goal11_6_1"/>
+        <addwaypoint id="goal11_6_2"/>
+    </agent>
+
+    <waypoint id="goal11_7_1" x="35" y="25" r="2"/>
+    <waypoint id="goal11_7_2" x="35" y="15" r="2"/>
+    <agent x="35.0" y="15" n="3" dx="4" dy="4" type="1">
+        <addwaypoint id="goal11_7_1"/>
+        <addwaypoint id="goal11_7_2"/>
+    </agent>
+
+    <waypoint id="goal11_8_1" x="35" y="25" r="2"/>
+    <waypoint id="goal11_8_2" x="35" y="35" r="2"/>
+    <agent x="35.0" y="35" n="3" dx="4" dy="4" type="1">
+        <addwaypoint id="goal11_8_1"/>
+        <addwaypoint id="goal11_8_2"/>
+    </agent>
+
+
+
+
+
+    <!-- Scenario 12 [dynamic]: center shift (25, 75) -->
+
+    <!-- Static obstacles -->
+    <obstacle x1="0" y1="50" x2="0" y2="100" type="line"/>
+    <obstacle x1="50" y1="50" x2="50" y2="100" type="line"/>
+    <obstacle x1="0" y1="50" x2="50" y2="50" type="line"/>  
+    <obstacle x1="0" y1="100" x2="50" y2="100" type="line"/>  
+
+    <!-- 5 crowds at corners -->
+    <waypoint id="goal12_1_1" x="25" y="75" r="15"/>
+    <agent x="25.0" y="75" n="10" dx="6" dy="6" type="1">
+        <addwaypoint id="goal12_1_1"/>
+    </agent>
+
+    <waypoint id="goal12_2_1" x="17" y="67" r="15"/>
+    <agent x="17" y="67" n="10" dx="6" dy="6" type="1">
+        <addwaypoint id="goal12_2_1"/>
+    </agent>
+
+    <waypoint id="goal12_3_1" x="33" y="67" r="15"/>
+    <agent x="33" y="67" n="10" dx="6" dy="6" type="1">
+        <addwaypoint id="goal12_3_1"/>
+    </agent>
+
+    <waypoint id="goal12_4_1" x="17" y="83" r="15"/>
+    <agent x="17" y="83" n="10" dx="6" dy="6" type="1">
+        <addwaypoint id="goal12_4_1"/>
+    </agent>
+
+    <waypoint id="goal12_5_1" x="33" y="83" r="15"/>
+    <agent x="33" y="83" n="10" dx="6" dy="6" type="1">
+        <addwaypoint id="goal12_5_1"/>
+    </agent>
+
+    <!-- movements -->
+    <waypoint id="goal12_6_1" x="15" y="79" r="2"/>
+    <waypoint id="goal12_6_2" x="15" y="71" r="2"/>
+    <agent x="15" y="71" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal12_6_1"/>
+        <addwaypoint id="goal12_6_2"/>
+    </agent>
+
+    <waypoint id="goal12_7_1" x="35" y="79" r="2"/>
+    <waypoint id="goal12_7_2" x="35" y="71" r="2"/>
+    <agent x="35" y="71" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal12_7_1"/>
+        <addwaypoint id="goal12_7_2"/>
+    </agent>
+
+    <waypoint id="goal12_8_1" x="29" y="85" r="2"/>
+    <waypoint id="goal12_8_2" x="21" y="85" r="2"/>
+    <agent x="21" y="85" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal12_8_1"/>
+        <addwaypoint id="goal12_8_2"/>
+    </agent>
+
+    <waypoint id="goal12_9_1" x="29" y="65" r="2"/>
+    <waypoint id="goal12_9_2" x="21" y="65" r="2"/>
+    <agent x="21" y="65" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal12_9_1"/>
+        <addwaypoint id="goal12_9_2"/>
+    </agent>
+
+</scenario>
+
+

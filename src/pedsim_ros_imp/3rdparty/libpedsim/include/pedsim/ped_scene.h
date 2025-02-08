@@ -82,7 +82,6 @@ class LIBEXPORT Tscene {
   virtual void moveAgentsWithSocial(double h);
   virtual void moveAgentsWithManual(double h);
   virtual void moveAgentsWithReplay();
-  virtual void adjustAgentsGazeWithManual(double h);
 
   set<const Ped::Tagent*> getNeighbors(double x, double y, double dist) const;
   const vector<Tagent*>& getAllAgents() const { return agents; };

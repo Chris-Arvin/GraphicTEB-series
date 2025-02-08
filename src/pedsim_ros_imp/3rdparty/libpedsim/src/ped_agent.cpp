@@ -41,7 +41,7 @@ Ped::Tagent::Tagent() {
 
   forceFactorDesired = 1.0;
   forceFactorSocial = 2.1;
-  forceFactorObstacle = 50.0;
+  forceFactorObstacle = 5.0;
   forceSigmaObstacle = 0.8;
   // 设置人的半径
   // agentRadius = 0.35;

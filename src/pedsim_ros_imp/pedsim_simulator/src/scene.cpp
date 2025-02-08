@@ -248,37 +248,29 @@ bool Scene::hasStarted() const { return (sceneTime == 0); }
 
 void Scene::dissolveClusters() {
   foreach (AgentCluster* cluster, agentClusters) {
-    QList<Agent*> newAgents = cluster->dissolve();
+    QList<Agent*> newAgents = cluster->dissolve(CONFIG.person_mode == PersonMode::TELEOPERATION);
     // divide agents into groups
     QList<AgentGroup*> newGroups = AgentGroup::divideAgents(newAgents);
     // apply group forces
     foreach (AgentGroup* currentGroup, newGroups) {
       if (currentGroup->memberCount() == 1) {
         // we don't need one agent groups
-        delete currentGroup;
+        // delete currentGroup;
       } else if (currentGroup->memberCount() > 1) {
         // keep track of groups
         agentGroups.append(currentGroup);
       }
       // add group's agents to the scene
-      // ROS_INFO("len: %d", currentGroup->getMembers().size());
       foreach (Agent* currentAgent, currentGroup->getMembers()) {
         currentAgent->setWaypoints(cluster->getWaypoints());
         if (currentGroup->memberCount() > 1) {
           currentAgent->setGroup(currentGroup);
-          // → Gaze Force
-          // 一个与agent的当前方向相反或相同的力，大小为该agent与群组的中心距离
-          // GroupGazeForce* gazeForce = new GroupGazeForce(currentAgent);
-          // gazeForce->setGroup(currentGroup);
-          // currentAgent->addForce(gazeForce);
-
           // → Coherence Force
           // 一个指向群组中心的力，大小与距离成正比
           GroupCoherenceForce* coherenceForce =
               new GroupCoherenceForce(currentAgent);
           coherenceForce->setGroup(currentGroup);
           currentAgent->addForce(coherenceForce);
-
           // → Repulsion Force
           // 即使是群组内的人也不要靠的太近，排斥力
           GroupRepulsionForce* repulsionForce =
@@ -518,22 +510,17 @@ std::set<const Ped::Tagent*> Scene::getNeighbors(double x, double y,
 void Scene::moveAllAgents() {
   // inform users when there is going to be the first update
   if (sceneTime == 0) emit aboutToStart();
-
   // clean up scene if necessary
   double cleanupInterval = 2.0;
   if (fmod(sceneTime, cleanupInterval) < CONFIG.getTimeStepSize())
     cleanupScene();
-
   // inform users that there will be an update
   emit aboutToMoveAgents();
-
   // dissolve agent clusters
   if (!agentClusters.isEmpty()) dissolveClusters();
-
   // update scene time
   sceneTime += CONFIG.getTimeStepSize();
   emit sceneTimeChanged(sceneTime);
-
   // 如果存在person或robot需要被社会力驱动，那么遍历agent，调用moveAgentWithSocial，进而调用agent.cpp中的move()，在这个move()中，会再次对agent类型进行判断，区分是person还是robot使用social force
   if (CONFIG.person_mode == PersonMode::SOCIAL_DRIVE || CONFIG.robot_mode == RobotMode::SOCIAL_DRIVE){
     // social force model to drive people
@@ -587,15 +574,6 @@ void Scene::moveAllAgents() {
     }
     Ped::Tscene::moveAgentsWithReplay();
   }
-
-  // update the gaze 
-  for (auto agent: getAgents()){
-    if (agent->getType()!=2){
-      this->gazeList.push(agent->gazeFromTopic);
-    }
-  }
-  Ped::Tscene::adjustAgentsGazeWithManual(CONFIG.getTimeStepSize());
-
   // inform users
   emit movedAgents();
 }

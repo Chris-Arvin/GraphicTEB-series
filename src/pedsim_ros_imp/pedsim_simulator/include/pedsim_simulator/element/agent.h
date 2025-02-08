@@ -87,7 +87,6 @@ class Agent : public ScenarioElement, public Ped::Tagent {
   bool setTopic();
   bool setSubscriber(ros::NodeHandle nh);
 
-  bool setPubTopic();
   bool setPublisher(ros::NodeHandle nh);
   Ped::Twaypoint* getCurrentDestination() const;
   bool needNewDestination() const;
@@ -135,9 +134,6 @@ class Agent : public ScenarioElement, public Ped::Tagent {
   void setType(Ped::Tagent::AgentType typeIn);
   void controlCallback(const geometry_msgs::Twist::ConstPtr& msg);
   void stateCallback(const pedsim_msgs::TrackedPersons::ConstPtr& msg);
-  void gazeCallback(const geometry_msgs::Twist::ConstPtr& msg);
-
-  void gazePublish(const visualization_msgs::Marker dir_msg,const visualization_msgs::Marker tar_msg) const;
 
   // → VisibleScenarioElement Overrides/Overloads
  public:

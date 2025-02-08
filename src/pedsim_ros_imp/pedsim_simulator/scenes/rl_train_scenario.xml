@@ -1,0 +1,1232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!-- Env boundary -->
+    <obstacle x1="-80" y1="-80" x2="-80" y2="80" type="line"/>
+    <obstacle x1="80" y1="-80" x2="80" y2="80" type="line"/>
+    <obstacle x1="-80" y1="-80" x2="80" y2="-80" type="line"/>  
+    <obstacle x1="-80" y1="80" x2="80" y2="80" type="line"/>  
+
+    <!-- Robot-->
+    <waypoint id="robot_goal" x="8" y="0" r="3"/>
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="robot_goal"/>
+    </agent>
+
+    <!-- Scenario 1 [static]: center shift (-75, -75) -->
+    <!-- Env Boundary -->
+    <obstacle x1="-75.0" y1="-75.0" x2="-75.0" y2="-25.0" type="line"/>
+    <obstacle x1="-25.0" y1="-75.0" x2="-25.0" y2="-25.0" type="line"/>
+    <obstacle x1="-75.0" y1="-75.0" x2="-25.0" y2="-75.0" type="line"/>
+    <obstacle x1="-75.0" y1="-25.0" x2="-25.0" y2="-25.0" type="line"/>
+    <!-- rec,rec,rec -->
+    <obstacle x="-38.0" y="-53.0" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-37.0" y="-55.5" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-36.0" y="-58.0" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <!-- rec1,c7,c3 -->
+    <obstacle x="-40.5" y="-53.5" xHalfLength="0.5" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x1="-39.0" y1="-59.1" x2="-39.0" y2="-55.0" type="line"/>
+    <obstacle x1="-39.0" y1="-59.0" x2="-40.0" y2="-59.0" type="line"/>
+    <obstacle x1="-39.0" y1="-58.2" x2="-39.6" y2="-58.2" type="line"/>
+    <obstacle x1="-39.0" y1="-57.0" x2="-39.8" y2="-57.0" type="line"/>
+    <obstacle x1="-39.0" y1="-57.5" x2="-40.0" y2="-56.2" type="line"/>
+    <obstacle x1="-39.0" y1="-55.8" x2="-40.5" y2="-55.8" type="line"/>
+    <obstacle x1="-39.0" y1="-55.0" x2="-40.0" y2="-55.0" type="line"/>
+    <obstacle x1="-41.5" y1="-59.0" x2="-41.5" y2="-60.9" type="line"/>
+    <obstacle x1="-41.5" y1="-60.6" x2="-37.5" y2="-60.6" type="line"/>
+    <obstacle x1="-37.5" y1="-58.0" x2="-37.5" y2="-61.0" type="line"/>
+    <!-- shan4, shan4 -->
+    <obstacle x="-43.5" y="-59.5" xHalfLength="0.1" yHalfLength="1.2" type="rectangle"/>
+    <obstacle x="-44.2" y="-58.4" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-44.2" y="-60.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-43.9" y="-59.5" xHalfLength="0.4" yHalfLength="0.1" type="rectangle"/>
+    <!-- 3 obs -->
+    <obstacle x1="-46.5" y1="-57.1" x2="-47.0" y2="-58.5" type="line"/>
+    <obstacle x1="-46.8" y1="-54.5" x2="-46.2" y2="-55.4" type="line"/>
+    <obstacle x="-47.5" y="-61.0" xHalfLength="0.6" yHalfLength="0.1" type="rectangle"/>
+    <!-- line -->
+    <obstacle x1="-48.5" y1="-55.0" x2="-49.0" y2="-56.0" type="line"/>
+    <!-- 工 -->
+    <obstacle x1="-49.4" y1="-58.3" x2="-48.6" y2="-57.8" type="line"/>
+    <obstacle x1="-49.0" y1="-58.8" x2="-49.8" y2="-57.8" type="line"/>
+    <!-- x -->
+    <obstacle x1="-53.2" y1="-58.1" x2="-51.1" y2="-56.0" type="line"/>
+    <obstacle x1="-51.2" y1="-58.1" x2="-53.1" y2="-56.0" type="line"/>
+    <!-- obs -->
+    <obstacle x1="-52.2" y1="-55.3" x2="-52.2" y2="-54.4" type="line"/>
+    <!-- c -->    
+    <obstacle x="-51.8" y="-60.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x1="-51.1" y1="-60.5" x2="-51.1" y2="-59.5" type="line"/>
+    <obstacle x1="-52.5" y1="-60.5" x2="-52.5" y2="-60.0" type="line"/>
+    <!-- 斜线 -->
+    <obstacle x1="-54.0" y1="-52.0" x2="-55.0" y2="-57.0" type="line"/>
+    <obstacle x1="-54.0" y1="-54.0" x2="-55.5" y2="-50.0" type="line"/>
+    <!-- rectangle -->
+    <obstacle x="-58.2" y="-53.0" xHalfLength="1.2" yHalfLength="0.3" type="rectangle"/>
+    <!-- x -->
+    <obstacle x1="-58.0" y1="-55.0" x2="-59.0" y2="-56.5" type="line"/>
+    <obstacle x1="-58.0" y1="-56.5" x2="-59.0" y2="-55.0" type="line"/>
+    <!-- // -->
+    <obstacle x1="-58.5" y1="-58.0" x2="-56.0" y2="-59.0" type="line"/>
+    <obstacle x1="-58.5" y1="-59.5" x2="-56.0" y2="-60.5" type="line"/>
+    <!-- 山 -->
+    <obstacle x="-62.5" y="-56.0" xHalfLength="0.2" yHalfLength="1.6" type="rectangle"/>
+    <obstacle x1="-62.5" y1="-56.0" x2="-61.0" y2="-56.0" type="line"/>
+    <obstacle x1="-62.5" y1="-57.5" x2="-61.5" y2="-57.5" type="line"/>
+    <obstacle x1="-62.5" y1="-54.5" x2="-61.5" y2="-54.5" type="line"/>
+    <!-- L -->
+    <obstacle x="-61.5" y="-59.5" xHalfLength="1.0" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-60.5" y="-59.0" xHalfLength="0.1" yHalfLength="0.6" type="rectangle"/>
+    <!-- circle -->
+    <obstacle x="-64.0" y="-50.0" radius="0.8" type="circle"/>
+    <obstacle x="-61.0" y="-50.0" radius="0.7" type="circle"/>
+    <obstacle x="-58.0" y="-50.0" radius="0.5" type="circle"/>
+    <obstacle x="-52.0" y="-51.5" radius="0.7" type="circle"/>
+    <obstacle x="-50.0" y="-50.0" radius="0.4" type="circle"/>
+    <obstacle x="-46.0" y="-51.0" radius="0.5" type="circle"/>
+    <obstacle x="-43.0" y="-52.0" radius="0.8" type="circle"/>
+    <obstacle x="-40.0" y="-50.0" radius="0.8" type="circle"/>
+    <!-- rec,rec,rec -->
+    <obstacle x="-38.0" y="-40.0" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-37.0" y="-42.5" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-36.0" y="-45.0" xHalfLength="0.3" yHalfLength="0.2" type="rectangle"/>
+    <!-- rec1,c7,c3 -->
+    <obstacle x="-40.5" y="-40.5" xHalfLength="0.5" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x1="-39.0" y1="-46.1" x2="-39.0" y2="-42.0" type="line"/>
+    <obstacle x1="-39.0" y1="-46.0" x2="-40.0" y2="-46.0" type="line"/>
+    <obstacle x1="-39.0" y1="-45.2" x2="-39.6" y2="-45.2" type="line"/>
+    <obstacle x1="-39.0" y1="-44.0" x2="-39.8" y2="-44.0" type="line"/>
+    <obstacle x1="-39.0" y1="-44.5" x2="-40.0" y2="-43.2" type="line"/>
+    <obstacle x1="-39.0" y1="-42.8" x2="-40.5" y2="-42.8" type="line"/>
+    <obstacle x1="-39.0" y1="-42.0" x2="-40.0" y2="-42.0" type="line"/>
+    <obstacle x1="-41.5" y1="-46.0" x2="-41.5" y2="-47.9" type="line"/>
+    <obstacle x1="-41.5" y1="-47.6" x2="-37.5" y2="-47.6" type="line"/>
+    <obstacle x1="-37.5" y1="-45.0" x2="-37.5" y2="-48.0" type="line"/>
+    <!-- shan4, shan4 -->
+    <obstacle x="-43.5" y="-46.5" xHalfLength="0.1" yHalfLength="1.2" type="rectangle"/>
+    <obstacle x="-44.2" y="-45.4" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-44.2" y="-47.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x="-43.9" y="-46.5" xHalfLength="0.4" yHalfLength="0.1" type="rectangle"/>
+    <!-- 3 obs -->
+    <obstacle x1="-46.5" y1="-44.1" x2="-47.0" y2="-45.5" type="line"/>
+    <obstacle x1="-46.8" y1="-41.5" x2="-46.2" y2="-42.4" type="line"/>
+    <obstacle x="-47.5" y="-48.0" xHalfLength="0.6" yHalfLength="0.1" type="rectangle"/>
+    <!-- line -->
+    <obstacle x1="-48.5" y1="-42.0" x2="-49.0" y2="-43.0" type="line"/>
+    <!-- 工 -->
+    <obstacle x1="-49.4" y1="-45.3" x2="-48.6" y2="-44.8" type="line"/>
+    <obstacle x1="-49.0" y1="-45.8" x2="-49.8" y2="-44.8" type="line"/>
+    <!-- x -->
+    <obstacle x1="-53.2" y1="-45.1" x2="-51.1" y2="-43.0" type="line"/>
+    <obstacle x1="-51.2" y1="-45.1" x2="-53.1" y2="-43.0" type="line"/>
+    <!-- obs -->
+    <obstacle x1="-52.2" y1="-42.3" x2="-52.2" y2="-41.4" type="line"/>
+    <!-- c -->    
+    <obstacle x="-51.8" y="-47.5" xHalfLength="0.7" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x1="-51.1" y1="-47.5" x2="-51.1" y2="-46.5" type="line"/>
+    <obstacle x1="-52.5" y1="-47.5" x2="-52.5" y2="-47.0" type="line"/>
+    <!-- 斜线 -->
+    <obstacle x1="-54.0" y1="-39.0" x2="-55.0" y2="-44.0" type="line"/>
+    <obstacle x1="-54.0" y1="-41.0" x2="-55.5" y2="-37.0" type="line"/>
+    <!-- rectangle -->
+    <obstacle x="-58.2" y="-40.0" xHalfLength="1.2" yHalfLength="0.3" type="rectangle"/>
+    <!-- x -->
+    <obstacle x1="-58.0" y1="-42.0" x2="-59.0" y2="-43.5" type="line"/>
+    <obstacle x1="-58.0" y1="-43.5" x2="-59.0" y2="-42.0" type="line"/>
+    <!-- // -->
+    <obstacle x1="-58.5" y1="-45.0" x2="-56.0" y2="-46.0" type="line"/>
+    <obstacle x1="-58.5" y1="-46.5" x2="-56.0" y2="-47.5" type="line"/>
+    <!-- 山 -->
+    <obstacle x="-62.5" y="-43.0" xHalfLength="0.2" yHalfLength="1.6" type="rectangle"/>
+
+
+
+
+
+
+
+
+    <!-- Scenario 2 [static]: center shift (-50, 0) -->
+    <!-- Env Boundary -->
+    <obstacle x1="-75" y1="-25" x2="-75" y2="25" type="line"/>
+    <obstacle x1="-25" y1="-25" x2="-25" y2="25" type="line"/>
+    <obstacle x1="-75" y1="-25" x2="-25" y2="-25" type="line"/>  
+    <obstacle x1="-75" y1="25" x2="-25" y2="25" type="line"/>  
+    <!-- -x -->
+    <obstacle x="-63.0" y="10.0" xHalfLength="1.3" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x="-64.8" y="8.2" xHalfLength="1.2" yHalfLength="0.2" type="rectangle"/>
+
+    <obstacle x="-61.0" y="8.0" radius="0.5" type="circle"/>
+
+    <obstacle x1="-66.0" y1="4.8" x2="-66.0" y2="6.5" type="line"/>
+    <obstacle x1="-64.0" y1="4.8" x2="-64.0" y2="6.5" type="line"/>
+    <obstacle x1="-62.5" y1="4.8" x2="-62.5" y2="6.5" type="line"/>
+
+    <obstacle x1="-60.0" y1="5.0" x2="-57.0" y2="5.0" type="line"/>
+    <obstacle x1="-59.0" y1="6.5" x2="-56.5" y2="6.5" type="line"/>
+    <obstacle x1="-58.0" y1="8" x2="-55.5" y2="8" type="line"/>
+
+    <obstacle x1="-54.0" y1="3" x2="-52.0" y2="5" type="line"/>
+    <obstacle x1="-52.0" y1="3" x2="-54.0" y2="5" type="line"/>
+
+    <obstacle x1="-52.5" y1="6.1" x2="-50.5" y2="8.1" type="line"/>
+    <obstacle x1="-50.5" y1="6.1" x2="-52.5" y2="8.1" type="line"/>
+
+    <obstacle x="-58.0" y="3.1" xHalfLength="2" yHalfLength="0.3" type="rectangle"/>
+    <obstacle x="-64.0" y="3.1" xHalfLength="2" yHalfLength="0.3" type="rectangle"/>
+
+    <obstacle x1="-68.0" y1="0.0" x2="-64.0" y2="1.5" type="line"/>
+    <obstacle x1="-64.0" y1="0.0" x2="-60.0" y2="1.5" type="line"/>
+    <obstacle x1="-60.0" y1="0.0" x2="-56.0" y2="1.5" type="line"/>
+    <obstacle x1="-56.0" y1="0.0" x2="-52.0" y2="1.5" type="line"/>
+
+    <obstacle x="-58.0" y="-3.0" xHalfLength="2" yHalfLength="0.3" type="rectangle"/>
+    <obstacle x="-64.0" y="-3.0" xHalfLength="2" yHalfLength="0.3" type="rectangle"/>
+
+    <obstacle x1="-66.0" y1="-5.0" x2="-66.0" y2="-8.0" type="line"/>
+    <obstacle x1="-64.5" y1="-5.0" x2="-64.5" y2="-8.0" type="line"/>
+    <obstacle x1="-63.3" y1="-5.0" x2="-63.3" y2="-8.0" type="line"/>
+    <obstacle x1="-61.5" y1="-5.0" x2="-61.5" y2="-8.0" type="line"/>
+    <obstacle x1="-59.5" y1="-5.0" x2="-59.5" y2="-8.0" type="line"/>
+    <obstacle x1="-58.0" y1="-5.0" x2="-58.0" y2="-8.0" type="line"/>
+    <obstacle x1="-56.2" y1="-5.0" x2="-56.2" y2="-8.0" type="line"/>
+    <obstacle x1="-55.0" y1="-5.0" x2="-55.0" y2="-8.0" type="line"/>
+
+    <obstacle x1="-66.0" y1="-9.5" x2="-63.0" y2="-9.5" type="line"/>
+    <obstacle x1="-66.0" y1="-11" x2="-63.0" y2="-11" type="line"/>
+    <obstacle x1="-66.0" y1="-12.5" x2="-63.0" y2="-12.5" type="line"/>
+    <obstacle x1="-66.0" y1="-14" x2="-63.0" y2="-14" type="line"/>
+    <obstacle x1="-66.0" y1="-15.5" x2="-63.0" y2="-15.5" type="line"/>
+
+    <obstacle x1="-62.0" y1="-10" x2="-59.0" y2="-10" type="line"/>
+    <obstacle x1="-62.0" y1="-11.5" x2="-59.0" y2="-11.5" type="line"/>
+    <obstacle x1="-62.0" y1="-13" x2="-59.0" y2="-13" type="line"/>
+    <obstacle x1="-62.0" y1="-14.5" x2="-59.0" y2="-14.5" type="line"/>
+    <obstacle x1="-62.0" y1="-16" x2="-59.0" y2="-16" type="line"/>
+
+    <obstacle x="-56.4" y="-12" xHalfLength="0.4" yHalfLength="1.4" type="rectangle"/>
+    <obstacle x="-52.0" y="-12" xHalfLength="1.5" yHalfLength="0.3" type="rectangle"/>
+    <obstacle x="-55.0" y="-16" xHalfLength="2" yHalfLength="0.3" type="rectangle"/>
+
+    <!-- +x -->
+    <obstacle x1="-45.0" y1="7" x2="-42.0" y2="7" type="line"/>
+    <obstacle x1="-40.9" y1="7" x2="-38.0" y2="7" type="line"/>
+    <obstacle x1="-36.5" y1="7" x2="-36.5" y2="4" type="line"/>
+
+    <obstacle x1="-50.0" y1="3" x2="-48.0" y2="5" type="line"/>
+    <obstacle x1="-48.0" y1="3" x2="-50.0" y2="5" type="line"/>
+
+    <obstacle x1="-48.5" y1="6.1" x2="-46.5" y2="8.1" type="line"/>
+    <obstacle x1="-46.5" y1="6.1" x2="-48.5" y2="8.1" type="line"/>
+
+    <obstacle x="-44.0" y="3.0" radius="1.0" type="circle"/>
+    <obstacle x="-40.0" y="3.0" radius="1.0" type="circle"/>
+
+    <obstacle x1="-50.0" y1="-1.5" x2="-46.0" y2="0.0" type="line"/>
+    <obstacle x1="-46.0" y1="-1.5" x2="-42.0" y2="0.0" type="line"/>
+    <obstacle x="-42.2" y="-0.8" xHalfLength="1.5" yHalfLength="0.2" type="rectangle"/>
+    <obstacle x1="-42.0" y1="-1.5" x2="-38.0" y2="0.0" type="line"/>
+    <obstacle x1="-38.0" y1="-1.5" x2="-34.0" y2="0.0" type="line"/>
+
+    <obstacle x1="-55.5" y1="-4.5" x2="-51.5" y2="-3" type="line"/>
+    <obstacle x1="-51.5" y1="-4.5" x2="-47.5" y2="-3" type="line"/>
+    <obstacle x1="-47.5" y1="-4.5" x2="-43.5" y2="-3" type="line"/>
+    <obstacle x1="-43.5" y1="-4.5" x2="-39.5" y2="-3" type="line"/>
+
+    <obstacle x1="-52" y1="-5.5" x2="-50" y2="-8" type="line"/>
+    <obstacle x1="-50" y1="-5.5" x2="-48" y2="-8" type="line"/>
+    <obstacle x1="-48.6" y1="-5.5" x2="-46.6" y2="-8" type="line"/>
+    <obstacle x1="-46" y1="-5.5" x2="-44" y2="-8" type="line"/>
+    <obstacle x1="-44" y1="-5.5" x2="-42" y2="-8" type="line"/>
+    <obstacle x1="-42" y1="-5.5" x2="-40" y2="-8" type="line"/>
+    <obstacle x1="-40" y1="-5.5" x2="-38" y2="-8" type="line"/>
+
+    <obstacle x1="-48.0" y1="-12" x2="-46.0" y2="-10" type="line"/>
+    <obstacle x1="-48.0" y1="-10" x2="-46.0" y2="-12" type="line"/>
+    <obstacle x1="-47.0" y1="-12.7" x2="-47.0" y2="-14.0" type="line"/>
+
+    <obstacle x1="-44.0" y1="-12" x2="-42.0" y2="-10" type="line"/>
+    <obstacle x1="-44.0" y1="-10" x2="-42.0" y2="-12" type="line"/>
+    <obstacle x1="-43.0" y1="-12.8" x2="-43.0" y2="-14.0" type="line"/>
+
+    <obstacle x1="-40.0" y1="-12" x2="-38.0" y2="-10" type="line"/>
+    <obstacle x1="-40.0" y1="-10" x2="-38.0" y2="-12" type="line"/>
+    <obstacle x1="-39.0" y1="-12.9" x2="-39.0" y2="-14.0" type="line"/>
+
+    <obstacle x1="-50.5" y1="-16" x2="-48.5" y2="-14" type="line"/>
+    <obstacle x1="-50.5" y1="-14" x2="-48.5" y2="-16" type="line"/>
+
+    <obstacle x1="-46.5" y1="-16" x2="-45.5" y2="-14" type="line"/>
+    <obstacle x1="-46.5" y1="-14" x2="-45.5" y2="-16" type="line"/>
+
+    <obstacle x1="-42.7" y1="-16" x2="-41.3" y2="-14" type="line"/>
+    <obstacle x1="-42.7" y1="-14" x2="-41.3" y2="-16" type="line"/>
+
+
+
+
+
+
+
+    <!-- Scenario 3 [static]: center shift (-50, 50) -->
+    <!-- Env Boundary -->
+    <obstacle x1="-75" y1="25" x2="-75" y2="75" type="line"/>
+    <obstacle x1="-25" y1="25" x2="-25" y2="75" type="line"/>
+    <obstacle x1="-75" y1="25" x2="-25" y2="25" type="line"/>  
+    <obstacle x1="-75" y1="75" x2="-25" y2="75" type="line"/> 
+    <!-- center -->
+    <obstacle x="-50.0" y="50.0" radius="0.9" type="circle"/>
+    <obstacle x1="-49.2" y1="47.5" x2="-47.5" y2="49.2" type="line"/>
+    <obstacle x1="-49.2" y1="52.5" x2="-47.5" y2="50.8" type="line"/>
+    <obstacle x1="-50.8" y1="47.5" x2="-52.5" y2="49.2" type="line"/>
+    <obstacle x1="-50.8" y1="52.5" x2="-52.5" y2="50.8" type="line"/>
+
+    <!-- +x -->
+    <obstacle x1="-54.0" y1="61.4" x2="-54.0" y2="64.5" type="line"/>
+    <obstacle x1="-54.0" y1="61.5" x2="-55.0" y2="59.5" type="line"/>
+    <obstacle x1="-54.0" y1="61.5" x2="-53.0" y2="59.5" type="line"/>
+
+    <obstacle x1="-52.0" y1="61.4" x2="-52.0" y2="64.5" type="line"/>
+    <obstacle x1="-52.0" y1="61.5" x2="-50.0" y2="59.5" type="line"/>
+    <obstacle x1="-50.0" y1="61.4" x2="-50.0" y2="64.5" type="line"/>
+    <obstacle x1="-48.0" y1="61.5" x2="-50.0" y2="59.5" type="line"/>
+    <obstacle x1="-48.0" y1="61.4" x2="-48.0" y2="64.5" type="line"/>
+    <obstacle x1="-50.6" y1="63" x2="-49.4" y2="63" type="line"/>
+
+    <obstacle x1="-46.0" y1="61.4" x2="-46.0" y2="64.5" type="line"/>
+    <obstacle x1="-46.0" y1="61.5" x2="-45.0" y2="59.5" type="line"/>
+    <obstacle x1="-46.0" y1="61.5" x2="-47.0" y2="59.5" type="line"/>
+
+    <obstacle x1="-44.0" y1="58" x2="-44.0" y2="55" type="line"/>
+    <obstacle x1="-45.5" y1="58" x2="-45.2" y2="55" type="line"/>
+    <obstacle x1="-47.0" y1="58" x2="-47.2" y2="55" type="line"/>
+    <obstacle x1="-48.5" y1="58" x2="-48.5" y2="55" type="line"/>
+    <obstacle x1="-50" y1="58" x2="-50" y2="55" type="line"/>
+    <obstacle x1="-51.5" y1="58" x2="-51.1" y2="55" type="line"/>
+    <obstacle x1="-53.0" y1="58" x2="-52.8" y2="55" type="line"/>
+    <obstacle x1="-54.5" y1="58" x2="-54.0" y2="55" type="line"/>
+    <obstacle x1="-56.0" y1="58" x2="-56.0" y2="55" type="line"/>
+
+    <!-- -x -->
+    <obstacle x1="-54.0" y1="38.6" x2="-54.0" y2="35.5" type="line"/>
+    <obstacle x1="-54.0" y1="38.5" x2="-55.0" y2="40.5" type="line"/>
+    <obstacle x1="-54.0" y1="38.5" x2="-53.0" y2="40.5" type="line"/>
+
+    <obstacle x1="-52.0" y1="38.6" x2="-52.0" y2="35.5" type="line"/>
+    <obstacle x1="-52.0" y1="38.5" x2="-50.0" y2="40.5" type="line"/>
+    <obstacle x1="-50.0" y1="38.6" x2="-50.0" y2="35.5" type="line"/>
+    <obstacle x1="-48.0" y1="38.5" x2="-50.0" y2="40.5" type="line"/>
+    <obstacle x1="-48.0" y1="38.6" x2="-48.0" y2="35.5" type="line"/>
+    <obstacle x1="-50.6" y1="37" x2="-49.4" y2="37" type="line"/>
+
+    <obstacle x1="-46.0" y1="38.6" x2="-46.0" y2="35.5" type="line"/>
+    <obstacle x1="-46.0" y1="38.5" x2="-45.0" y2="40.5" type="line"/>
+    <obstacle x1="-46.0" y1="38.5" x2="-47.0" y2="40.5" type="line"/>
+
+    <obstacle x1="-44.0" y1="42" x2="-44.0" y2="45" type="line"/>
+    <obstacle x1="-45.5" y1="42" x2="-45.5" y2="45" type="line"/>
+    <obstacle x1="-47.2" y1="42" x2="-47.0" y2="45" type="line"/>
+    <obstacle x1="-48.7" y1="42" x2="-48.5" y2="45" type="line"/>
+    <obstacle x1="-50" y1="42" x2="-50" y2="45" type="line"/>
+    <obstacle x1="-51.1" y1="42" x2="-51.5" y2="45" type="line"/>
+    <obstacle x1="-53.2" y1="42" x2="-53.0" y2="45" type="line"/>
+    <obstacle x1="-54.5" y1="42" x2="-54.5" y2="45" type="line"/>
+    <obstacle x1="-56.0" y1="42" x2="-56.0" y2="45" type="line"/>
+    <!-- +y -->
+    <obstacle x1="-38.6" y1="46.0" x2="-35.5" y2="46.0" type="line"/>
+    <obstacle x1="-38.5" y1="46.0" x2="-40.5" y2="45.0" type="line"/>
+    <obstacle x1="-38.5" y1="46.0" x2="-40.5" y2="47.0" type="line"/>
+
+    <obstacle x1="-38.6" y1="48.0" x2="-35.5" y2="48.0" type="line"/>
+    <obstacle x1="-38.5" y1="48.0" x2="-40.5" y2="50.0" type="line"/>
+    <obstacle x1="-38.6" y1="50.0" x2="-35.5" y2="50.0" type="line"/>
+    <obstacle x1="-38.5" y1="52.0" x2="-40.5" y2="50.0" type="line"/>
+    <obstacle x1="-38.6" y1="52.0" x2="-35.5" y2="52.0" type="line"/>
+    <obstacle x1="-37" y1="49.4" x2="-37" y2="50.6" type="line"/>
+
+    <obstacle x1="-38.6" y1="54.0" x2="-35.5" y2="54.0" type="line"/>
+    <obstacle x1="-38.5" y1="54.0" x2="-40.5" y2="55.0" type="line"/>
+    <obstacle x1="-38.5" y1="54.0" x2="-40.5" y2="53.0" type="line"/>
+
+    <obstacle x1="-42" y1="53.0" x2="-45" y2="52.8" type="line"/>
+    <obstacle x1="-42" y1="51.5" x2="-45" y2="51.5" type="line"/>
+    <obstacle x1="-42" y1="50" x2="-45" y2="50" type="line"/>
+    <obstacle x1="-42" y1="48.5" x2="-45" y2="48.9" type="line"/>
+    <obstacle x1="-42" y1="47.0" x2="-45" y2="47.2" type="line"/>
+
+    <!-- -y -->
+    <obstacle x1="-61.4" y1="46.0" x2="-64.5" y2="46.0" type="line"/>
+    <obstacle x1="-61.5" y1="46.0" x2="-59.5" y2="45.0" type="line"/>
+    <obstacle x1="-61.5" y1="46.0" x2="-59.5" y2="47.0" type="line"/>
+
+    <obstacle x1="-61.4" y1="48.0" x2="-64.5" y2="48.0" type="line"/>
+    <obstacle x1="-61.5" y1="48.0" x2="-59.5" y2="50.0" type="line"/>
+    <obstacle x1="-61.4" y1="50.0" x2="-64.5" y2="50.0" type="line"/>
+    <obstacle x1="-61.5" y1="52.0" x2="-59.5" y2="50.0" type="line"/>
+    <obstacle x1="-61.4" y1="52.0" x2="-64.5" y2="52.0" type="line"/>
+    <obstacle x1="-63" y1="49.4" x2="-63" y2="50.6" type="line"/>
+
+    <obstacle x1="-61.4" y1="54.0" x2="-64.5" y2="54.0" type="line"/>
+    <obstacle x1="-61.5" y1="54.0" x2="-59.5" y2="55.0" type="line"/>
+    <obstacle x1="-61.5" y1="54.0" x2="-59.5" y2="53.0" type="line"/>
+
+    <obstacle x1="-58" y1="53.0" x2="-55" y2="52.8" type="line"/>
+    <obstacle x1="-58" y1="51.5" x2="-55" y2="51.5" type="line"/>
+    <obstacle x1="-58" y1="50" x2="-55" y2="50" type="line"/>
+    <obstacle x1="-58" y1="48.5" x2="-55" y2="48.9" type="line"/>
+    <obstacle x1="-58" y1="47.0" x2="-55" y2="47.2" type="line"/>
+
+    <!-- corners -->
+    <obstacle x1="-64" y1="42" x2="-62" y2="44" type="line"/>
+    <obstacle x1="-64" y1="40" x2="-61" y2="43" type="line"/>
+    <obstacle x1="-64" y1="37.9" x2="-61" y2="40.9" type="line"/>
+    <obstacle x1="-64" y1="36" x2="-61" y2="39" type="line"/>
+    <obstacle x1="-62" y1="36" x2="-59" y2="39.6" type="line"/>
+    <obstacle x1="-60" y1="36" x2="-58" y2="38" type="line"/>
+    <obstacle x1="-57" y1="36" x2="-56" y2="38" type="line"/>
+    <obstacle x="-58" y="43" radius="0.4" type="circle"/>
+
+    <obstacle x1="-36" y1="42" x2="-38" y2="44" type="line"/>
+    <obstacle x1="-36" y1="40" x2="-39" y2="43" type="line"/>
+    <obstacle x1="-36" y1="37.9" x2="-39" y2="40.9" type="line"/>
+    <obstacle x1="-36" y1="36" x2="-39" y2="39" type="line"/>
+    <obstacle x1="-38" y1="36" x2="-41" y2="39.6" type="line"/>
+    <obstacle x1="-40" y1="36" x2="-42" y2="38" type="line"/>
+    <obstacle x1="-43" y1="36" x2="-44" y2="38" type="line"/>
+    <obstacle x="-42" y="43" radius="0.4" type="circle"/>
+
+    <obstacle x1="-64" y1="58" x2="-62" y2="56" type="line"/>
+    <obstacle x1="-64" y1="60" x2="-61" y2="57" type="line"/>
+    <obstacle x1="-64" y1="62.1" x2="-61" y2="59.1" type="line"/>
+    <obstacle x1="-64" y1="64" x2="-61" y2="61" type="line"/>
+    <obstacle x1="-62" y1="64" x2="-59" y2="60.4" type="line"/>
+    <obstacle x1="-60" y1="64" x2="-58" y2="62" type="line"/>
+    <obstacle x1="-57" y1="64" x2="-56" y2="62" type="line"/>
+    <obstacle x="-58" y="57" radius="0.4" type="circle"/>
+
+    <obstacle x1="-36" y1="58" x2="-38" y2="56" type="line"/>
+    <obstacle x1="-36" y1="60" x2="-39" y2="57" type="line"/>
+    <obstacle x1="-36" y1="62.1" x2="-39" y2="59.1" type="line"/>
+    <obstacle x1="-36" y1="64" x2="-39" y2="61" type="line"/>
+    <obstacle x1="-38" y1="64" x2="-41" y2="60.4" type="line"/>
+    <obstacle x1="-40" y1="64" x2="-42" y2="62" type="line"/>
+    <obstacle x1="-43" y1="64" x2="-44" y2="62" type="line"/>
+    <obstacle x="-42" y="57" radius="0.4" type="circle"/>
+
+
+
+
+
+
+
+
+
+
+    <!-- Scenario 4 [static]: center shift (0, -50) -->
+    <!-- Env Boundary -->
+    <obstacle x1="-25" y1="-75" x2="-25" y2="-25" type="line"/>
+    <obstacle x1="25" y1="-75" x2="25" y2="-25" type="line"/>
+    <obstacle x1="-25" y1="-75" x2="25" y2="-75" type="line"/>  
+    <obstacle x1="-25" y1="-25" x2="25" y2="-25" type="line"/>  
+
+    <!-- 第六行 -->
+    <obstacle x1="-15.0" y1="-37.0" x2="-10.0" y2="-37.0" type="line"/>
+    <obstacle x1="-14.0" y1="-35.5" x2="-14.0" y2="-38.0" type="line"/>
+    <obstacle x1="-12.0" y1="-35.5" x2="-12.0" y2="-38.0" type="line"/>
+
+    <obstacle x1="-13.0" y1="-33.0" x2="-13.0" y2="-35.3" type="line"/>
+    <obstacle x1="-11.0" y1="-33.0" x2="-11.0" y2="-35.3" type="line"/>
+    <obstacle x1="-10.0" y1="-34.0" x2="-15.0" y2="-34.0" type="line"/>
+
+    <obstacle x="-7.7" y="-35.6" xHalfLength="1.3" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x1="-8.0" y1="-36.5" x2="-8.0" y2="-34.5" type="line"/>
+
+    <obstacle x1="-8.0" y1="-39.0" x2="-4.0" y2="-39.0" type="line"/>
+    <obstacle x1="-4.0" y1="-39.0" x2="-4.0" y2="-37.0" type="line"/>
+    <obstacle x1="-5.5" y1="-39.0" x2="-5.5" y2="-38.0" type="line"/>
+
+    <obstacle x1="-4.5" y1="-35.0" x2="1.0" y2="-37.0" type="line"/>
+    <obstacle x1="-1.0" y1="-35.0" x2="4.5" y2="-37.0" type="line"/>
+    <obstacle x1="-2.5" y1="-37.0" x2="1.0" y2="-35.0" type="line"/>
+
+    <obstacle x="3.5" y="-38.5" radius="0.3" type="circle"/>
+
+    <obstacle x1="5.7" y1="-38.0" x2="8.0" y2="-33.0" type="line"/>
+    <obstacle x1="4.5" y1="-34.0" x2="9.0" y2="-35.7" type="line"/>
+    <obstacle x1="6.0" y1="-33.0" x2="9.0" y2="-34.0" type="line"/>
+
+    <!-- 第五行 -->
+    <obstacle x1="-15.0" y1="-44.0" x2="-12.0" y2="-44.0" type="line"/>
+    <obstacle x1="-15.0" y1="-44.0" x2="-15.0" y2="-43.0" type="line"/>
+    <obstacle x1="-13.5" y1="-44.0" x2="-13.5" y2="-42.5" type="line"/>
+    <obstacle x1="-12.0" y1="-44.0" x2="-12.0" y2="-43.0" type="line"/>
+
+    <obstacle x1="-10.0" y1="-40" x2="-10.0" y2="-43.0" type="line"/>
+    <obstacle x1="-10.0" y1="-40" x2="-12.0" y2="-40" type="line"/>
+    <obstacle x1="-9.5" y1="-41" x2="-12.0" y2="-41" type="line"/>
+    <obstacle x1="-9.0" y1="-42" x2="-10.0" y2="-42" type="line"/>
+    <obstacle x1="-9.0" y1="-43" x2="-10.5" y2="-43" type="line"/>
+
+    <obstacle x="-6.0" y="-42.0" xHalfLength="0.2" yHalfLength="1.5" type="rectangle"/>
+    <obstacle x1="-7.5" y1="-41" x2="-4.5" y2="-41" type="line"/>
+    <obstacle x1="-7" y1="-42" x2="-5" y2="-42" type="line"/>
+    <obstacle x1="-7.5" y1="-43" x2="-4.5" y2="-43" type="line"/>
+
+    <obstacle x1="-3.0" y1="-42" x2="-0.5" y2="-42" type="line"/>
+    <obstacle x1="-2.3" y1="-41" x2="-2.3" y2="-43" type="line"/>
+    <obstacle x1="-1.0" y1="-41" x2="-1.0" y2="-43" type="line"/>
+
+    <obstacle x1="-1.0" y1="-40" x2="2.0" y2="-40" type="line"/>
+    <obstacle x1="-0.1" y1="-39" x2="-0.1" y2="-40.7" type="line"/>
+    <obstacle x1="1.0" y1="-39.5" x2="1.0" y2="-42" type="line"/>
+
+    <obstacle x1="8.0" y1="-38.0" x2="11.0" y2="-38.0" type="line"/>
+    <obstacle x1="9.0" y1="-37.5" x2="9.0" y2="-38.5" type="line"/>
+    <obstacle x1="10.0" y1="-37.5" x2="10.0" y2="-39.0" type="line"/>
+    <obstacle x="4.0" y="-42.0" radius="0.5" type="circle"/>
+    <obstacle x="5.2" y="-40.2" radius="0.5" type="circle"/>
+    <obstacle x="6.0" y="-42.0" radius="0.8" type="circle"/>
+    <obstacle x="8.0" y="-41.0" radius="1.0" type="circle"/>
+    <obstacle x="11.0" y="-41.3" radius="0.5" type="circle"/>
+    <obstacle x1="11.0" y1="-39.5" x2="16.0" y2="-39.5" type="line"/>
+    <obstacle x1="12.8" y1="-39" x2="12.8" y2="-41" type="line"/>
+    <obstacle x1="13.8" y1="-39" x2="13.8" y2="-40.5" type="line"/>
+    <obstacle x1="16.0" y1="-39.5" x2="16.0" y2="-41.5" type="line"/>
+
+    <!-- 第四行 -->
+    <obstacle x1="-15.0" y1="-49.0" x2="-12.0" y2="-46.0" type="line"/>
+    <obstacle x1="-15.0" y1="-46.0" x2="-12.0" y2="-49.0" type="line"/>
+    <obstacle x1="-11" y1="-48" x2="-8" y2="-45" type="line"/>
+    <obstacle x1="-11" y1="-45" x2="-8" y2="-48" type="line"/>
+
+    <obstacle x1="-7.0" y1="-49.0" x2="-4.0" y2="-46.0" type="line"/>
+    <obstacle x1="-7.0" y1="-46.0" x2="-4.0" y2="-49.0" type="line"/>
+    <obstacle x1="-3" y1="-48" x2="0" y2="-45" type="line"/>
+    <obstacle x1="-3" y1="-45" x2="0" y2="-48" type="line"/>
+
+    <obstacle x1="1.0" y1="-49.0" x2="4.0" y2="-46.0" type="line"/>
+    <obstacle x1="1.0" y1="-46.0" x2="4.0" y2="-49.0" type="line"/>
+    <obstacle x1="5" y1="-48" x2="8" y2="-45" type="line"/>
+    <obstacle x1="5" y1="-45" x2="8" y2="-48" type="line"/>
+
+    <obstacle x1="9.0" y1="-49.0" x2="12.0" y2="-46.0" type="line"/>
+    <obstacle x1="9.0" y1="-46.0" x2="12.0" y2="-49.0" type="line"/>
+    <obstacle x1="13" y1="-48" x2="15" y2="-45" type="line"/>
+    <obstacle x1="13" y1="-45" x2="15" y2="-48" type="line"/>
+
+    <!-- 第三行 -->
+    <obstacle x1="-15.0" y1="-53.0" x2="-10.0" y2="-53.0" type="line"/>
+    <obstacle x1="-14.0" y1="-51.5" x2="-14.0" y2="-54.0" type="line"/>
+    <obstacle x1="-12.0" y1="-51.5" x2="-12.0" y2="-54.0" type="line"/>
+
+    <obstacle x1="-10.0" y1="-50.5" x2="-15.0" y2="-50.5" type="line"/>
+
+    <obstacle x="-7.7" y="-51.6" xHalfLength="1.3" yHalfLength="0.1" type="rectangle"/>
+    <obstacle x1="-8.0" y1="-52.5" x2="-8.0" y2="-50.5" type="line"/>
+
+    <obstacle x1="-8.0" y1="-55.0" x2="-4.0" y2="-55.0" type="line"/>
+    <obstacle x1="-4.0" y1="-55.0" x2="-4.0" y2="-53.0" type="line"/>
+    <obstacle x1="-5.5" y1="-55.0" x2="-5.5" y2="-54.0" type="line"/>
+
+    <obstacle x1="-4.5" y1="-51.0" x2="1.0" y2="-53.0" type="line"/>
+    <obstacle x1="-1.0" y1="-51.0" x2="4.5" y2="-53.0" type="line"/>
+    <obstacle x1="-2.5" y1="-53.0" x2="1.0" y2="-51.0" type="line"/>
+
+    <obstacle x="3.5" y="-54.5" radius="0.3" type="circle"/>
+
+    <obstacle x1="5.7" y1="-54.0" x2="8.0" y2="-50.0" type="line"/>
+    <obstacle x1="4.5" y1="-50.3" x2="9.0" y2="-52.0" type="line"/>
+    <obstacle x1="6.0" y1="-49.5" x2="9.0" y2="-50.5" type="line"/>
+
+    <!-- 第二行 -->
+    <obstacle x1="-15.0" y1="-60.0" x2="-12.0" y2="-60.0" type="line"/>
+    <obstacle x1="-15.0" y1="-60.0" x2="-15.0" y2="-59.0" type="line"/>
+    <obstacle x1="-13.5" y1="-60.0" x2="-13.5" y2="-58.5" type="line"/>
+    <obstacle x1="-12.0" y1="-60.0" x2="-12.0" y2="-59.0" type="line"/>
+
+    <obstacle x1="-10.0" y1="-56" x2="-10.0" y2="-59.0" type="line"/>
+    <obstacle x1="-10.0" y1="-56" x2="-12.0" y2="-56" type="line"/>
+    <obstacle x1="-9.5" y1="-57" x2="-12.0" y2="-57" type="line"/>
+    <obstacle x1="-9.0" y1="-58" x2="-10.0" y2="-58" type="line"/>
+    <obstacle x1="-9.0" y1="-59.0" x2="-10.5" y2="-59.0" type="line"/>
+
+    <obstacle x="-6.0" y="-58.0" xHalfLength="0.2" yHalfLength="1.5" type="rectangle"/>
+    <obstacle x1="-7.5" y1="-57" x2="-4.5" y2="-57" type="line"/>
+    <obstacle x1="-7" y1="-58" x2="-5" y2="-58" type="line"/>
+    <obstacle x1="-7.5" y1="-59" x2="-4.5" y2="-59" type="line"/>
+
+    <obstacle x1="-3.0" y1="-58" x2="-0.5" y2="-58" type="line"/>
+    <obstacle x1="-2.3" y1="-57" x2="-2.3" y2="-59" type="line"/>
+    <obstacle x1="-1.0" y1="-57" x2="-1.0" y2="-59" type="line"/>
+
+    <obstacle x1="-1.0" y1="-56" x2="2.0" y2="-56" type="line"/>
+    <obstacle x1="-0.1" y1="-55" x2="-0.1" y2="-56.7" type="line"/>
+    <obstacle x1="1.0" y1="-55.5" x2="1.0" y2="-58" type="line"/>
+
+    <obstacle x1="8.0" y1="-54.0" x2="11.0" y2="-54.0" type="line"/>
+    <obstacle x1="9.0" y1="-53.5" x2="9.0" y2="-54.5" type="line"/>
+    <obstacle x1="10.0" y1="-53.5" x2="10.0" y2="-55.0" type="line"/>
+    <obstacle x="4.0" y="-58.0" radius="0.5" type="circle"/>
+    <obstacle x="5.2" y="-56.2" radius="0.5" type="circle"/>
+    <obstacle x="6.0" y="-58.0" radius="0.8" type="circle"/>
+    <obstacle x="8.0" y="-57.0" radius="1.0" type="circle"/>
+    <obstacle x="11.0" y="-57.3" radius="0.5" type="circle"/>
+    <obstacle x1="11.0" y1="-55.5" x2="16.0" y2="-55.5" type="line"/>
+    <obstacle x1="12.8" y1="-55.0" x2="12.8" y2="-57.0" type="line"/>
+    <obstacle x1="13.8" y1="-55.0" x2="13.8" y2="-56.5" type="line"/>
+    <obstacle x1="16.0" y1="-55.5" x2="16.0" y2="-57.5" type="line"/>
+
+    <!-- 第一行 -->
+    <obstacle x1="-15.0" y1="-65.0" x2="-12.0" y2="-62.0" type="line"/>
+    <obstacle x1="-15.0" y1="-62.0" x2="-12.0" y2="-65.0" type="line"/>
+    <obstacle x1="-11" y1="-64" x2="-8" y2="-61" type="line"/>
+    <obstacle x1="-11" y1="-61" x2="-8" y2="-64" type="line"/>
+
+    <obstacle x1="-7.0" y1="-65.0" x2="-4.0" y2="-62.0" type="line"/>
+    <obstacle x1="-7.0" y1="-62.0" x2="-4.0" y2="-65.0" type="line"/>
+    <obstacle x1="-3" y1="-64" x2="0" y2="-61" type="line"/>
+    <obstacle x1="-3" y1="-61" x2="0" y2="-64" type="line"/>
+
+    <obstacle x1="1.0" y1="-65.0" x2="4.0" y2="-62.0" type="line"/>
+    <obstacle x1="1.0" y1="-62.0" x2="4.0" y2="-65.0" type="line"/>
+    <obstacle x1="5" y1="-64" x2="8" y2="-61" type="line"/>
+    <obstacle x1="5" y1="-61" x2="8" y2="-64" type="line"/>
+
+    <obstacle x1="9.0" y1="-65.0" x2="12.0" y2="-62.0" type="line"/>
+    <obstacle x1="9.0" y1="-62.0" x2="12.0" y2="-65.0" type="line"/>
+    <obstacle x1="13" y1="-64" x2="15" y2="-61" type="line"/>
+    <obstacle x1="13" y1="-61" x2="15" y2="-64" type="line"/>
+
+
+
+
+
+
+
+    <!-- Scenario 5 [static & dynamic]: center shift (0, 0) -->
+    <!-- Env Boundary -->
+    <obstacle x1="-25" y1="-25" x2="-25" y2="25" type="line"/>
+    <obstacle x1="25" y1="-25" x2="25" y2="25" type="line"/>
+    <obstacle x1="-25" y1="-25" x2="25" y2="-25" type="line"/>  
+    <obstacle x1="-25" y1="25" x2="25" y2="25" type="line"/>  
+
+    <!-- y=[-11,-15] 走人-->
+    <obstacle x1="-15" y1="-15" x2="-5" y2="-15" type="line"/>
+    <obstacle x1="-15" y1="-11" x2="-5" y2="-11" type="line"/>
+    <waypoint id="goal5_1_1" x="-14" y="-14.5" r="1"/>
+    <waypoint id="goal5_1_2" x="-6" y="-11.5" r="1"/>
+    <agent x="-6" y="-12" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_1_1"/>
+        <addwaypoint id="goal5_1_2"/>
+    </agent>
+    <obstacle x1="-1" y1="-15" x2="1" y2="-15" type="line"/>
+    <obstacle x1="-1" y1="-11" x2="1" y2="-11" type="line"/>
+    <waypoint id="goal5_2_1" x="-3" y="-9" r="2"/>
+    <waypoint id="goal5_2_2" x="-3" y="-17" r="2"/>
+    <agent x="-3" y="-16" n="3" dx="2" dy="1" type="1">
+        <addwaypoint id="goal5_2_1"/>
+        <addwaypoint id="goal5_2_2"/>
+    </agent>
+    <obstacle x1="5" y1="-15" x2="15" y2="-15" type="line"/>
+    <obstacle x1="5" y1="-11" x2="15" y2="-11" type="line"/>
+    <waypoint id="goal5_3_1" x="3" y="-9" r="2"/>
+    <waypoint id="goal5_3_2" x="3" y="-17" r="2"/>
+    <agent x="3" y="-16" n="3" dx="2" dy="1" type="1">
+        <addwaypoint id="goal5_3_1"/>
+        <addwaypoint id="goal5_3_2"/>
+    </agent>
+
+    <!-- y=[-4,-8] 走人-->
+    <obstacle x1="-15" y1="-4" x2="-10" y2="-4" type="line"/>
+    <obstacle x1="-15" y1="-8" x2="-10" y2="-8" type="line"/>
+    <waypoint id="goal5_4_1" x="-8.5" y="-9" r="1"/>
+    <waypoint id="goal5_4_2" x="-8.5" y="-3" r="1"/>
+    <agent x="-8.5" y="-4" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_4_1"/>
+        <addwaypoint id="goal5_4_2"/>
+    </agent>
+    <obstacle x1="-7" y1="-4" x2="-2" y2="-4" type="line"/>
+    <obstacle x1="-7" y1="-8" x2="-2" y2="-8" type="line"/>
+    <waypoint id="goal5_5_1" x="-0.5" y="-3" r="1"/>
+    <waypoint id="goal5_5_2" x="-0.5" y="-9" r="1"/>
+    <agent x="-0.5" y="-8" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_5_1"/>
+        <addwaypoint id="goal5_5_2"/>
+    </agent>
+    <obstacle x1="1" y1="-4" x2="6" y2="-4" type="line"/>
+    <obstacle x1="1" y1="-8" x2="6" y2="-8" type="line"/>
+    <waypoint id="goal5_6_1" x="7.5" y="-9" r="1"/>
+    <waypoint id="goal5_6_2" x="7.5" y="-3" r="1"/>
+    <agent x="7.5" y="-4" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_6_1"/>
+        <addwaypoint id="goal5_6_2"/>
+    </agent>
+    <obstacle x1="9" y1="-4" x2="14" y2="-4" type="line"/>
+    <obstacle x1="9" y1="-8" x2="14" y2="-8" type="line"/>
+    <waypoint id="goal5_7_1" x="-7" y="-6" r="1"/>
+    <waypoint id="goal5_7_2" x="-2" y="-6" r="1"/>
+    <agent x="-3" y="-6" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_7_1"/>
+        <addwaypoint id="goal5_7_2"/>
+    </agent>
+    <waypoint id="goal5_8_1" x="1" y="-5" r="1"/>
+    <waypoint id="goal5_8_2" x="6" y="-5" r="1"/>
+    <agent x="5" y="-5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_8_1"/>
+        <addwaypoint id="goal5_8_2"/>
+    </agent>
+    <waypoint id="goal5_9_1" x="1" y="-7" r="1"/>
+    <waypoint id="goal5_9_2" x="6" y="-7" r="1"/>
+    <agent x="5" y="-7" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_9_1"/>
+        <addwaypoint id="goal5_9_2"/>
+    </agent>
+
+    <!-- y=[-1,5] 迎面走来的人-->
+    <obstacle x1="-15" y1="-1" x2="15" y2="-1" type="line"/>
+    <obstacle x1="-15" y1="5" x2="15" y2="5" type="line"/>
+    <waypoint id="goal5_10_1" x="-12" y="3" r="2"/>
+    <waypoint id="goal5_10_2" x="-4" y="3" r="2"/>
+    <agent x="-4" y="3" n="3" dx="0.1" dy="2" type="1">
+        <addwaypoint id="goal5_10_1"/>
+        <addwaypoint id="goal5_10_2"/>
+    </agent>
+    <waypoint id="goal5_10_3" x="-5" y="0" r="2"/>
+    <waypoint id="goal5_10_4" x="-11" y="0" r="2"/>
+    <agent x="-11" y="0" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_10_3"/>
+        <addwaypoint id="goal5_10_4"/>
+    </agent>
+    <waypoint id="goal5_11_1" x="6" y="0" r="2"/>
+    <waypoint id="goal5_11_2" x="-2" y="0" r="2"/>
+    <agent x="-2" y="1" n="3" dx="0.1" dy="2" type="1">
+        <addwaypoint id="goal5_11_1"/>
+        <addwaypoint id="goal5_11_2"/>
+    </agent>
+    <waypoint id="goal5_11_3" x="-3" y="3" r="2"/>
+    <waypoint id="goal5_11_4" x="5" y="3" r="2"/>
+    <agent x="5" y="4" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_11_3"/>
+        <addwaypoint id="goal5_11_4"/>
+    </agent>
+    <waypoint id="goal5_12_1" x="10" y="-1" r="2"/>
+    <waypoint id="goal5_12_2" x="10" y="5" r="2"/>
+    <agent x="10" y="4" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_12_1"/>
+        <addwaypoint id="goal5_12_2"/>
+    </agent>
+    <waypoint id="goal5_13_1" x="11.5" y="5" r="2"/>
+    <waypoint id="goal5_13_2" x="11.5" y="-1" r="2"/>
+    <agent x="11.5" y="0" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_13_1"/>
+        <addwaypoint id="goal5_13_2"/>
+    </agent>
+
+    <!-- y=[8,15] 站立说话的群组+动态行人 -->
+    <obstacle x1="-15" y1="8" x2="15" y2="8" type="line"/>
+    <obstacle x1="-15" y1="15" x2="15" y2="15" type="line"/>
+    <waypoint id="goal5_14_1" x="-11" y="8" r="2"/>
+    <waypoint id="goal5_14_2" x="-11" y="15" r="2"/>
+    <agent x="-11" y="14" n="3" dx="0.1" dy="2" type="1">
+        <addwaypoint id="goal5_14_1"/>
+        <addwaypoint id="goal5_14_2"/>
+    </agent>
+    <waypoint id="goal5_15_1" x="-7" y="15" r="2"/>
+    <waypoint id="goal5_15_2" x="-7" y="8" r="2"/>
+    <agent x="-7" y="9" n="3" dx="0.1" dy="2" type="1">
+        <addwaypoint id="goal5_15_1"/>
+        <addwaypoint id="goal5_15_2"/>
+    </agent>
+    <waypoint id="goal5_16_1" x="-4" y="10" r="2"/>
+    <waypoint id="goal5_16_2" x="1" y="10" r="2"/>
+    <agent x="1" y="10" n="3" dx="2" dy="0.2" type="1">
+        <addwaypoint id="goal5_16_1"/>
+        <addwaypoint id="goal5_16_2"/>
+    </agent>
+    <waypoint id="goal5_17_1" x="-4" y="13" r="1"/>
+    <waypoint id="goal5_17_2" x="1" y="12" r="1"/>
+    <agent x="1" y="13" n="1" dx="0.2" dy="0.2" type="1">
+        <addwaypoint id="goal5_17_1"/>
+        <addwaypoint id="goal5_17_2"/>
+    </agent>
+    <waypoint id="goal5_17_3" x="1" y="14.5" r="0.2"/>
+    <agent x="1" y="14.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_17_3"/>
+    </agent>
+    <waypoint id="goal5_18_1" x="9" y="9" r="2"/>
+    <waypoint id="goal5_18_2" x="3" y="14" r="2"/>
+    <agent x="3" y="14" n="2" dx="1" dy="1" type="1">
+        <addwaypoint id="goal5_18_1"/>
+        <addwaypoint id="goal5_18_2"/>
+    </agent>
+    <waypoint id="goal5_19_1" x="12" y="9" r="2"/>
+    <waypoint id="goal5_19_2" x="6" y="14" r="2"/>
+    <agent x="6" y="14" n="2" dx="1" dy="1" type="1">
+        <addwaypoint id="goal5_19_1"/>
+        <addwaypoint id="goal5_19_2"/>
+    </agent>
+    <waypoint id="goal5_20_1" x="5" y="9.5" r="1"/>
+    <agent x="5" y="9.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_20_1"/>
+    </agent>
+    <waypoint id="goal5_21_1" x="10" y="13" r="1"/>
+    <agent x="10" y="13" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal5_21_1"/>
+    </agent>
+
+
+
+
+
+
+    <!-- Scenario 6 [static & dynamic]: center shift (0, 50) -->
+    <!-- End Boundary -->
+    <obstacle x1="-25" y1="25" x2="-25" y2="75" type="line"/>
+    <obstacle x1="25" y1="25" x2="25" y2="75" type="line"/>
+    <obstacle x1="-25" y1="25" x2="25" y2="25" type="line"/>  
+    <obstacle x1="-25" y1="75" x2="25" y2="75" type="line"/>  
+
+    <!-- -x -y  -->
+    <obstacle x="-9.0" y="41.0" xHalfLength="0.3" yHalfLength="0.8" type="rectangle"/>
+    <obstacle x1="-9" y1="48" x2="-9" y2="52" type="line"/>
+    <!-- -x, +y -->
+    <obstacle x1="-6" y1="58" x2="-10" y2="58" type="line"/>
+    <obstacle x1="-6" y1="58" x2="-6" y2="60" type="line"/>
+    <obstacle x1="-10" y1="58" x2="-10" y2="59" type="line"/>
+    <obstacle x1="-8" y1="57" x2="-8" y2="60" type="line"/>
+
+    <waypoint id="goal6_1_1" x="-2" y="45" r="2"/>
+    <waypoint id="goal6_1_2" x="-12" y="45" r="2"/>
+    <agent x="-12" y="45" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_1_1"/>
+        <addwaypoint id="goal6_1_2"/>
+    </agent>
+    <waypoint id="goal6_1_3" x="-2" y="55" r="2"/>
+    <waypoint id="goal6_1_4" x="-12" y="55" r="2"/>
+    <agent x="-12" y="55" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_1_3"/>
+        <addwaypoint id="goal6_1_4"/>
+    </agent>
+
+    <!-- +x, -y -->
+    <obstacle x="9.0" y="41.0" radius="0.8" type="circle"/>
+    <obstacle x1="9" y1="48" x2="9" y2="52" type="line"/>
+    <!-- +x, +y -->
+    <obstacle x1="8" y1="56.5" x2="8" y2="59.5" type="line"/>
+    <obstacle x1="6.5" y1="58" x2="9.5" y2="58" type="line"/>
+
+    <waypoint id="goal6_2_1" x="2" y="45" r="2"/>
+    <waypoint id="goal6_2_2" x="12" y="45" r="2"/>
+    <agent x="12" y="45" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_2_1"/>
+        <addwaypoint id="goal6_2_2"/>
+    </agent>
+    <waypoint id="goal6_2_3" x="2" y="55" r="2"/>
+    <waypoint id="goal6_2_4" x="12" y="55" r="2"/>
+    <agent x="12" y="55" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_2_3"/>
+        <addwaypoint id="goal6_2_4"/>
+    </agent>
+
+    <waypoint id="goal6_3_1" x="6" y="41" r="2"/>
+    <waypoint id="goal6_3_2" x="-6" y="41" r="2"/>
+    <agent x="-6" y="41" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_3_1"/>
+        <addwaypoint id="goal6_3_2"/>
+    </agent>
+    <waypoint id="goal6_3_3" x="-6" y="59" r="2"/>
+    <waypoint id="goal6_3_4" x="5" y="59" r="2"/>
+    <agent x="5" y="59" n="3" dx="2" dy="3" type="1">
+        <addwaypoint id="goal6_3_3"/>
+        <addwaypoint id="goal6_3_4"/>
+    </agent>
+
+    <!-- 0,0 -->
+    <obstacle x="0.0" y="48.9" xHalfLength="1" yHalfLength="0.5" type="rectangle"/>
+    <obstacle x="0.0" y="51.1" xHalfLength="1" yHalfLength="0.5" type="rectangle"/>
+
+    <waypoint id="goal6_4_1" x="0" y="46" r="3"/>
+    <waypoint id="goal6_4_2_1" x="-3" y="50" r="2"/>
+    <waypoint id="goal6_4_2_2" x="3" y="50" r="2"/>
+    <waypoint id="goal6_4_3" x="0" y="54" r="3"/>
+    <agent x="-2" y="54" n="3" dx="1" dy="2" type="1">
+        <addwaypoint id="goal6_4_1"/>
+        <addwaypoint id="goal6_4_2_1"/>
+        <addwaypoint id="goal6_4_3"/>
+    </agent>
+    <agent x="2" y="54" n="3" dx="1" dy="2" type="1">
+        <addwaypoint id="goal6_4_1"/>
+        <addwaypoint id="goal6_4_2_2"/>
+        <addwaypoint id="goal6_4_3"/>
+    </agent>
+
+    <waypoint id="goal6_5_1" x="10" y="47" r="2"/>
+    <waypoint id="goal6_5_2" x="10" y="53" r="2"/>
+    <waypoint id="goal6_5_3" x="8" y="53" r="2"/>
+    <waypoint id="goal6_5_4" x="8" y="47" r="2"/>
+    <agent x="8" y="47" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal6_5_1"/>
+        <addwaypoint id="goal6_5_2"/>
+        <addwaypoint id="goal6_5_3"/>
+        <addwaypoint id="goal6_5_4"/>
+    </agent>
+    <waypoint id="goal6_6_1" x="-10" y="47" r="2"/>
+    <waypoint id="goal6_6_2" x="-10" y="53" r="2"/>
+    <waypoint id="goal6_6_3" x="-8" y="53" r="2"/>
+    <waypoint id="goal6_6_4" x="-8" y="47" r="2"/>
+    <agent x="-8" y="47" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal6_6_1"/>
+        <addwaypoint id="goal6_6_2"/>
+        <addwaypoint id="goal6_6_3"/>
+        <addwaypoint id="goal6_6_4"/>
+    </agent>
+
+
+
+
+
+
+
+
+
+
+    <!-- Scenario 7 [dynamic]: center shift (50, -50) -->
+    <!-- Env Boundary -->
+    <obstacle x1="25" y1="-75" x2="25" y2="-25" type="line"/>
+    <obstacle x1="75" y1="-75" x2="75" y2="-25" type="line"/>
+    <obstacle x1="25" y1="-75" x2="75" y2="-75" type="line"/>  
+    <obstacle x1="25" y1="-25" x2="75" y2="-25" type="line"/>  
+    <!--AgentClusters-->    
+    <waypoint id="goal9_1_1" x="49" y="-58" r="3"/>
+    <waypoint id="goal9_1_2" x="49" y="-48" r="3"/>
+    <agent x="49.0" y="-48" n="5" dx="6" dy="8" type="1">
+        <addwaypoint id="goal9_1_1"/>
+        <addwaypoint id="goal9_1_2"/>
+    </agent>
+
+    <waypoint id="goal9_2_1" x="53" y="-42" r="3"/>
+    <waypoint id="goal9_2_2" x="53" y="-53" r="3"/>
+    <agent x="53.0" y="-53" n="5" dx="6" dy="8" type="1">
+        <addwaypoint id="goal9_2_1"/>
+        <addwaypoint id="goal9_2_2"/>
+    </agent>
+
+    <waypoint id="goal9_3_1" x="57" y="-56" r="3"/>
+    <waypoint id="goal9_3_2" x="57" y="-46" r="3"/>
+    <agent x="57.0" y="-46" n="5" dx="6" dy="8" type="1">
+        <addwaypoint id="goal9_3_1"/>
+        <addwaypoint id="goal9_3_2"/>
+    </agent>
+
+    <waypoint id="goal9_4_1" x="60" y="-56" r="3"/>
+    <waypoint id="goal9_4_2" x="68" y="-56" r="3"/>
+    <agent x="68.2" y="-56" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_4_1"/>
+        <addwaypoint id="goal9_4_2"/>
+    </agent>
+
+    <waypoint id="goal9_5_1" x="60" y="-54.5" r="3"/>
+    <waypoint id="goal9_5_2" x="68" y="-54.5" r="3"/>
+    <agent x="68.0" y="-54.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_5_1"/>
+        <addwaypoint id="goal9_5_2"/>
+    </agent>
+
+    <waypoint id="goal9_6_1" x="60" y="-53" r="3"/>
+    <waypoint id="goal9_6_2" x="68" y="-53" r="3"/>
+    <agent x="68.3" y="-53" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_6_1"/>
+        <addwaypoint id="goal9_6_2"/>
+    </agent>
+
+    <waypoint id="goal9_7_1" x="60" y="-51.5" r="3"/>
+    <waypoint id="goal9_7_2" x="68" y="-51.5" r="3"/>
+    <agent x="68.0" y="-51.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_7_1"/>
+        <addwaypoint id="goal9_7_2"/>
+    </agent>
+
+    <waypoint id="goal9_8_1" x="60" y="-50" r="3"/>
+    <waypoint id="goal9_8_2" x="68" y="-50" r="3"/>
+    <agent x="67.8" y="-50" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_8_1"/>
+        <addwaypoint id="goal9_8_2"/>
+    </agent>
+
+    <waypoint id="goal9_9_1" x="60" y="-48.5" r="3"/>
+    <waypoint id="goal9_9_2" x="68" y="-48.5" r="3"/>
+    <agent x="68.0" y="-48.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_9_1"/>
+        <addwaypoint id="goal9_9_2"/>
+    </agent>
+
+    <waypoint id="goal9_10_1" x="60" y="-47" r="3"/>
+    <waypoint id="goal9_10_2" x="68" y="-47" r="3"/>
+    <agent x="68.4" y="-47" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_10_1"/>
+        <addwaypoint id="goal9_10_2"/>
+    </agent>
+
+    <waypoint id="goal9_11_1" x="60" y="-45.5" r="3"/>
+    <waypoint id="goal9_11_2" x="68" y="-45.5" r="3"/>
+    <agent x="68.0" y="-45.5" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_11_1"/>
+        <addwaypoint id="goal9_11_2"/>
+    </agent>
+
+    <waypoint id="goal9_12_1" x="60" y="-44" r="3"/>
+    <waypoint id="goal9_12_2" x="68" y="-44" r="3"/>
+    <agent x="68.0" y="-44" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal9_12_1"/>
+        <addwaypoint id="goal9_12_2"/>
+    </agent>
+
+
+
+    <!-- Scenario 8 [dynamic]: center shift (50, 0) -->
+    <!-- Env Boundary -->
+    <obstacle x1="25" y1="-25" x2="25" y2="25" type="line"/>
+    <obstacle x1="75" y1="-25" x2="75" y2="25" type="line"/>
+    <obstacle x1="25" y1="-25" x2="75" y2="-25" type="line"/>  
+    <obstacle x1="25" y1="25" x2="75" y2="25" type="line"/>  
+    <!-- Add pedestrians -->
+    <waypoint id="goal10_1_1" x="35" y="-5" r="2"/>
+    <waypoint id="goal10_1_2" x="35" y="5" r="2"/>
+    <agent x="35.0" y="5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_1_1"/>
+        <addwaypoint id="goal10_1_2"/>
+    </agent>
+    <waypoint id="goal10_2_1" x="38" y="-4" r="2"/>
+    <waypoint id="goal10_2_2" x="38" y="4" r="2"/>
+    <agent x="38.0" y="4" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_2_1"/>
+        <addwaypoint id="goal10_2_2"/>
+    </agent>
+    <waypoint id="goal10_3_1" x="41" y="5" r="2"/>
+    <waypoint id="goal10_3_2" x="41" y="-4.5" r="2"/>
+    <agent x="41.0" y="-5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_3_1"/>
+        <addwaypoint id="goal10_3_2"/>
+    </agent>
+    <waypoint id="goal10_4_1" x="44" y="-4.2" r="2"/>
+    <waypoint id="goal10_4_2" x="44" y="4" r="2"/>
+    <agent x="44.0" y="4" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_4_1"/>
+        <addwaypoint id="goal10_4_2"/>
+    </agent>
+    <waypoint id="goal10_5_1" x="47" y="4.7" r="2"/>
+    <waypoint id="goal10_5_2" x="47" y="-4.5" r="2"/>
+    <agent x="47.0" y="-4.5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_5_1"/>
+        <addwaypoint id="goal10_5_2"/>
+    </agent>
+    <waypoint id="goal10_6_1" x="50" y="-4" r="2"/>
+    <waypoint id="goal10_6_2" x="50" y="4.8" r="2"/>
+    <agent x="50.0" y="3" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_6_1"/>
+        <addwaypoint id="goal10_6_2"/>
+    </agent>
+    <waypoint id="goal10_7_1" x="53" y="-5" r="2"/>
+    <waypoint id="goal10_7_2" x="53" y="6" r="2"/>
+    <agent x="53.0" y="7" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_7_1"/>
+        <addwaypoint id="goal10_7_2"/>
+    </agent>    
+    <waypoint id="goal10_8_1" x="56" y="4.6" r="2"/>
+    <waypoint id="goal10_8_2" x="56" y="-5" r="2"/>
+    <agent x="56.0" y="-5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_8_1"/>
+        <addwaypoint id="goal10_8_2"/>
+    </agent>
+    <waypoint id="goal10_9_1" x="59" y="-4.3" r="2"/>
+    <waypoint id="goal10_9_2" x="59" y="4.8" r="2"/>
+    <agent x="59.0" y="4.5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_9_1"/>
+        <addwaypoint id="goal10_9_2"/>
+    </agent>
+    <waypoint id="goal10_10_1" x="62" y="5" r="2"/>
+    <waypoint id="goal10_10_2" x="62" y="-4.3" r="2"/>
+    <agent x="62.0" y="-5.2" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_10_1"/>
+        <addwaypoint id="goal10_10_2"/>
+    </agent>
+    <waypoint id="goal10_11_1" x="65" y="-5" r="2"/>
+    <waypoint id="goal10_11_2" x="65" y="4.8" r="2"/>
+    <agent x="65.0" y="4.6" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_11_1"/>
+        <addwaypoint id="goal10_11_2"/>
+    </agent>
+    <!-- -x <-> +x, -y -->
+    <waypoint id="goal10_12_1" x="45" y="-15" r="2"/>
+    <waypoint id="goal10_12_2" x="35" y="-15" r="2"/>
+    <agent x="35.0" y="-15" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_12_1"/>
+        <addwaypoint id="goal10_12_2"/>
+    </agent>
+    <waypoint id="goal10_13_1" x="37.1" y="-13.5" r="2"/>
+    <waypoint id="goal10_13_2" x="44" y="-13.5" r="2"/>
+    <agent x="44.0" y="-13.5" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_13_1"/>
+        <addwaypoint id="goal10_13_2"/>
+    </agent>
+    <waypoint id="goal10_14_1" x="44.6" y="-11" r="2"/>
+    <waypoint id="goal10_14_2" x="37" y="-11" r="2"/>
+    <agent x="35.0" y="-11" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_14_1"/>
+        <addwaypoint id="goal10_14_2"/>
+    </agent>
+    <waypoint id="goal10_15_1" x="35" y="-9.5" r="2"/>
+    <waypoint id="goal10_15_2" x="46" y="-9.5" r="2"/>
+    <agent x="46" y="-9.5" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_15_1"/>
+        <addwaypoint id="goal10_15_2"/>
+    </agent>
+    <waypoint id="goal10_16_1" x="45" y="-8" r="2"/>
+    <waypoint id="goal10_16_2" x="36" y="-8" r="2"/>
+    <agent x="35.0" y="-8" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_16_1"/>
+        <addwaypoint id="goal10_16_2"/>
+    </agent>    
+    <!-- -x <-> +x, -y -->
+    <waypoint id="goal10_17_1" x="55" y="-15" r="2"/>
+    <waypoint id="goal10_17_2" x="45" y="-15" r="2"/>
+    <agent x="45.0" y="-15" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_17_1"/>
+        <addwaypoint id="goal10_17_2"/>
+    </agent>
+    <waypoint id="goal10_18_1" x="47.1" y="-13.5" r="2"/>
+    <waypoint id="goal10_18_2" x="54" y="-13.5" r="2"/>
+    <agent x="54.0" y="-13.5" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_18_1"/>
+        <addwaypoint id="goal10_18_2"/>
+    </agent>
+    <waypoint id="goal10_19_1" x="54.6" y="-11" r="2"/>
+    <waypoint id="goal10_19_2" x="47" y="-11" r="2"/>
+    <agent x="45.0" y="-11" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_19_1"/>
+        <addwaypoint id="goal10_19_2"/>
+    </agent>
+    <waypoint id="goal10_20_1" x="45" y="-9.5" r="2"/>
+    <waypoint id="goal10_20_2" x="56" y="-9.5" r="2"/>
+    <agent x="56" y="-9.5" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_20_1"/>
+        <addwaypoint id="goal10_20_2"/>
+    </agent>
+    <waypoint id="goal10_21_1" x="55" y="-8" r="2"/>
+    <waypoint id="goal10_21_2" x="46" y="-8" r="2"/>
+    <agent x="45.0" y="-8" n="1" dx="2" dy="0.1" type="1">
+        <addwaypoint id="goal10_21_1"/>
+        <addwaypoint id="goal10_21_2"/>
+    </agent>
+    <!-- -x <-> +x, -y -->
+    <waypoint id="goal10_22_1" x="55" y="-15" r="2"/>
+    <waypoint id="goal10_22_2" x="65" y="-15" r="2"/>
+    <agent x="55.0" y="-15" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_22_1"/>
+        <addwaypoint id="goal10_22_2"/>
+    </agent>
+    <waypoint id="goal10_23_1" x="56" y="-10" r="2"/>
+    <waypoint id="goal10_23_2" x="65" y="-10" r="2"/>
+    <agent x="56.0" y="-10" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_23_1"/>
+        <addwaypoint id="goal10_23_2"/>
+    </agent>
+    <waypoint id="goal10_24_1" x="64.6" y="-6" r="2"/>
+    <waypoint id="goal10_24_2" x="56" y="-6" r="2"/>
+    <agent x="55.0" y="-6" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal10_24_1"/>
+        <addwaypoint id="goal10_24_2"/>
+    </agent>
+    <!-- -x <-> +x, +y -->
+    <waypoint id="goal10_25_1" x="40" y="10" r="2"/>
+    <waypoint id="goal10_25_2" x="35" y="15" r="2"/>
+    <agent x="35.0" y="15" n="1" dx="2" dy="2" type="1">
+        <addwaypoint id="goal10_25_1"/>
+        <addwaypoint id="goal10_25_2"/>
+    </agent>
+    <waypoint id="goal10_26_1" x="40" y="15" r="2"/>
+    <waypoint id="goal10_26_2" x="35" y="10" r="2"/>
+    <agent x="35" y="10" n="1" dx="2" dy="2" type="1">
+        <addwaypoint id="goal10_26_1"/>
+        <addwaypoint id="goal10_26_2"/>
+    </agent>
+    <!-- -x <-> +x, +y -->
+    <waypoint id="goal10_27_1" x="48" y="5" r="2"/>
+    <waypoint id="goal10_27_2" x="40" y="15" r="2"/>
+    <agent x="40.0" y="15" n="4" dx="5" dy="5" type="1">
+        <addwaypoint id="goal10_27_1"/>
+        <addwaypoint id="goal10_27_2"/>
+    </agent>
+    <waypoint id="goal10_28_1" x="58" y="5" r="2"/>
+    <waypoint id="goal10_28_2" x="50" y="15" r="2"/>
+    <agent x="50.0" y="15" n="4" dx="5" dy="5" type="1">
+        <addwaypoint id="goal10_28_1"/>
+        <addwaypoint id="goal10_28_2"/>
+    </agent>
+    <waypoint id="goal10_29_1" x="66" y="5" r="2"/>
+    <waypoint id="goal10_29_2" x="58" y="15" r="2"/>
+    <agent x="58.0" y="15" n="4" dx="5" dy="5" type="1">
+        <addwaypoint id="goal10_29_1"/>
+        <addwaypoint id="goal10_29_2"/>
+    </agent>
+
+
+    <!-- Scenario 9 [dynamic]: center shift (50, 50) -->
+    <!-- Env Boundary -->
+    <obstacle x1="25" y1="25" x2="25" y2="75" type="line"/>
+    <obstacle x1="25" y1="75" x2="75" y2="75" type="line"/>      
+    <obstacle x1="75" y1="75" x2="75" y2="25" type="line"/>
+    <obstacle x1="75" y1="25" x2="25" y2="25" type="line"/>  
+    <!-- Add pedestrians -->
+    <waypoint id="goal11_1_1" x="38" y="42" r="2"/>
+    <waypoint id="goal11_1_2" x="50" y="58" r="2"/>
+    <agent x="50.0" y="58" n="3" dx="2" dy="2" type="1">
+        <addwaypoint id="goal11_1_1"/>
+        <addwaypoint id="goal11_1_2"/>
+    </agent>
+    <waypoint id="goal11_2_1" x="38" y="58" r="2"/>
+    <waypoint id="goal11_2_2" x="50" y="42" r="2"/>
+    <agent x="50.0" y="42" n="3" dx="2" dy="2" type="1">
+        <addwaypoint id="goal11_2_1"/>
+        <addwaypoint id="goal11_2_2"/>
+    </agent>
+    <waypoint id="goal11_3_1" x="52" y="42" r="2"/>
+    <waypoint id="goal11_3_2" x="40" y="58" r="2"/>
+    <agent x="40.0" y="58" n="3" dx="2" dy="2" type="1">
+        <addwaypoint id="goal11_3_1"/>
+        <addwaypoint id="goal11_3_2"/>
+    </agent>
+    <waypoint id="goal11_4_1" x="52" y="58" r="2"/>
+    <waypoint id="goal11_4_2" x="40" y="42" r="2"/>
+    <agent x="40.0" y="42" n="3" dx="2" dy="2" type="1">
+        <addwaypoint id="goal11_4_1"/>
+        <addwaypoint id="goal11_4_2"/>
+    </agent>
+    <waypoint id="goal11_5_1" x="65" y="50" r="2"/>
+    <waypoint id="goal11_5_2" x="55" y="50" r="2"/>
+    <agent x="55.0" y="50" n="3" dx="0" dy="5" type="1">
+        <addwaypoint id="goal11_5_1"/>
+        <addwaypoint id="goal11_5_2"/>
+    </agent>
+    <waypoint id="goal11_6_1" x="55" y="50" r="2"/>
+    <waypoint id="goal11_6_2" x="65" y="50" r="2"/>
+    <agent x="65.0" y="50" n="3" dx="0" dy="3" type="1">
+        <addwaypoint id="goal11_6_1"/>
+        <addwaypoint id="goal11_6_2"/>
+    </agent>
+    <waypoint id="goal11_7_1" x="60" y="50" r="2"/>
+    <waypoint id="goal11_7_2" x="60" y="40" r="2"/>
+    <agent x="60.0" y="40" n="3" dx="4" dy="4" type="1">
+        <addwaypoint id="goal11_7_1"/>
+        <addwaypoint id="goal11_7_2"/>
+    </agent>
+    <waypoint id="goal11_8_1" x="60" y="50" r="2"/>
+    <waypoint id="goal11_8_2" x="60" y="60" r="2"/>
+    <agent x="60.0" y="60" n="3" dx="4" dy="4" type="1">
+        <addwaypoint id="goal11_8_1"/>
+        <addwaypoint id="goal11_8_2"/>
+    </agent>
+
+
+</scenario>
+
+

@@ -1,10 +1,12 @@
 <launch>
   <!-- select a mode: how to drive persons. [opt: 0: data replay;  1: social force;  2: manually control with interface keyboard] -->
-  <arg name="person_mode" default="2"/>
+  <arg name="person_mode" default="1"/>
   <!-- select a mode: how to drive the robot. [opt: 0: controlled by move_base, listen to the topic /cmd_vel;  2: manually control with interface keyboard] -->
   <arg name="robot_mode" default="0"/>
 
   <arg name="scene_file" default="$(find pedsim_simulator)/scenes/demo1_static_env.xml"/>
+  <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/demo2_dynamic_env.xml"/> -->
+
 
 
   <!-- set the initial pose of the robot -->

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!-- Static obstacles -->
+    <obstacle x1="-25" y1="-25" x2="-25" y2="25" type="line"/>
+    <obstacle x1="25" y1="-25" x2="25" y2="25" type="line"/>
+    <obstacle x1="-25" y1="-25" x2="25" y2="-25" type="line"/>  
+    <obstacle x1="-25" y1="25" x2="25" y2="25" type="line"/>  
+
+    <!-- Add robot (type=2): all the parameters are invalid. The robot pose is aligned with the parameters in pedsim_simulator.launch -->
+    <waypoint id="goal2" x="2" y="0" r="2"/>
+    <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
+        <addwaypoint id="goal2"/>
+    </agent>
+
+    <!-- -x -y  -->
+    <obstacle x="-9.0" y="-9.0" xHalfLength="0.3" yHalfLength="0.8" type="rectangle"/>
+    <obstacle x1="-9" y1="-2" x2="-9" y2="2" type="line"/>
+    <!-- -x, +y -->
+    <obstacle x1="-6" y1="8" x2="-10" y2="8" type="line"/>
+    <obstacle x1="-6" y1="8" x2="-6" y2="10" type="line"/>
+    <obstacle x1="-10" y1="8" x2="-10" y2="9" type="line"/>
+    <obstacle x1="-8" y1="7" x2="-8" y2="10" type="line"/>
+
+    <waypoint id="goal6_1_1" x="-2" y="-5" r="2"/>
+    <waypoint id="goal6_1_2" x="-12" y="-5" r="2"/>
+    <agent x="-12" y="-5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_1_1"/>
+        <addwaypoint id="goal6_1_2"/>
+    </agent>
+    <waypoint id="goal6_1_3" x="-2" y="5" r="2"/>
+    <waypoint id="goal6_1_4" x="-12" y="5" r="2"/>
+    <agent x="-12" y="5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_1_3"/>
+        <addwaypoint id="goal6_1_4"/>
+    </agent>
+
+    <!-- +x, -y -->
+    <obstacle x="9.0" y="-9.0" radius="0.8" type="circle"/>
+    <obstacle x1="9" y1="-2" x2="9" y2="2" type="line"/>
+    <!-- +x, +y -->
+    <obstacle x1="8" y1="6.5" x2="8" y2="9.5" type="line"/>
+    <obstacle x1="6.5" y1="8" x2="9.5" y2="8" type="line"/>
+
+    <waypoint id="goal6_2_1" x="2" y="-5" r="2"/>
+    <waypoint id="goal6_2_2" x="12" y="-5" r="2"/>
+    <agent x="12" y="-5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_2_1"/>
+        <addwaypoint id="goal6_2_2"/>
+    </agent>
+    <waypoint id="goal6_2_3" x="2" y="5" r="2"/>
+    <waypoint id="goal6_2_4" x="12" y="5" r="2"/>
+    <agent x="12" y="5" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_2_3"/>
+        <addwaypoint id="goal6_2_4"/>
+    </agent>
+
+    <waypoint id="goal6_3_1" x="6" y="-9" r="2"/>
+    <waypoint id="goal6_3_2" x="-6" y="-9" r="2"/>
+    <agent x="-6" y="-9" n="3" dx="3" dy="3" type="1">
+        <addwaypoint id="goal6_3_1"/>
+        <addwaypoint id="goal6_3_2"/>
+    </agent>
+    <waypoint id="goal6_3_3" x="-6" y="9" r="2"/>
+    <waypoint id="goal6_3_4" x="5" y="9" r="2"/>
+    <agent x="5" y="9" n="3" dx="2" dy="3" type="1">
+        <addwaypoint id="goal6_3_3"/>
+        <addwaypoint id="goal6_3_4"/>
+    </agent>
+
+    <!-- 0,0 -->
+    <obstacle x="0.0" y="-1.1" xHalfLength="1" yHalfLength="0.5" type="rectangle"/>
+    <obstacle x="0.0" y="1.1" xHalfLength="1" yHalfLength="0.5" type="rectangle"/>
+
+    <waypoint id="goal6_4_1" x="0" y="-4" r="3"/>
+    <waypoint id="goal6_4_2_1" x="-3" y="0" r="2"/>
+    <waypoint id="goal6_4_2_2" x="3" y="0" r="2"/>
+    <waypoint id="goal6_4_3" x="0" y="4" r="3"/>
+    <agent x="-2" y="4" n="3" dx="1" dy="2" type="1">
+        <addwaypoint id="goal6_4_1"/>
+        <addwaypoint id="goal6_4_2_1"/>
+        <addwaypoint id="goal6_4_3"/>
+    </agent>
+    <agent x="2" y="4" n="3" dx="1" dy="2" type="1">
+        <addwaypoint id="goal6_4_1"/>
+        <addwaypoint id="goal6_4_2_2"/>
+        <addwaypoint id="goal6_4_3"/>
+    </agent>
+
+    <waypoint id="goal6_5_1" x="10" y="-3" r="2"/>
+    <waypoint id="goal6_5_2" x="10" y="3" r="2"/>
+    <waypoint id="goal6_5_3" x="8" y="3" r="2"/>
+    <waypoint id="goal6_5_4" x="8" y="-3" r="2"/>
+    <agent x="8" y="-3" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal6_5_1"/>
+        <addwaypoint id="goal6_5_2"/>
+        <addwaypoint id="goal6_5_3"/>
+        <addwaypoint id="goal6_5_4"/>
+    </agent>
+    <waypoint id="goal6_6_1" x="-10" y="-3" r="2"/>
+    <waypoint id="goal6_6_2" x="-10" y="3" r="2"/>
+    <waypoint id="goal6_6_3" x="-8" y="3" r="2"/>
+    <waypoint id="goal6_6_4" x="-8" y="-3" r="2"/>
+    <agent x="-8" y="-3" n="1" dx="0.1" dy="0.1" type="1">
+        <addwaypoint id="goal6_6_1"/>
+        <addwaypoint id="goal6_6_2"/>
+        <addwaypoint id="goal6_6_3"/>
+        <addwaypoint id="goal6_6_4"/>
+    </agent>
+
+
+</scenario>
+
+

@@ -108,7 +108,6 @@ class Simulator {
   void publishRobotPosition();
   void publishWaypoints();
   void pubTfForSelfSFM();
-  void publishGaze();
 
  private:
   ros::NodeHandle nh_;

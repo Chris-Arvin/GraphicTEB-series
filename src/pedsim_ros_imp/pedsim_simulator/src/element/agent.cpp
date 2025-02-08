@@ -270,7 +270,6 @@ bool Agent::removeForce(Force* forceIn) {
 
 bool Agent::setTopic(){
   this->topicName = "/people"+to_string(this->id)+"/keyboard";
-  this->GazetopicName="/people"+to_string(this->id)+"/keyboard"+"/gaze";
   return true;
 }
 
@@ -278,28 +277,15 @@ bool Agent::setSubscriber(ros::NodeHandle nh){
   this->nh_ = nh;
   this->sub_action_ = this->nh_.subscribe<geometry_msgs::Twist>(this->topicName, 1, boost::bind(&Agent::controlCallback, this,_1));
   this->sub_state_ = this->nh_.subscribe<pedsim_msgs::TrackedPersons>("/persons_recorded", 1, boost::bind(&Agent::stateCallback, this,_1));
-  this->sub_gaze_ =this->nh_.subscribe<geometry_msgs::Twist>(this->GazetopicName,1,boost::bind(&Agent::gazeCallback,this,_1));
   return true;
 }
-bool Agent::setPubTopic(){
-  // ROS_INFO_STREAM("topic name set");
-  this->topicPubGazeDirName="/people"+to_string(this->id)+"/gaze/direction";
-  return true;
-}
+
 bool Agent::setPublisher(ros::NodeHandle nh){
   this->nh_=nh;
-  this->pub_gaze_dir_=this->nh_.advertise<visualization_msgs::Marker>(this->topicPubGazeDirName,1,true);
-  this->pub_gaze_tar_=this->nh_.advertise<visualization_msgs::Marker>(this->topicPubGazeTarName,1,true);
+  // this->pub_gaze_dir_=this->nh_.advertise<visualization_msgs::Marker>(this->topicPubGazeDirName,1,true);
+  // this->pub_gaze_tar_=this->nh_.advertise<visualization_msgs::Marker>(this->topicPubGazeTarName,1,true);
   
   return true;
-}
-
-
-
-void Agent::gazePublish(const visualization_msgs::Marker dir_msg,const visualization_msgs::Marker tar_msg) const{
-
-  this->pub_gaze_dir_.publish(dir_msg);
-  this->pub_gaze_tar_.publish(tar_msg);
 }
 
 void Agent::controlCallback(const geometry_msgs::Twist::ConstPtr& msg){
@@ -318,17 +304,6 @@ void Agent::stateCallback(const pedsim_msgs::TrackedPersons::ConstPtr& msg){
       this->stateFromTopic = Ped::Tvector(person.pose.pose.position.x, person.pose.pose.position.y, yaw, person.twist.twist.linear.x, person.twist.twist.linear.y);
     }
   }
-}
-
-void Agent::gazeCallback(const geometry_msgs::Twist::ConstPtr& msg){
-  
-
-  float yawRot= msg->angular.z; // for gaze target move along with x axis
-  float pitchRot = msg->angular.y; // for gaze target move along with y axis
-  float rollRot=msg->angular.x; // for gaze target move along with z axis
-  float mode=msg->linear.x;
-
-  this->gazeFromTopic=Ped::Tvector(yawRot,pitchRot,rollRot,mode);
 }
 
 AgentStateMachine* Agent::getStateMachine() const { return stateMachine; }

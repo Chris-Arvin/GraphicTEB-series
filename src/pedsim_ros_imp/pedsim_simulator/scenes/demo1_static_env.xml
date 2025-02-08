@@ -88,16 +88,8 @@
     <obstacle x="-11.5" y="-2.5" xHalfLength="1.0" yHalfLength="0.2" type="rectangle"/>
     <obstacle x="-10.5" y="-2.0" xHalfLength="0.1" yHalfLength="0.6" type="rectangle"/>
 
-    <!-- Waypoints required for social force -->
-    <waypoint id="p1" x="9" y="-1" r="2"/>
-    <waypoint id="p2" x="6" y="4" r="2"/>
-    <!-- Add pedestrians -->
-    <agent x="6" y="20" n="1" dx="0" dy="0" type="1">
-        <addwaypoint id="p1"/>
-        <addwaypoint id="p2"/>
-    </agent>
-    <waypoint id="robot_goal" x="15" y="0" r="0.5"/>
     <!-- Add robot (type=2): all the parameters are invalid. The robot pose is aligned with the parameters in pedsim_simulator.launch -->
+    <waypoint id="robot_goal" x="15" y="0" r="0.5"/>
     <agent x="-5" y="0" n="1" dx="0" dy="0" type="2">
         <addwaypoint id="robot_goal"/>
     </agent>

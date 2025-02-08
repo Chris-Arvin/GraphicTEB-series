@@ -48,7 +48,7 @@ AgentCluster::AgentCluster(double xIn, double yIn, int countIn) {
 
 AgentCluster::~AgentCluster() {}
 
-QList<Agent*> AgentCluster::dissolve() {
+QList<Agent*> AgentCluster::dissolve(bool is_mutual_control) {
   QList<Agent*> agents;
 
   std::uniform_real_distribution<double> randomX(-distribution.width() / 2,
@@ -74,7 +74,7 @@ QList<Agent*> AgentCluster::dissolve() {
     a->setGazeOrientation(q_orientation.x(),q_orientation.y(),q_orientation.z(),q_orientation.w());
      
     a->setType(agentType);
-    if (agentType!= 2 ){
+    if (agentType!= 2 && is_mutual_control){
       a->setTopic();
     }
     // add waypoints to the agent

@@ -149,14 +149,12 @@ void Simulator::runSimulation() {
         }
         else{
           agent->setSubscriber(nh_);
-          agent->setPubTopic();
           agent->setPublisher(nh_);          
         }
       }
     }
 
     if (!paused_) {
-      publishGaze();
       updateRobotPositionFromTF();
       SCENE.moveAllAgents();
       publishAgents();
@@ -438,84 +436,6 @@ void Simulator::publishWaypoints() {
   }
   pub_waypoints_.publish(sim_waypoints);
 }
-
-void Simulator::publishGaze()
-{
-  visualization_msgs::Marker gazeVec;
-  visualization_msgs::Marker gazePoint;
-
-  int agent_id=0;
-
-  for (const Agent* a : SCENE.getAgents()) 
-  {
-    if (a->getType()==Ped::Tagent::ROBOT){
-      continue;
-    }
-    else{
-
-      // publish the gaze vector
-      gazeVec.header.frame_id="odom";
-      gazeVec.header.stamp=ros::Time::now();
-      gazeVec.ns="gaze_vector";
-      gazeVec.id=agent_id;
-      gazeVec.action =visualization_msgs::Marker::ADD;
-      
-      gazeVec.type = visualization_msgs::Marker::ARROW;
-
-      gazeVec.pose.position.x=a->getPosition().x;
-      gazeVec.pose.position.y=a->getPosition().y;
-      gazeVec.pose.position.z=1.6;
-
-      gazeVec.pose.orientation.x=a->getGazeOrientation().x;
-      gazeVec.pose.orientation.y=a->getGazeOrientation().y;
-      gazeVec.pose.orientation.z=a->getGazeOrientation().z;
-      gazeVec.pose.orientation.w=a->getGazeOrientation().yaw;
-
-      gazeVec.scale.x = 1;
-      gazeVec.scale.y = 0.1;
-      gazeVec.scale.z = 0.1;
-
-      gazeVec.color.a = 1.0;
-      gazeVec.color.r = 0.0;
-      gazeVec.color.g = 1.0;
-      gazeVec.color.b = 0.0;
-
-
-
-      // publish the gaze point
-      bool gazePoint_valid=a->getGazeTarget().yaw;
-
-      gazePoint.header.frame_id="odom";
-      gazePoint.header.stamp=ros::Time::now();
-      gazePoint.ns="gaze_vector";
-      gazePoint.id=agent_id;
-
-      if (gazePoint_valid){
-        gazePoint.action =visualization_msgs::Marker::ADD;
-      }
-      else{
-        gazePoint.action= visualization_msgs::Marker::DELETE;
-      }
-      gazePoint.type = visualization_msgs::Marker::SPHERE;
-
-      gazePoint.scale.x = 0.2;
-      gazePoint.scale.y = 0.2;
-      gazePoint.scale.z = 0.2;
-
-      gazePoint.pose.position.x=a->getGazeTarget().x;
-      gazePoint.pose.position.y=a->getGazeTarget().y;
-      gazePoint.pose.position.z=a->getGazeTarget().z;
-
-      gazePoint.color.a = 1.0;
-      gazePoint.color.r = 1.0;
-      gazePoint.color.g = 0.0;
-      gazePoint.color.b = 0.0;
-
-      a->gazePublish(gazeVec,gazePoint);
-    }
-  }
-}
-
 
 std::string Simulator::agentStateToActivity(
     const AgentStateMachine::AgentState& state) const {

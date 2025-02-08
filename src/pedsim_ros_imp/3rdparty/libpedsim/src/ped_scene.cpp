@@ -183,52 +183,6 @@ void Ped::Tscene::moveAgentsWithReplay(){
   }
 }
 
-// change the agent's gaze (gaze target or gaze direction)
-void Ped::Tscene::adjustAgentsGazeWithManual(double h){
-  for (Tagent* agent: agents){
-    if (agent->getType()!=2){
-      Ped::Tvector gaze= this->gazeList.front();
-      this->gazeList.pop();
-
-      double yawRotate=gaze.x;
-      double pitchRotate=gaze.y;
-      double rollRotate=gaze.z;
-
-      Eigen::Quaterniond q_orientation;
-      q_orientation.x()=agent->getGazeOrientation().x;
-      q_orientation.y()=agent->getGazeOrientation().y;
-      q_orientation.z()=agent->getGazeOrientation().z;
-      q_orientation.w()=agent->getGazeOrientation().yaw;
-
-  
-      Eigen::AngleAxisd Zeuler((yawRotate/180)*M_PI,Eigen::Vector3d::UnitZ());
-
-      Eigen::AngleAxisd Yeuler((pitchRotate/180)*M_PI,Eigen::Vector3d::UnitY());
-      Eigen::AngleAxisd Xeuler(0,Eigen::Vector3d::UnitX());
-      Eigen::Matrix3d rotMatrix_adjust=(Zeuler*Yeuler* Xeuler).toRotationMatrix();
-
-    
-      Eigen::Vector3d adjust_gaze=q_orientation.normalized().toRotationMatrix()*rotMatrix_adjust*Eigen::Vector3d(1,0,0);
-
-      agent->setgdirx(adjust_gaze(0));
-      agent->setgdiry(adjust_gaze(1));
-      agent->setgdirz(adjust_gaze(2));
-      
-      q_orientation=Eigen::Quaterniond(q_orientation.normalized().toRotationMatrix()*rotMatrix_adjust);
-
-      agent->setGazeOrientation(q_orientation.x(),q_orientation.y(),q_orientation.z(),q_orientation.w());
-
-      double gtar_x,gtar_y;
-      double gtar_norm=1.0;
-      gtar_x=agent->getPosition().x+gtar_norm*cos(agent->gettheta());
-      gtar_y=agent->getPosition().y+gtar_norm*sin(agent->gettheta());
-
-      agent->setGazeTarget(gtar_x,gtar_y,0,0);
-
-
-    }
-  }
-}
 /// Internally used to update the quadtree.
 void Ped::Tscene::placeAgent(const Ped::Tagent* agentIn) {
   if (tree != NULL) tree->addAgent(agentIn);
