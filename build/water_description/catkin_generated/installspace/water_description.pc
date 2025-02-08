@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/install
+
+Name: water_description
+Description: Description of water_description
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/devel
+
+Name: mbf_costmap_nav
+Description: Description of mbf_costmap_nav
+Version: 0.4.0
+Cflags: -I/home/arvin/Documents/pedsim_ws/devel/include -I/home/arvin/Documents/pedsim_ws/src/mbf/mbf_costmap_nav/include -I/usr/include
+Libs: -L${prefix}/lib -lmbf_costmap_server /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.74.0
+Requires: actionlib actionlib_msgs costmap_2d dynamic_reconfigure geometry_msgs mbf_abstract_nav mbf_costmap_core mbf_msgs mbf_utility nav_core nav_msgs pluginlib roscpp std_msgs std_srvs tf

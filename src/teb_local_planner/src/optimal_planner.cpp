@@ -138,27 +138,28 @@ void TebOptimalPlanner::visualize()
 void TebOptimalPlanner::registerG2OTypes()
 {
   g2o::Factory* factory = g2o::Factory::instance();
-  factory->registerType("VERTEX_POSE", new g2o::HyperGraphElementCreator<VertexPose>);
-  factory->registerType("VERTEX_TIMEDIFF", new g2o::HyperGraphElementCreator<VertexTimeDiff>);
+  factory->registerType("VERTEX_POSE", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<VertexPose>));
+  factory->registerType("VERTEX_TIMEDIFF", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<VertexTimeDiff>));
 
-  factory->registerType("EDGE_TIME_OPTIMAL", new g2o::HyperGraphElementCreator<EdgeTimeOptimal>);
-  factory->registerType("EDGE_SHORTEST_PATH", new g2o::HyperGraphElementCreator<EdgeShortestPath>);
-  factory->registerType("EDGE_VELOCITY", new g2o::HyperGraphElementCreator<EdgeVelocity>);
-  factory->registerType("EDGE_VELOCITY_HOLONOMIC", new g2o::HyperGraphElementCreator<EdgeVelocityHolonomic>);
-  factory->registerType("EDGE_ACCELERATION", new g2o::HyperGraphElementCreator<EdgeAcceleration>);
-  factory->registerType("EDGE_ACCELERATION_START", new g2o::HyperGraphElementCreator<EdgeAccelerationStart>);
-  factory->registerType("EDGE_ACCELERATION_GOAL", new g2o::HyperGraphElementCreator<EdgeAccelerationGoal>);
-  factory->registerType("EDGE_ACCELERATION_HOLONOMIC", new g2o::HyperGraphElementCreator<EdgeAccelerationHolonomic>);
-  factory->registerType("EDGE_ACCELERATION_HOLONOMIC_START", new g2o::HyperGraphElementCreator<EdgeAccelerationHolonomicStart>);
-  factory->registerType("EDGE_ACCELERATION_HOLONOMIC_GOAL", new g2o::HyperGraphElementCreator<EdgeAccelerationHolonomicGoal>);
-  factory->registerType("EDGE_KINEMATICS_DIFF_DRIVE", new g2o::HyperGraphElementCreator<EdgeKinematicsDiffDrive>);
-  factory->registerType("EDGE_KINEMATICS_CARLIKE", new g2o::HyperGraphElementCreator<EdgeKinematicsCarlike>);
-  factory->registerType("EDGE_INFLATED_OBSTACLE", new g2o::HyperGraphElementCreator<EdgeInflatedObstacle>);
-  factory->registerType("EDGE_DYNAMIC_OBSTACLE", new g2o::HyperGraphElementCreator<EdgeDynamicObstacle>);
-  factory->registerType("EDGE_GOAL_LINE", new g2o::HyperGraphElementCreator<GoalLine>);
-  factory->registerType("EDGE_PREFER_ROTDIR", new g2o::HyperGraphElementCreator<EdgePreferRotDir>);
+  factory->registerType("EDGE_TIME_OPTIMAL", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeTimeOptimal>));
+  factory->registerType("EDGE_SHORTEST_PATH", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeShortestPath>));
+  factory->registerType("EDGE_VELOCITY", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeVelocity>));
+  factory->registerType("EDGE_VELOCITY_HOLONOMIC", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeVelocityHolonomic>));
+  factory->registerType("EDGE_ACCELERATION", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeAcceleration>));
+  factory->registerType("EDGE_ACCELERATION_START", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeAccelerationStart>));
+  factory->registerType("EDGE_ACCELERATION_GOAL", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeAccelerationGoal>));
+  factory->registerType("EDGE_ACCELERATION_HOLONOMIC", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeAccelerationHolonomic>));
+  factory->registerType("EDGE_ACCELERATION_HOLONOMIC_START", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeAccelerationHolonomicStart>));
+  factory->registerType("EDGE_ACCELERATION_HOLONOMIC_GOAL", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeAccelerationHolonomicGoal>));
+  factory->registerType("EDGE_KINEMATICS_DIFF_DRIVE", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeKinematicsDiffDrive>));
+  factory->registerType("EDGE_KINEMATICS_CARLIKE", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeKinematicsCarlike>));
+  factory->registerType("EDGE_INFLATED_OBSTACLE", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeInflatedObstacle>));
+  factory->registerType("EDGE_DYNAMIC_OBSTACLE", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgeDynamicObstacle>));
+  factory->registerType("EDGE_GOAL_LINE", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<GoalLine>));
+  factory->registerType("EDGE_PREFER_ROTDIR", std::shared_ptr<g2o::AbstractHyperGraphElementCreator>(new g2o::HyperGraphElementCreator<EdgePreferRotDir>));
   return;
 }
+
 
 /*
  * initialize g2o optimizer. Set solver settings here.
@@ -1141,30 +1142,28 @@ void TebOptimalPlanner::extractVelocity(const PoseSE2& pose1, const PoseSE2& pos
   
   Eigen::Vector2d deltaS = pose2.position() - pose1.position();
   
-  if (cfg_->robot.max_vel_y == 0) // nonholonomic robot
+  if (cfg_->robot.max_vel_y == 0) // 非全向机器人
   {
-    Eigen::Vector2d conf1dir( cos(pose1.theta()), sin(pose1.theta()) );
-    // translational velocity
-    double dir = deltaS.dot(conf1dir);
-    vx = (double) g2o::sign(dir) * deltaS.norm()/dt;
+    Eigen::Vector2d conf1dir(cos(pose1.theta()), sin(pose1.theta()));
+    // 平移速度：使用 std::copysign 替换 g2o::sign
+    double norm = deltaS.norm();
+    vx = std::copysign(norm/dt, deltaS.dot(conf1dir));
     vy = 0;
   }
-  else // holonomic robot
+  else // 全向机器人
   {
-    // transform pose 2 into the current robot frame (pose1)
-    // for velocities only the rotation of the direction vector is necessary.
-    // (map->pose1-frame: inverse 2d rotation matrix)
+    // transform pose2 into the frame of pose1
     double cos_theta1 = std::cos(pose1.theta());
     double sin_theta1 = std::sin(pose1.theta());
-    double p1_dx =  cos_theta1*deltaS.x() + sin_theta1*deltaS.y();
-    double p1_dy = -sin_theta1*deltaS.x() + cos_theta1*deltaS.y();
+    double p1_dx = cos_theta1 * deltaS.x() + sin_theta1 * deltaS.y();
+    double p1_dy = -sin_theta1 * deltaS.x() + cos_theta1 * deltaS.y();
     vx = p1_dx / dt;
-    vy = p1_dy / dt;    
+    vy = p1_dy / dt;
   }
   
-  // rotational velocity
+  // 旋转速度
   double orientdiff = g2o::normalize_theta(pose2.theta() - pose1.theta());
-  omega = orientdiff/dt;
+  omega = orientdiff / dt;
 }
 
 bool TebOptimalPlanner::getVelocityCommand(double& vx, double& vy, double& omega, int look_ahead_poses) const

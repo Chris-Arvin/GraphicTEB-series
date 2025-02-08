@@ -30,6 +30,8 @@
 
 cmake_minimum_required(VERSION 2.8.3)
 project(spencer_tracking_rviz_plugin)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(catkin REQUIRED COMPONENTS rviz spencer_tracking_msgs spencer_human_attribute_msgs spencer_social_relation_msgs)
 catkin_package()

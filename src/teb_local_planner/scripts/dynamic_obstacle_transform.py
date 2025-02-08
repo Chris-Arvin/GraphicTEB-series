@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from math import atan2, cos, sin, hypot, acos
 from pedsim_msgs.msg import TrackedPerson, TrackedPersons

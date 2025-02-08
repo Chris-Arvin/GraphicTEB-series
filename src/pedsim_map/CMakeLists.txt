@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(pedsim_map)
 add_definitions(-Wall -Wunused -std=c++11 -pipe -Wunused -Wextra)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+add_definitions(-DBOOST_BIND_GLOBAL_PLACEHOLDERS)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)

@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/install
+
+Name: mbf_msgs
+Description: Description of mbf_msgs
+Version: 0.4.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: actionlib_msgs geometry_msgs message_runtime nav_msgs std_msgs

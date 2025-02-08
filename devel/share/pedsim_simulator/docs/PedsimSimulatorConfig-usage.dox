@@ -1,0 +1,17 @@
+\subsubsection usage Usage
+\verbatim
+<node name="pedsim_simulator" pkg="pedsim_simulator" type="pedsim_simulator">
+  <param name="update_rate" type="double" value="24.0" />
+  <param name="simulation_factor" type="double" value="1.0" />
+  <param name="force_obstacle" type="double" value="10.0" />
+  <param name="sigma_obstacle" type="double" value="0.2" />
+  <param name="force_social" type="double" value="5.1" />
+  <param name="force_group_gaze" type="double" value="3.0" />
+  <param name="force_group_coherence" type="double" value="2.0" />
+  <param name="force_group_repulsion" type="double" value="1.0" />
+  <param name="force_random" type="double" value="0.1" />
+  <param name="force_wall" type="double" value="2.0" />
+  <param name="paused" type="bool" value="False" />
+</node>
+\endverbatim
+

@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/install
+
+Name: pedsim_visualizer
+Description: Description of pedsim_visualizer
+Version: 0.1.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: geometry_msgs pedsim_msgs pedsim_utils roscpp rospy std_msgs visualization_msgs dynamic_reconfigure

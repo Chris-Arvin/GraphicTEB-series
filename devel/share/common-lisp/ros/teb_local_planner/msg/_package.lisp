@@ -1,0 +1,15 @@
+(cl:defpackage teb_local_planner-msg
+  (:use )
+  (:export
+   "<FEEDBACKMSG>"
+   "FEEDBACKMSG"
+   "<OBSTACLEARRAYMSG>"
+   "OBSTACLEARRAYMSG"
+   "<OBSTACLEMSG>"
+   "OBSTACLEMSG"
+   "<TRAJECTORYMSG>"
+   "TRAJECTORYMSG"
+   "<TRAJECTORYPOINTMSG>"
+   "TRAJECTORYPOINTMSG"
+  ))
+

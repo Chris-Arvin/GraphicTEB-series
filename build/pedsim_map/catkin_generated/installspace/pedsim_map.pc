@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/install
+
+Name: pedsim_map
+Description: Description of pedsim_map
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: nav_msgs roscpp rospy visualization_msgs pedsim_msgs tf

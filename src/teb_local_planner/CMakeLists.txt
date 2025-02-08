@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(teb_local_planner)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # !!!! what we have done in the terminal is: sudo ln -s ~/opencv_build/opencv/include /usr/local/include/opencv
 set(OpenCV_DIR "~/opencv_build/opencv/build")
+find_package(OpenCV 4 REQUIRED)
 
 # Set to Release in order to speed up the program significantly
 set(CMAKE_BUILD_TYPE Release) #None, Debug, Release, RelWithDebInfo, MinSizeRel
@@ -10,7 +14,6 @@ set(CMAKE_BUILD_TYPE Release) #None, Debug, Release, RelWithDebInfo, MinSizeRel
 find_package(catkin REQUIRED COMPONENTS
   base_local_planner
   costmap_2d
-  costmap_converter
   cmake_modules
   dynamic_reconfigure
   geometry_msgs
@@ -34,7 +37,7 @@ message(STATUS "System: ${CMAKE_SYSTEM}")
 ## System dependencies are found with CMake's conventions
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
 message(STATUS "${CMAKE_MODULE_PATH}")
-find_package(Boost REQUIRED COMPONENTS system thread graph)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread graph)
 find_package(SUITESPARSE REQUIRED)
 find_package(G2O REQUIRED)
 
@@ -109,6 +112,8 @@ add_message_files(
   TrajectoryPointMsg.msg
   TrajectoryMsg.msg
   FeedbackMsg.msg
+  ObstacleArrayMsg.msg
+  ObstacleMsg.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -128,7 +133,7 @@ add_message_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
    DEPENDENCIES
-   geometry_msgs std_msgs costmap_converter
+   geometry_msgs std_msgs
 )
 
 #add dynamic reconfigure api
@@ -153,7 +158,6 @@ catkin_package(
   CATKIN_DEPENDS
 	base_local_planner
 	costmap_2d
-	costmap_converter
 	dynamic_reconfigure
 	geometry_msgs
 	interactive_markers

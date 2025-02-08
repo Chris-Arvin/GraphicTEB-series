@@ -67,7 +67,6 @@ namespace teb_local_planner
   
 
 TebLocalPlannerROS::TebLocalPlannerROS() : costmap_ros_(NULL), tf_(NULL), costmap_model_(NULL),
-                                           costmap_converter_loader_("costmap_converter", "costmap_converter::BaseCostmapToPolygons"),
                                            dynamic_recfg_(NULL), custom_via_points_active_(false), goal_reached_(false), no_infeasible_plans_(0),
                                            last_preferred_rotdir_(RotType::none), initialized_(false)
 {
@@ -130,35 +129,7 @@ void TebLocalPlannerROS::initialize(std::string name, tf2_ros::Buffer* tf, costm
     {
       planner_ = PlannerInterfacePtr(new TebOptimalPlanner(cfg_, &obstacles_, robot_model, visualization_, &via_points_));
       ROS_INFO("Parallel planning in distinctive topologies disabled.");
-    }
-
-
-    //Initialize a costmap to polygon converter
-    // 是否用线等形式的语义地图 替代 costmap的栅格地图
-    if (!cfg_.obstacles.costmap_converter_plugin.empty())
-    {
-      try
-      {
-        costmap_converter_ = costmap_converter_loader_.createInstance(cfg_.obstacles.costmap_converter_plugin);
-        std::string converter_name = costmap_converter_loader_.getName(cfg_.obstacles.costmap_converter_plugin);
-        // replace '::' by '/' to convert the c++ namespace to a NodeHandle namespace
-        boost::replace_all(converter_name, "::", "/");
-        costmap_converter_->setOdomTopic(cfg_.odom_topic);
-        costmap_converter_->initialize(ros::NodeHandle(nh, "costmap_converter/" + converter_name));
-        costmap_converter_->setCostmap2D(costmap_);
-        
-        costmap_converter_->startWorker(ros::Rate(cfg_.obstacles.costmap_converter_rate), costmap_, cfg_.obstacles.costmap_converter_spin_thread);
-        ROS_INFO_STREAM("Costmap conversion plugin " << cfg_.obstacles.costmap_converter_plugin << " loaded.");        
-      }
-      catch(pluginlib::PluginlibException& ex)
-      {
-        ROS_WARN("The specified costmap converter plugin cannot be loaded. All occupied costmap cells are treaten as point obstacles. Error message: %s", ex.what());
-        costmap_converter_.reset();
-      }
-    }
-    else 
-      ROS_INFO("No costmap conversion plugin specified. All occupied costmap cells are treaten as point obstacles.");
-  
+    }  
     
     // Get footprint of the robot and minimum and maximum distance from the center of the robot to its footprint vertices.
     footprint_spec_ = costmap_ros_->getRobotFootprint();
@@ -174,10 +145,7 @@ void TebLocalPlannerROS::initialize(std::string name, tf2_ros::Buffer* tf, costm
     
     // validate optimization footprint and costmap footprint
     validateFootprints(robot_model->getInscribedRadius(), robot_inscribed_radius_, cfg_.obstacles.min_obstacle_dist);
-        
-    // setup callback for custom obstacles
-    custom_obst_sub_ = nh.subscribe("obstacles", 1, &TebLocalPlannerROS::customObstacleCB, this);
-    
+            
     dynamic_obs_for_GraphicTEB_sub_ = nh.subscribe("/dynamic_obstacles", 1, &TebLocalPlannerROS::dynamicObstacleCB, this);
 
     // initialize failure detector
@@ -341,24 +309,7 @@ uint32_t TebLocalPlannerROS::computeVelocityCommands(const geometry_msgs::PoseSt
   transformed_plan.front() = robot_pose; // update start
   
   // 如果开启了graphic，那么去graph_search.cpp里面 根据我们的图形处理结果来拟合obs就好啦
-  if (!cfg_.hcp.graphic_exploration){
-    // clear currently existing obstacles
-    obstacles_.clear();
-    
-    // 这里如果没有开启costmapConverter，那就是把所有障碍物都当成点Point类型的convert来处理
-    // Update obstacle container with costmap information or polygons provided by a costmap_converter plugin
-    if (costmap_converter_){
-      updateObstacleContainerWithCostmapConverter();
-    }
-    else
-      updateObstacleContainerWithCostmap();
-    
-    // also consider custom obstacles (must be called after other updates, since the container is not cleared)
-    updateObstacleContainerWithCustomObstacles();
-  }
-  else{
-    updateObstacleForGraphicTEB();
-  }
+  updateObstacleForGraphicTEB();
     
   // Do not allow config changes during the following optimization step
   boost::mutex::scoped_lock cfg_lock(cfg_.configMutex());
@@ -520,129 +471,6 @@ void TebLocalPlannerROS::updateObstacleContainerWithCostmap()
   }
 }
 
-// 首先先考虑障碍物能不能用点、线、圆近似表示，如果不能就只能用polygon了
-// 从costmap_converter中获得障碍物的语义信息
-// 注意，也保存了障碍物的速度信息
-void TebLocalPlannerROS::updateObstacleContainerWithCostmapConverter()
-{
-  if (!costmap_converter_)
-    return;
-    
-  //Get obstacles from costmap converter
-  costmap_converter::ObstacleArrayConstPtr obstacles = costmap_converter_->getObstacles();
-  if (!obstacles)
-    return;
-
-  for (std::size_t i=0; i<obstacles->obstacles.size(); ++i)
-  {
-    const costmap_converter::ObstacleMsg* obstacle = &obstacles->obstacles.at(i);
-    const geometry_msgs::Polygon* polygon = &obstacle->polygon;
-
-    if (polygon->points.size()==1 && obstacle->radius > 0) // Circle
-    {
-      obstacles_.push_back(ObstaclePtr(new CircularObstacle(polygon->points[0].x, polygon->points[0].y, obstacle->radius)));
-    }
-    else if (polygon->points.size()==1) // Point
-    {
-      obstacles_.push_back(ObstaclePtr(new PointObstacle(polygon->points[0].x, polygon->points[0].y)));
-    }
-    else if (polygon->points.size()==2) // Line
-    {
-      obstacles_.push_back(ObstaclePtr(new LineObstacle(polygon->points[0].x, polygon->points[0].y,
-                                                        polygon->points[1].x, polygon->points[1].y )));
-    }
-    else if (polygon->points.size()>2) // Real polygon
-    {
-        PolygonObstacle* polyobst = new PolygonObstacle;
-        for (std::size_t j=0; j<polygon->points.size(); ++j)
-        {
-            polyobst->pushBackVertex(polygon->points[j].x, polygon->points[j].y);
-        }
-        polyobst->finalizePolygon();
-        obstacles_.push_back(ObstaclePtr(polyobst));
-    }
-
-    // Set velocity, if obstacle is moving
-    if(!obstacles_.empty())
-      obstacles_.back()->setCentroidVelocity(obstacles->obstacles[i].velocities, obstacles->obstacles[i].orientation);
-  }
-}
-
-// 和上面的一样，只不过这里特定针对来自（用户发布的）msg的障碍物。【我的理解是，上面的那些处理是针对costmap本身就包含的静态障碍物的，这里针对的是例如行人等这些动态障碍物，他们不会被更新到costmap，而是会被发布到一个额外的消息中】
-void TebLocalPlannerROS::updateObstacleContainerWithCustomObstacles()
-{
-  // Add custom obstacles obtained via message
-  boost::mutex::scoped_lock l(custom_obst_mutex_);
-
-  if (!custom_obstacle_msg_.obstacles.empty())
-  {
-    // We only use the global header to specify the obstacle coordinate system instead of individual ones
-    Eigen::Affine3d obstacle_to_map_eig;
-    try 
-    {
-      geometry_msgs::TransformStamped obstacle_to_map =  tf_->lookupTransform(global_frame_, ros::Time(0),
-                                                                              custom_obstacle_msg_.header.frame_id, ros::Time(0),
-                                                                              custom_obstacle_msg_.header.frame_id, ros::Duration(cfg_.robot.transform_tolerance));
-      obstacle_to_map_eig = tf2::transformToEigen(obstacle_to_map);
-    }
-    catch (tf::TransformException ex)
-    {
-      ROS_ERROR("%s",ex.what());
-      obstacle_to_map_eig.setIdentity();
-    }
-    
-    for (size_t i=0; i<custom_obstacle_msg_.obstacles.size(); ++i)
-    {
-      if (custom_obstacle_msg_.obstacles.at(i).polygon.points.size() == 1 && custom_obstacle_msg_.obstacles.at(i).radius > 0 ) // circle
-      {
-        Eigen::Vector3d pos( custom_obstacle_msg_.obstacles.at(i).polygon.points.front().x,
-                             custom_obstacle_msg_.obstacles.at(i).polygon.points.front().y,
-                             custom_obstacle_msg_.obstacles.at(i).polygon.points.front().z );
-        obstacles_.push_back(ObstaclePtr(new CircularObstacle( (obstacle_to_map_eig * pos).head(2), custom_obstacle_msg_.obstacles.at(i).radius)));
-      }
-      else if (custom_obstacle_msg_.obstacles.at(i).polygon.points.size() == 1 ) // point
-      {
-        Eigen::Vector3d pos( custom_obstacle_msg_.obstacles.at(i).polygon.points.front().x,
-                             custom_obstacle_msg_.obstacles.at(i).polygon.points.front().y,
-                             custom_obstacle_msg_.obstacles.at(i).polygon.points.front().z );
-        obstacles_.push_back(ObstaclePtr(new PointObstacle( (obstacle_to_map_eig * pos).head(2) )));
-      }
-      else if (custom_obstacle_msg_.obstacles.at(i).polygon.points.size() == 2 ) // line
-      {
-        Eigen::Vector3d line_start( custom_obstacle_msg_.obstacles.at(i).polygon.points.front().x,
-                                    custom_obstacle_msg_.obstacles.at(i).polygon.points.front().y,
-                                    custom_obstacle_msg_.obstacles.at(i).polygon.points.front().z );
-        Eigen::Vector3d line_end( custom_obstacle_msg_.obstacles.at(i).polygon.points.back().x,
-                                  custom_obstacle_msg_.obstacles.at(i).polygon.points.back().y,
-                                  custom_obstacle_msg_.obstacles.at(i).polygon.points.back().z );
-        obstacles_.push_back(ObstaclePtr(new LineObstacle( (obstacle_to_map_eig * line_start).head(2),
-                                                           (obstacle_to_map_eig * line_end).head(2) )));
-      }
-      else if (custom_obstacle_msg_.obstacles.at(i).polygon.points.empty())
-      {
-        ROS_WARN("Invalid custom obstacle received. List of polygon vertices is empty. Skipping...");
-        continue;
-      }
-      else // polygon
-      {
-        PolygonObstacle* polyobst = new PolygonObstacle;
-        for (size_t j=0; j<custom_obstacle_msg_.obstacles.at(i).polygon.points.size(); ++j)
-        {
-          Eigen::Vector3d pos( custom_obstacle_msg_.obstacles.at(i).polygon.points[j].x,
-                               custom_obstacle_msg_.obstacles.at(i).polygon.points[j].y,
-                               custom_obstacle_msg_.obstacles.at(i).polygon.points[j].z );
-          polyobst->pushBackVertex( (obstacle_to_map_eig * pos).head(2) );
-        }
-        polyobst->finalizePolygon();
-        obstacles_.push_back(ObstaclePtr(polyobst));
-      }
-
-      // Set velocity, if obstacle is moving
-      if(!obstacles_.empty())
-        obstacles_.back()->setCentroidVelocity(custom_obstacle_msg_.obstacles[i].velocities, custom_obstacle_msg_.obstacles[i].orientation);
-    }
-  }
-}
 
 void TebLocalPlannerROS::updateObstacleForGraphicTEB(){
   boost::mutex::scoped_lock l(dynamic_obs_mutex_);
@@ -932,7 +760,7 @@ double TebLocalPlannerROS::convertTransRotVelToSteeringAngle(double v, double om
   double radius = v/omega;
   
   if (fabs(radius) < min_turning_radius)
-    radius = double(g2o::sign(radius)) * min_turning_radius; 
+    radius = double(std::copysign(1.0,radius)) * min_turning_radius; 
 
   return std::atan(wheelbase / radius);
 }
@@ -1021,12 +849,7 @@ void TebLocalPlannerROS::configureBackupModes(std::vector<geometry_msgs::PoseSta
     }
 
 }
-     
-void TebLocalPlannerROS::customObstacleCB(const costmap_converter::ObstacleArrayMsg::ConstPtr& obst_msg)
-{
-  boost::mutex::scoped_lock l(custom_obst_mutex_);
-  custom_obstacle_msg_ = *obst_msg;  
-}
+
 
 void TebLocalPlannerROS::dynamicObstacleCB(const geometry_msgs::PoseArray::ConstPtr& obst_msg)
 {

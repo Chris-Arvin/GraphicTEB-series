@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(pedsim_utils)
 add_compile_options(-Wall -Wunused -std=c++11)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PACKAGE_DEPS
   cmake_modules

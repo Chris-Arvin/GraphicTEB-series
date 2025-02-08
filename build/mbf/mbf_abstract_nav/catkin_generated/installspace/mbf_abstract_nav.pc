@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/install
+
+Name: mbf_abstract_nav
+Description: Description of mbf_abstract_nav
+Version: 0.4.0
+Cflags: -I${prefix}/include -I/usr/include
+Libs: -L${prefix}/lib -lmbf_abstract_server /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.74.0
+Requires: actionlib actionlib_msgs dynamic_reconfigure geometry_msgs mbf_msgs mbf_abstract_core mbf_utility nav_msgs roscpp std_msgs std_srvs tf xmlrpcpp

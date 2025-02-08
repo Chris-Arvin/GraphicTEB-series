@@ -1,0 +1,15 @@
+-I/home/arvin/Documents/pedsim_ws/devel/include
+-I/opt/ros/noetic/include
+-I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp
+-I/usr/include/eigen3
+-I/usr/include/OGRE/Overlay
+-I/usr/include/OGRE
+-I/usr/include
+-I/usr/lib/x86_64-linux-gnu/urdfdom/cmake/../../../../include
+-DROS_BUILD_SHARED_LIBS=1
+-DROS_BUILD_SHARED_LIBS=1
+-DROS_PACKAGE_NAME="spencer_tracking_rviz_plugin"
+-DROSCONSOLE_BACKEND_LOG4CXX
+-o
+/home/arvin/Documents/pedsim_ws/build/pedsim_ros_imp/2ndparty/spencer_tracking_rviz_plugin/src/moc_human_attributes_display.cpp
+/home/arvin/Documents/pedsim_ws/src/pedsim_ros_imp/2ndparty/spencer_tracking_rviz_plugin/src/human_attributes_display.h

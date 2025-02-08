@@ -1,0 +1,17 @@
+\subsubsection usage Usage
+\verbatim
+<node name="move_base_flex_node" pkg="mbf_abstract_nav" type="move_base_flex_node">
+  <param name="planner_frequency" type="double" value="0.0" />
+  <param name="planner_patience" type="double" value="5.0" />
+  <param name="planner_max_retries" type="int" value="-1" />
+  <param name="controller_frequency" type="double" value="20.0" />
+  <param name="controller_patience" type="double" value="5.0" />
+  <param name="controller_max_retries" type="int" value="-1" />
+  <param name="recovery_enabled" type="bool" value="True" />
+  <param name="recovery_patience" type="double" value="15.0" />
+  <param name="oscillation_timeout" type="double" value="0.0" />
+  <param name="oscillation_distance" type="double" value="0.5" />
+  <param name="restore_defaults" type="bool" value="False" />
+</node>
+\endverbatim
+

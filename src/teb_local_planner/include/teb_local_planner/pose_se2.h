@@ -242,6 +242,14 @@ public:
     _theta = g2o::normalize_theta( _theta + pose_as_array[2] );
   }
   
+  static double average_angle(double a, double b) {
+    double diff = a - b;
+    // 将差值调整到 [-PI, PI] 范围内
+    while (diff < -M_PI) diff += 2 * M_PI;
+    while (diff > M_PI) diff -= 2 * M_PI;
+    return b + diff / 2;
+  }
+
   /**
     * @brief Get the mean / average of two poses and store it in the caller class
     * For the position part: 0.5*(x1+x2)
@@ -252,7 +260,7 @@ public:
   void averageInPlace(const PoseSE2& pose1, const PoseSE2& pose2)
   {
     _position = (pose1._position + pose2._position)/2;
-    _theta = g2o::average_angle(pose1._theta, pose2._theta);
+    _theta = average_angle(pose1._theta, pose2._theta);
   }
   
   /**
@@ -265,7 +273,7 @@ public:
     */ 
   static PoseSE2 average(const PoseSE2& pose1, const PoseSE2& pose2)
   {
-    return PoseSE2( (pose1._position + pose2._position)/2 , g2o::average_angle(pose1._theta, pose2._theta) );
+    return PoseSE2( (pose1._position + pose2._position)/2 , average_angle(pose1._theta, pose2._theta) );
   }
   
   /**

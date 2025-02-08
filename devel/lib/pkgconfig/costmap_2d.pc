@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/devel
+
+Name: costmap_2d
+Description: Description of costmap_2d
+Version: 1.16.7
+Cflags: -I/home/arvin/Documents/pedsim_ws/devel/include -I/home/arvin/Documents/pedsim_ws/src/costmap_2d/include -I/usr/include/eigen3 -I/usr/include
+Libs: -L${prefix}/lib -lcostmap_2d -llayers /usr/lib/x86_64-linux-gnu/libboost_system.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.74.0
+Requires: dynamic_reconfigure geometry_msgs laser_geometry map_msgs message_filters message_runtime nav_msgs pluginlib roscpp sensor_msgs std_msgs tf2_ros visualization_msgs voxel_grid

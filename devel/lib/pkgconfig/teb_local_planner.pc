@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/devel
+
+Name: teb_local_planner
+Description: Description of teb_local_planner
+Version: 0.8.4
+Cflags: -I/home/arvin/Documents/pedsim_ws/devel/include -I/home/arvin/Documents/pedsim_ws/src/teb_local_planner/include -I/usr/include/suitesparse -I/usr/local/include/g2o
+Libs: -L${prefix}/lib -lteb_local_planner -lamd -lbtf -lcamd -lccolamd -lcholmod -lcolamd -lcxsparse -lklu -lumfpack -lspqr /usr/local/lib/libg2o_csparse_extension.so /usr/local/lib/libg2o_core.so /usr/local/lib/libg2o_stuff.so /usr/local/lib/libg2o_types_slam2d.so /usr/local/lib/libg2o_types_slam3d.so /usr/local/lib/libg2o_solver_cholmod.so /usr/local/lib/libg2o_solver_pcg.so /usr/local/lib/libg2o_solver_csparse.so /usr/local/lib/libg2o_incremental.so
+Requires: base_local_planner costmap_2d dynamic_reconfigure geometry_msgs interactive_markers message_runtime nav_core nav_msgs pluginlib roscpp mbf_costmap_core std_msgs tf2 tf2_ros visualization_msgs

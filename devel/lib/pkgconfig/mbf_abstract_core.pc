@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/devel
+
+Name: mbf_abstract_core
+Description: Description of mbf_abstract_core
+Version: 0.4.0
+Cflags: -I/home/arvin/Documents/pedsim_ws/src/mbf/mbf_abstract_core/include
+Libs: -L${prefix}/lib 
+Requires: std_msgs geometry_msgs

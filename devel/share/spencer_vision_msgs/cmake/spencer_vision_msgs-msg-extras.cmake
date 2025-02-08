@@ -1,0 +1,2 @@
+set(spencer_vision_msgs_MESSAGE_FILES "/home/arvin/Documents/pedsim_ws/src/pedsim_ros_imp/2ndparty/spencer_messages/spencer_vision_msgs/msg/PersonImage.msg;/home/arvin/Documents/pedsim_ws/src/pedsim_ros_imp/2ndparty/spencer_messages/spencer_vision_msgs/msg/PersonImages.msg;/home/arvin/Documents/pedsim_ws/src/pedsim_ros_imp/2ndparty/spencer_messages/spencer_vision_msgs/msg/PersonROI.msg;/home/arvin/Documents/pedsim_ws/src/pedsim_ros_imp/2ndparty/spencer_messages/spencer_vision_msgs/msg/PersonROIs.msg")
+set(spencer_vision_msgs_SERVICE_FILES "")

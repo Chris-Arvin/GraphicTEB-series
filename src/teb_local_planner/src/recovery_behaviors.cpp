@@ -99,7 +99,7 @@ bool FailureDetector::detect(double v_eps, double omega_eps)
     {
         v_mean += buffer_[i].v;
         omega_mean += buffer_[i].omega;
-        if ( i>0 && g2o::sign(buffer_[i].omega) != g2o::sign(buffer_[i-1].omega) )
+        if ( i>0 && std::copysign(1.0,buffer_[i].omega) != std::copysign(1.0,buffer_[i-1].omega) )
             ++omega_zero_crossings;
     }
     v_mean /= n;

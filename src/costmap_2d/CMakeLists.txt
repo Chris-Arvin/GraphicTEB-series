@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(costmap_2d)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(catkin REQUIRED
         COMPONENTS
@@ -24,7 +26,7 @@ find_package(catkin REQUIRED
         )
 
 find_package(Eigen3 REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 include_directories(
     include
     ${catkin_INCLUDE_DIRS}

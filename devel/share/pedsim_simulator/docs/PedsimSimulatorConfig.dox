@@ -1,0 +1,16 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~update_rate" : \b [double] Simulation frequency (Hz) min: 1.0, default: 24.0, max: 50.0
+- \b "~simulation_factor" : \b [double] Simulation factor min: 0.1, default: 1.0, max: 10.0
+- \b "~force_obstacle" : \b [double] Obstacle force weight min: 0.0, default: 10.0, max: 50.0
+- \b "~sigma_obstacle" : \b [double] Sigma factor (obstacles) min: 0.1, default: 0.2, max: 1.0
+- \b "~force_social" : \b [double] Social force weight min: 0.0, default: 5.1, max: 10.0
+- \b "~force_group_gaze" : \b [double] Group gaze force weight min: 0.0, default: 3.0, max: 10.0
+- \b "~force_group_coherence" : \b [double] Group coherence force weight min: 0.0, default: 2.0, max: 10.0
+- \b "~force_group_repulsion" : \b [double] Group repulsion force weight min: 0.0, default: 1.0, max: 10.0
+- \b "~force_random" : \b [double] Random force weight min: 0.0, default: 0.1, max: 1.0
+- \b "~force_wall" : \b [double] Wall force weight min: 0.0, default: 2.0, max: 10.0
+- \b "~paused" : \b [bool] Pause/unpause simulation min: False, default: False, max: True
+

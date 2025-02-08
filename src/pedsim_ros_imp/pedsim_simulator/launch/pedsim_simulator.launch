@@ -10,7 +10,8 @@
 
   <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/pic_for_sim.xml"/> -->
   <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/pic_for_sim1.xml"/> -->
-  <arg name="scene_file" default="$(find pedsim_simulator)/scenes/pic_for_sim2.xml"/>
+  <arg name="scene_file" default="$(find pedsim_simulator)/scenes/demo1_static_env.xml"/>
+  <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/demo2_dynamic_env.xml"/> -->
   <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/pic_for_sim_old.xml"/> -->
   <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/0_complex_demo_static_obs.xml"/> -->
   <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/1_complex_demo_static_obs.xml"/> -->
@@ -28,7 +29,7 @@
   <!-- <arg name="scene_file" default="$(find pedsim_simulator)/scenes/graphicTEB/test16_three_pedestrians.xml"/> -->
 
   <!-- set the initial pose of the robot -->
-  <arg name="pose_initial_x" default="-5.0"/>
+  <arg name="pose_initial_x" default="-15.0"/>
   <arg name="pose_initial_y" default="0.0"/>
   <arg name="pose_initial_theta" default="0.0"/>
 

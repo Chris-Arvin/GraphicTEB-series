@@ -1,0 +1,7 @@
+\subsubsection usage Usage
+\verbatim
+<node name="pedsim_visualizer" pkg="pedsim_visualizer" type="pedsim_visualizer">
+  <param name="update_rate" type="double" value="24.0" />
+</node>
+\endverbatim
+

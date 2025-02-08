@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/install
+
+Name: move_base
+Description: Description of move_base
+Version: 1.16.7
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: dynamic_reconfigure geometry_msgs move_base_msgs nav_msgs roscpp

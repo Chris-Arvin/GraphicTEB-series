@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(pedsim)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 #------------------ Configuration ------------------#
 option(SHALL_DEBUG "Enable debug features" OFF)
@@ -23,7 +26,7 @@ endif(SHALL_DEBUG)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
 )
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 
 catkin_package(
   CATKIN_DEPENDS  roscpp

@@ -1,0 +1,8 @@
+prefix=/home/arvin/Documents/pedsim_ws/install
+
+Name: mbf_utility
+Description: Description of mbf_utility
+Version: 0.4.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lmbf_utility
+Requires: geometry_msgs roscpp tf tf2 tf2_ros tf2_geometry_msgs

@@ -35,9 +35,6 @@ TebLocalPlannerROS:
  dynamic_obstacle_inflation_dist: 0.5
  include_dynamic_obstacles: True
 
- costmap_converter_plugin: ""
- costmap_converter_spin_thread: True
- costmap_converter_rate: 5
  simple_exploration: False
  graphic_exploration: True    # whether to use graphicTEB
  graphic_is_limitation: True  # whether limit the DepthFirstSearch in GraphicTEB to accelerate calculation

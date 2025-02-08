@@ -140,7 +140,7 @@ Visualization Manager:
           Style:
             Line width: 0.05000000074505806
             Scaling factor: 1
-            Value: Person meshes
+            Value: Cylinders
           Topic: /pedsim_visualizer/tracked_persons
           Unreliable: false
           Value: true

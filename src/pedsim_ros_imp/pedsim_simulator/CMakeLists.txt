@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 project(pedsim_simulator)
 add_definitions(-Wall -Wunused -std=c++11 -pipe -Wunused -Wextra)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(PEDSIM_SIMULATOR_DEPENDENCIES
   roscpp
   rospy
@@ -23,7 +26,7 @@ set(CMAKE_AUTOUIC ON)
 
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS ${PEDSIM_SIMULATOR_DEPENDENCIES})
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 find_package(Qt5Widgets REQUIRED)
 
 # dynamic reconfigure parameters

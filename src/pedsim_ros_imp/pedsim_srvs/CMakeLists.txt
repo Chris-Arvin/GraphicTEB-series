@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(pedsim_srvs)
-
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set( MESSAGE_DEPENDENCIES
     pedsim_msgs

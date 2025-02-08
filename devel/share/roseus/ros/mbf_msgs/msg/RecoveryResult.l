@@ -1,0 +1,151 @@
+;; Auto-generated. Do not edit!
+
+
+(when (boundp 'mbf_msgs::RecoveryResult)
+  (if (not (find-package "MBF_MSGS"))
+    (make-package "MBF_MSGS"))
+  (shadow 'RecoveryResult (find-package "MBF_MSGS")))
+(unless (find-package "MBF_MSGS::RECOVERYRESULT")
+  (make-package "MBF_MSGS::RECOVERYRESULT"))
+
+(in-package "ROS")
+;;//! \htmlinclude RecoveryResult.msg.html
+
+
+(intern "*SUCCESS*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*SUCCESS* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*SUCCESS* 0)
+(intern "*FAILURE*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*FAILURE* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*FAILURE* 150)
+(intern "*CANCELED*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*CANCELED* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*CANCELED* 151)
+(intern "*PAT_EXCEEDED*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*PAT_EXCEEDED* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*PAT_EXCEEDED* 152)
+(intern "*TF_ERROR*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*TF_ERROR* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*TF_ERROR* 153)
+(intern "*NOT_INITIALIZED*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*NOT_INITIALIZED* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*NOT_INITIALIZED* 154)
+(intern "*INVALID_PLUGIN*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*INVALID_PLUGIN* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*INVALID_PLUGIN* 155)
+(intern "*INTERNAL_ERROR*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*INTERNAL_ERROR* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*INTERNAL_ERROR* 156)
+(intern "*STOPPED*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*STOPPED* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*STOPPED* 157)
+(intern "*IMPASSABLE*" (find-package "MBF_MSGS::RECOVERYRESULT"))
+(shadow '*IMPASSABLE* (find-package "MBF_MSGS::RECOVERYRESULT"))
+(defconstant mbf_msgs::RecoveryResult::*IMPASSABLE* 158)
+
+(defun mbf_msgs::RecoveryResult-to-symbol (const)
+  (cond
+        ((= const 0) 'mbf_msgs::RecoveryResult::*SUCCESS*)
+        ((= const 150) 'mbf_msgs::RecoveryResult::*FAILURE*)
+        ((= const 151) 'mbf_msgs::RecoveryResult::*CANCELED*)
+        ((= const 152) 'mbf_msgs::RecoveryResult::*PAT_EXCEEDED*)
+        ((= const 153) 'mbf_msgs::RecoveryResult::*TF_ERROR*)
+        ((= const 154) 'mbf_msgs::RecoveryResult::*NOT_INITIALIZED*)
+        ((= const 155) 'mbf_msgs::RecoveryResult::*INVALID_PLUGIN*)
+        ((= const 156) 'mbf_msgs::RecoveryResult::*INTERNAL_ERROR*)
+        ((= const 157) 'mbf_msgs::RecoveryResult::*STOPPED*)
+        ((= const 158) 'mbf_msgs::RecoveryResult::*IMPASSABLE*)
+        (t nil)))
+
+(defclass mbf_msgs::RecoveryResult
+  :super ros::object
+  :slots (_outcome _message _used_plugin ))
+
+(defmethod mbf_msgs::RecoveryResult
+  (:init
+   (&key
+    ((:outcome __outcome) 0)
+    ((:message __message) "")
+    ((:used_plugin __used_plugin) "")
+    )
+   (send-super :init)
+   (setq _outcome (round __outcome))
+   (setq _message (string __message))
+   (setq _used_plugin (string __used_plugin))
+   self)
+  (:outcome
+   (&optional __outcome)
+   (if __outcome (setq _outcome __outcome)) _outcome)
+  (:message
+   (&optional __message)
+   (if __message (setq _message __message)) _message)
+  (:used_plugin
+   (&optional __used_plugin)
+   (if __used_plugin (setq _used_plugin __used_plugin)) _used_plugin)
+  (:serialization-length
+   ()
+   (+
+    ;; uint32 _outcome
+    4
+    ;; string _message
+    4 (length _message)
+    ;; string _used_plugin
+    4 (length _used_plugin)
+    ))
+  (:serialize
+   (&optional strm)
+   (let ((s (if strm strm
+              (make-string-output-stream (send self :serialization-length)))))
+     ;; uint32 _outcome
+       (write-long _outcome s)
+     ;; string _message
+       (write-long (length _message) s) (princ _message s)
+     ;; string _used_plugin
+       (write-long (length _used_plugin) s) (princ _used_plugin s)
+     ;;
+     (if (null strm) (get-output-stream-string s))))
+  (:deserialize
+   (buf &optional (ptr- 0))
+   ;; uint32 _outcome
+     (setq _outcome (sys::peek buf ptr- :integer)) (incf ptr- 4)
+   ;; string _message
+     (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _message (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
+   ;; string _used_plugin
+     (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _used_plugin (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
+   ;;
+   self)
+  )
+
+(setf (get mbf_msgs::RecoveryResult :md5sum-) "41d522f528f315af4a6c19e2fde7a3d0")
+(setf (get mbf_msgs::RecoveryResult :datatype-) "mbf_msgs/RecoveryResult")
+(setf (get mbf_msgs::RecoveryResult :definition-)
+      "# ====== DO NOT MODIFY! AUTOGENERATED FROM AN ACTION DEFINITION ======
+
+# Predefined success codes:
+uint8 SUCCESS         = 0
+
+# Possible server codes:
+uint8 FAILURE         = 150
+uint8 CANCELED        = 151
+uint8 PAT_EXCEEDED    = 152
+uint8 TF_ERROR        = 153
+uint8 NOT_INITIALIZED = 154
+uint8 INVALID_PLUGIN  = 155
+uint8 INTERNAL_ERROR  = 156
+uint8 STOPPED         = 157  # The recovery behaviour execution has been stopped rigorously.
+uint8 IMPASSABLE      = 158  # Further execution would lead to a collision
+
+# 171..199 are reserved as plugin specific errors
+
+uint32 outcome
+string message
+string used_plugin
+
+
+")
+
+
+
+(provide :mbf_msgs/RecoveryResult "41d522f528f315af4a6c19e2fde7a3d0")
+
+
