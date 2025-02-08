@@ -48,7 +48,7 @@ TebLocalPlannerROS:
  least_no_outer_iterations: 10
  optimization_activate: True
  optimization_verbose: False  # 是否打印优化过程
- penalty_epsilon: 0.15         # （动态）障碍物的额外安全缓冲
+ penalty_epsilon: 0.05         # （动态）障碍物的额外安全缓冲
  obstacle_cost_exponent: 4
  weight_max_vel_x: 2
  weight_max_vel_theta: 1

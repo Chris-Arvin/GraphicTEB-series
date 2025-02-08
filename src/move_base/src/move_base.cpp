@@ -907,8 +907,8 @@ namespace move_base {
             last_oscillation_reset_ + ros::Duration(oscillation_timeout_) < ros::Time::now())
         {
           publishZeroVelocity();
-          state_ = CLEARING;
-          recovery_trigger_ = OSCILLATION_R;
+          // state_ = CLEARING;
+          // recovery_trigger_ = OSCILLATION_R;
         }
 
         {
@@ -931,8 +931,8 @@ namespace move_base {
           if(ros::Time::now() > attempt_end){
             //we'll move into our obstacle clearing mode
             publishZeroVelocity();
-            state_ = CLEARING;
-            recovery_trigger_ = CONTROLLING_R;
+            // state_ = CLEARING;
+            // recovery_trigger_ = CONTROLLING_R;
           }
           else{
             //otherwise, if we can't find a valid control, we'll go back to planning

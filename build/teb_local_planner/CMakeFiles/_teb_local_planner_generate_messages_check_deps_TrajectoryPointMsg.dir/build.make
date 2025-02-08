@@ -67,7 +67,7 @@ include teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_
 include teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_deps_TrajectoryPointMsg.dir/progress.make
 
 teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_deps_TrajectoryPointMsg:
-	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py teb_local_planner /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryPointMsg.msg geometry_msgs/Quaternion:geometry_msgs/Point:geometry_msgs/Vector3:geometry_msgs/Twist:geometry_msgs/Pose
+	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py teb_local_planner /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryPointMsg.msg geometry_msgs/Pose:geometry_msgs/Point:geometry_msgs/Quaternion:geometry_msgs/Vector3:geometry_msgs/Twist
 
 _teb_local_planner_generate_messages_check_deps_TrajectoryPointMsg: teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_deps_TrajectoryPointMsg
 _teb_local_planner_generate_messages_check_deps_TrajectoryPointMsg: teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_deps_TrajectoryPointMsg.dir/build.make
