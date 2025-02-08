@@ -223,10 +223,24 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_utilizes.cpp.
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/teb_local_planner.dir/src/map_process_utilizes.cpp.s"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/map_process_utilizes.cpp -o CMakeFiles/teb_local_planner.dir/src/map_process_utilizes.cpp.s
 
+teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o: teb_local_planner/CMakeFiles/teb_local_planner.dir/flags.make
+teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/map_process_rl_support.cpp
+teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o: teb_local_planner/CMakeFiles/teb_local_planner.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o"
+	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o -MF CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o.d -o CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o -c /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/map_process_rl_support.cpp
+
+teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.i"
+	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/map_process_rl_support.cpp > CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.i
+
+teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.s"
+	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/map_process_rl_support.cpp -o CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.s
+
 teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o: teb_local_planner/CMakeFiles/teb_local_planner.dir/flags.make
 teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/bucketedqueue.cpp
 teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o: teb_local_planner/CMakeFiles/teb_local_planner.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o -MF CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o.d -o CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o -c /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/bucketedqueue.cpp
 
 teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.i: cmake_force
@@ -240,7 +254,7 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.s: cmak
 teb_local_planner/CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o: teb_local_planner/CMakeFiles/teb_local_planner.dir/flags.make
 teb_local_planner/CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/dynamicvoronoi.cpp
 teb_local_planner/CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o: teb_local_planner/CMakeFiles/teb_local_planner.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object teb_local_planner/CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object teb_local_planner/CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT teb_local_planner/CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o -MF CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o.d -o CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o -c /home/arvin/Documents/pedsim_ws/src/teb_local_planner/src/dynamicvoronoi.cpp
 
 teb_local_planner/CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.i: cmake_force
@@ -264,6 +278,7 @@ teb_local_planner_OBJECTS = \
 "CMakeFiles/teb_local_planner.dir/src/graph_search.cpp.o" \
 "CMakeFiles/teb_local_planner.dir/src/map_process.cpp.o" \
 "CMakeFiles/teb_local_planner.dir/src/map_process_utilizes.cpp.o" \
+"CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o" \
 "CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o" \
 "CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o"
 
@@ -281,6 +296,7 @@ teb_local_planner_EXTERNAL_OBJECTS =
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: teb_local_planner/CMakeFiles/teb_local_planner.dir/src/graph_search.cpp.o
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process.cpp.o
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_utilizes.cpp.o
+/home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: teb_local_planner/CMakeFiles/teb_local_planner.dir/src/bucketedqueue.cpp.o
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: teb_local_planner/CMakeFiles/teb_local_planner.dir/src/dynamicvoronoi.cpp.o
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: teb_local_planner/CMakeFiles/teb_local_planner.dir/build.make
@@ -429,7 +445,7 @@ teb_local_planner_EXTERNAL_OBJECTS =
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: /home/arvin/opencv_build/opencv/build/lib/libopencv_imgproc.so.4.12.0
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: /home/arvin/opencv_build/opencv/build/lib/libopencv_core.so.4.12.0
 /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so: teb_local_planner/CMakeFiles/teb_local_planner.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX shared library /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX shared library /home/arvin/Documents/pedsim_ws/devel/lib/libteb_local_planner.so"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/teb_local_planner.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

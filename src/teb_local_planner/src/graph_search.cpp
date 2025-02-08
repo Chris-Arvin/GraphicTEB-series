@@ -125,45 +125,45 @@ void graphicProcess::addPaths(const PoseSE2& start, const PoseSE2& goal, const s
   
   ROS_INFO("    Add [%d] non-homo trajectories to TEB", map_cv_obj_.getHomoPathsPruned().size());
 
-  // ros::NodeHandle nh("/");
-  // ros::ServiceClient client = nh.serviceClient<rl_planner::rl_state>("rl_state_service");
-  // rl_planner::rl_state srv;
-  // srv.request = map_cv_obj_.getState();
-  // srv.request.last_static_safety_margin = static_safety_margin_;
-  // srv.request.last_dynamic_safety_margin = dynamic_safety_margin_;
+  ros::NodeHandle nh("/");
+  ros::ServiceClient client = nh.serviceClient<rl_planner::rl_state>("rl_state_service");
+  rl_planner::rl_state srv;
+  srv.request = map_cv_obj_.getState();
+  srv.request.last_static_safety_margin = static_safety_margin_;
+  srv.request.last_dynamic_safety_margin = dynamic_safety_margin_;
   
-  // if (client.call(srv))
-  // {
-  //   static_safety_margin_ = srv.response.static_safety_margin;
-  //   dynamic_safety_margin_ = srv.response.dynamic_safety_margin;
+  if (client.call(srv))
+  {
+    static_safety_margin_ = srv.response.static_safety_margin;
+    dynamic_safety_margin_ = srv.response.dynamic_safety_margin;
 
-  //   ROS_INFO("------------ Service call success! ---------------");
-  //   ROS_INFO("static_dis=%.2f", static_safety_margin_);
-  //   ROS_INFO("dynamic_dis=%.2f", dynamic_safety_margin_);
-  //   // // 打印dynamic_dis
-  //   // for (size_t i = 0; i < dynamic_dis.size(); i++)
-  //   // {
-  //   //     ROS_INFO("dynamic_dis[%zu] = %.2f", i, dynamic_dis[i]);
-  //   // }
-  //   ROS_INFO("------------ Service call print end! ---------------");
-  // }
-  // else
-  //   ROS_ERROR("Failed to call service my_service");
+    ROS_INFO("------------ Service call success! ---------------");
+    ROS_INFO("static_dis=%.2f", static_safety_margin_);
+    ROS_INFO("dynamic_dis=%.2f", dynamic_safety_margin_);
+    // // 打印dynamic_dis
+    // for (size_t i = 0; i < dynamic_dis.size(); i++)
+    // {
+    //     ROS_INFO("dynamic_dis[%zu] = %.2f", i, dynamic_dis[i]);
+    // }
+    ROS_INFO("------------ Service call print end! ---------------");
+  }
+  else
+    ROS_ERROR("Failed to call service my_service");
 
-  // // static_safety_margin_ = 0.1;
-  // // dynamic_safety_margin_ = 0.2;    
-  // // ROS_INFO("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx static_dis=%.2f", static_safety_margin_);
-  // // ROS_INFO("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx dynamic_dis=%.2f", dynamic_safety_margin_);  
+  // static_safety_margin_ = 0.1;
+  // dynamic_safety_margin_ = 0.2;    
+  // ROS_INFO("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx static_dis=%.2f", static_safety_margin_);
+  // ROS_INFO("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx dynamic_dis=%.2f", dynamic_safety_margin_);  
 
-  // // test
-  // for (auto signature_value:signature_value_list){
-  //   std::map<int,double> safety_margin;
-  //   for (auto idx:map_cv_obj_.label_static_list_)
-  //     safety_margin[idx] = static_safety_margin_;
-  //   for (auto idx:map_cv_obj_.label_dynamic_list_)
-  //     safety_margin[idx] = dynamic_safety_margin_;
-  //   hcp_->updateSafetyMargin(signature_value, safety_margin);
-  // }
+  // test
+  for (auto signature_value:signature_value_list){
+    std::map<int,double> safety_margin;
+    for (auto idx:map_cv_obj_.label_static_list_)
+      safety_margin[idx] = static_safety_margin_;
+    for (auto idx:map_cv_obj_.label_dynamic_list_)
+      safety_margin[idx] = dynamic_safety_margin_;
+    hcp_->updateSafetyMargin(signature_value, safety_margin);
+  }
 
 
 }

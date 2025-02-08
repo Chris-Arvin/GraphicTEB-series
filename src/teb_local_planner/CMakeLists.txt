@@ -201,6 +201,7 @@ add_library(teb_local_planner
    src/graph_search.cpp
    src/map_process.cpp
    src/map_process_utilizes.cpp
+   src/map_process_rl_support.cpp
    src/bucketedqueue.cpp
    src/dynamicvoronoi.cpp   
 )

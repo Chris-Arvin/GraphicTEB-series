@@ -67,7 +67,7 @@ include teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_
 include teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_deps_ObstacleArrayMsg.dir/progress.make
 
 teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_deps_ObstacleArrayMsg:
-	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py teb_local_planner /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleArrayMsg.msg teb_local_planner/ObstacleMsg:geometry_msgs/Point32:geometry_msgs/Twist:std_msgs/Header:geometry_msgs/Quaternion:geometry_msgs/Polygon:geometry_msgs/Vector3:geometry_msgs/TwistWithCovariance
+	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py teb_local_planner /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleArrayMsg.msg geometry_msgs/Point32:geometry_msgs/Vector3:teb_local_planner/ObstacleMsg:geometry_msgs/Polygon:std_msgs/Header:geometry_msgs/TwistWithCovariance:geometry_msgs/Twist:geometry_msgs/Quaternion
 
 _teb_local_planner_generate_messages_check_deps_ObstacleArrayMsg: teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_deps_ObstacleArrayMsg
 _teb_local_planner_generate_messages_check_deps_ObstacleArrayMsg: teb_local_planner/CMakeFiles/_teb_local_planner_generate_messages_check_deps_ObstacleArrayMsg.dir/build.make

@@ -11,6 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/teb_local_planner.dir/src/homotopy_class_planner.cpp.o.d"
   "CMakeFiles/teb_local_planner.dir/src/map_process.cpp.o"
   "CMakeFiles/teb_local_planner.dir/src/map_process.cpp.o.d"
+  "CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o"
+  "CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cpp.o.d"
   "CMakeFiles/teb_local_planner.dir/src/map_process_utilizes.cpp.o"
   "CMakeFiles/teb_local_planner.dir/src/map_process_utilizes.cpp.o.d"
   "CMakeFiles/teb_local_planner.dir/src/obstacles.cpp.o"

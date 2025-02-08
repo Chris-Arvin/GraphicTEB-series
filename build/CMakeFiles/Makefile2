@@ -3533,12 +3533,12 @@ rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/all: rl_planner/CMake
 rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/all: rl_planner/CMakeFiles/_rl_planner_generate_messages_check_deps_rl_state.dir/all
 	$(MAKE) $(MAKESILENT) -f rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/build.make rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/depend
 	$(MAKE) $(MAKESILENT) -f rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/build.make rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=69 "Built target rl_planner_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target rl_planner_generate_messages_eus"
 .PHONY : rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : rl_planner/CMakeFiles/rl_planner_generate_messages_eus.dir/rule
@@ -3564,7 +3564,7 @@ rl_planner/CMakeFiles/rl_planner_geneus.dir/all: rl_planner/CMakeFiles/rl_planne
 
 # Build rule for subdir invocation for target.
 rl_planner/CMakeFiles/rl_planner_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rl_planner/CMakeFiles/rl_planner_geneus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : rl_planner/CMakeFiles/rl_planner_geneus.dir/rule
@@ -3587,12 +3587,12 @@ rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/all: rl_planner/CMak
 rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/all: rl_planner/CMakeFiles/_rl_planner_generate_messages_check_deps_rl_state.dir/all
 	$(MAKE) $(MAKESILENT) -f rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/build.make rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/depend
 	$(MAKE) $(MAKESILENT) -f rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/build.make rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target rl_planner_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=69 "Built target rl_planner_generate_messages_lisp"
 .PHONY : rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : rl_planner/CMakeFiles/rl_planner_generate_messages_lisp.dir/rule
@@ -3618,7 +3618,7 @@ rl_planner/CMakeFiles/rl_planner_genlisp.dir/all: rl_planner/CMakeFiles/rl_plann
 
 # Build rule for subdir invocation for target.
 rl_planner/CMakeFiles/rl_planner_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rl_planner/CMakeFiles/rl_planner_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : rl_planner/CMakeFiles/rl_planner_genlisp.dir/rule
@@ -6100,12 +6100,12 @@ pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/all
 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/all: pedsim_ros_imp/pedsim_srvs/CMakeFiles/_pedsim_srvs_generate_messages_check_deps_GetAllAgentsState.dir/all
 	$(MAKE) $(MAKESILENT) -f pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/build.make pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/depend
 	$(MAKE) $(MAKESILENT) -f pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/build.make pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=66 "Built target pedsim_srvs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target pedsim_srvs_generate_messages_lisp"
 .PHONY : pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_lisp.dir/rule
@@ -6131,7 +6131,7 @@ pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_genlisp.dir/all: pedsim_ros_im
 
 # Build rule for subdir invocation for target.
 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_genlisp.dir/rule
@@ -6157,12 +6157,12 @@ pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/a
 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/all: pedsim_ros_imp/pedsim_srvs/CMakeFiles/_pedsim_srvs_generate_messages_check_deps_GetAllAgentsState.dir/all
 	$(MAKE) $(MAKESILENT) -f pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/build.make pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/depend
 	$(MAKE) $(MAKESILENT) -f pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/build.make pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target pedsim_srvs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=66 "Built target pedsim_srvs_generate_messages_nodejs"
 .PHONY : pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_generate_messages_nodejs.dir/rule
@@ -6188,7 +6188,7 @@ pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_gennodejs.dir/all: pedsim_ros_
 
 # Build rule for subdir invocation for target.
 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_gennodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_gennodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : pedsim_ros_imp/pedsim_srvs/CMakeFiles/pedsim_srvs_gennodejs.dir/rule
@@ -6791,12 +6791,12 @@ pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles
 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/all: pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/_spencer_social_relation_msgs_generate_messages_check_deps_SocialActivities.dir/all
 	$(MAKE) $(MAKESILENT) -f pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/build.make pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/depend
 	$(MAKE) $(MAKESILENT) -f pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/build.make pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=74 "Built target spencer_social_relation_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target spencer_social_relation_msgs_generate_messages_eus"
 .PHONY : pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_eus.dir/rule
@@ -6822,7 +6822,7 @@ pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles
 
 # Build rule for subdir invocation for target.
 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_geneus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_geneus.dir/rule
@@ -6850,12 +6850,12 @@ pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles
 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/all: pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/_spencer_social_relation_msgs_generate_messages_check_deps_SocialActivities.dir/all
 	$(MAKE) $(MAKESILENT) -f pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/build.make pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) $(MAKESILENT) -f pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/build.make pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target spencer_social_relation_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=74 "Built target spencer_social_relation_msgs_generate_messages_lisp"
 .PHONY : pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_generate_messages_lisp.dir/rule
@@ -6881,7 +6881,7 @@ pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles
 
 # Build rule for subdir invocation for target.
 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : pedsim_ros_imp/2ndparty/spencer_messages/spencer_social_relation_msgs/CMakeFiles/spencer_social_relation_msgs_genlisp.dir/rule
@@ -9361,12 +9361,12 @@ mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/all: mbf/mbf_abstract_nav/CM
 mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/all: mbf/mbf_abstract_nav/CMakeFiles/mbf_abstract_server.dir/all
 	$(MAKE) $(MAKESILENT) -f mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/build.make mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/depend
 	$(MAKE) $(MAKESILENT) -f mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/build.make mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target mbf_simple_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=36 "Built target mbf_simple_server"
 .PHONY : mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/all
 
 # Build rule for subdir invocation for target.
 mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 25
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 26
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/rule
@@ -9389,7 +9389,7 @@ mbf/mbf_simple_nav/CMakeFiles/mbf_simple_nav.dir/all: mbf/mbf_abstract_nav/CMake
 mbf/mbf_simple_nav/CMakeFiles/mbf_simple_nav.dir/all: mbf/mbf_simple_nav/CMakeFiles/mbf_simple_server.dir/all
 	$(MAKE) $(MAKESILENT) -f mbf/mbf_simple_nav/CMakeFiles/mbf_simple_nav.dir/build.make mbf/mbf_simple_nav/CMakeFiles/mbf_simple_nav.dir/depend
 	$(MAKE) $(MAKESILENT) -f mbf/mbf_simple_nav/CMakeFiles/mbf_simple_nav.dir/build.make mbf/mbf_simple_nav/CMakeFiles/mbf_simple_nav.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=36 "Built target mbf_simple_nav"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target mbf_simple_nav"
 .PHONY : mbf/mbf_simple_nav/CMakeFiles/mbf_simple_nav.dir/all
 
 # Build rule for subdir invocation for target.
@@ -12144,12 +12144,12 @@ move_base/CMakeFiles/navfn_generate_messages_py.dir/clean:
 move_base/CMakeFiles/move_base_gencfg.dir/all:
 	$(MAKE) $(MAKESILENT) -f move_base/CMakeFiles/move_base_gencfg.dir/build.make move_base/CMakeFiles/move_base_gencfg.dir/depend
 	$(MAKE) $(MAKESILENT) -f move_base/CMakeFiles/move_base_gencfg.dir/build.make move_base/CMakeFiles/move_base_gencfg.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target move_base_gencfg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=37 "Built target move_base_gencfg"
 .PHONY : move_base/CMakeFiles/move_base_gencfg.dir/all
 
 # Build rule for subdir invocation for target.
 move_base/CMakeFiles/move_base_gencfg.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 move_base/CMakeFiles/move_base_gencfg.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/arvin/Documents/pedsim_ws/build/CMakeFiles 0
 .PHONY : move_base/CMakeFiles/move_base_gencfg.dir/rule
@@ -12266,7 +12266,7 @@ move_base/CMakeFiles/move_base.dir/all: move_base/CMakeFiles/navfn_generate_mess
 move_base/CMakeFiles/move_base.dir/all: move_base/CMakeFiles/move_base_gencfg.dir/all
 	$(MAKE) $(MAKESILENT) -f move_base/CMakeFiles/move_base.dir/build.make move_base/CMakeFiles/move_base.dir/depend
 	$(MAKE) $(MAKESILENT) -f move_base/CMakeFiles/move_base.dir/build.make move_base/CMakeFiles/move_base.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=37 "Built target move_base"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num= "Built target move_base"
 .PHONY : move_base/CMakeFiles/move_base.dir/all
 
 # Build rule for subdir invocation for target.
