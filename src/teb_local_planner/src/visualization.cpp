@@ -567,7 +567,7 @@ void TebVisualization::publishFeedbackMessage(const TebOptimalPlanner& teb_plann
 void TebVisualization::pubMarker(int wx, int wy, char color, ros::Publisher publisher, mapProcess* map_obj){
     visualization_msgs::Marker marker;
     // Set the frame ID and timestamp.  See the TF tutorials for information on these.
-    marker.header.frame_id = "/map";
+    marker.header.frame_id = "map";
     marker.header.stamp = ros::Time::now();
  
     // Set the namespace and id for this marker.  This serves to create a unique ID
@@ -617,7 +617,7 @@ void TebVisualization::pubMarker(int wx, int wy, char color, ros::Publisher publ
 void TebVisualization::pubTEBMap(ros::Publisher publisher, mapProcess* map_obj){
   // 建立一个Marker类型的数据，用来发布地图
   visualization_msgs::Marker marker;
-  marker.header.frame_id = "/map";
+  marker.header.frame_id = "map";
   marker.header.stamp = ros::Time::now();
   marker.id = 0;
   marker.type = visualization_msgs::Marker::POINTS;
@@ -663,7 +663,7 @@ void TebVisualization::pubMarkerArray(std::vector<Point2D> points, char color, r
       double wy=point.y;
       map_obj->map2world(point.x,point.y,wx,wy);
       // Set the frame ID and timestamp.  See the TF tutorials for information on these.
-      marker.header.frame_id = "/map";
+      marker.header.frame_id = "map";
       marker.header.stamp = ros::Time::now();
   
       // Set the namespace and id for this marker.  This serves to create a unique ID
@@ -722,7 +722,7 @@ void TebVisualization::pubMarkerArray(std::vector<std::vector<Point2D>> points_l
         double wy=point.y;
         map_obj->map2world(point.x,point.y,wx,wy);
         // Set the frame ID and timestamp.  See the TF tutorials for information on these.
-        marker.header.frame_id = "/map";
+        marker.header.frame_id = "map";
         marker.header.stamp = ros::Time::now();
     
         // Set the namespace and id for this marker.  This serves to create a unique ID
@@ -785,7 +785,7 @@ void TebVisualization::pubMarkerArray(std::map<int, std::vector<Point2D>> points
     for (auto points:points_list){
       if (points.first>=map_obj->getStartID()) continue;
       visualization_msgs::Marker marker;
-      marker.header.frame_id = "/map";
+      marker.header.frame_id = "map";
       marker.header.stamp = ros::Time::now();
       marker.ns = std::to_string(num);
       num++;
@@ -838,7 +838,7 @@ void TebVisualization::pubMarkerArray(std::map<std::pair<int,int>, std::vector<P
       if (connect.first.first>connect.first.second) continue;
       auto points = connect.second;
       visualization_msgs::Marker marker;
-      marker.header.frame_id = "/map";
+      marker.header.frame_id = "map";
       marker.header.stamp = ros::Time::now();
       marker.id = num++;
       marker.type = visualization_msgs::Marker::POINTS;
@@ -875,7 +875,7 @@ void TebVisualization::pubMapBoundaries(ros::Publisher publisher, mapProcess* ma
     for (auto boundary:map_obj->getMapBoundaries()){
       i++;
       visualization_msgs::Marker marker;
-      marker.header.frame_id = "/map";
+      marker.header.frame_id = "map";
       marker.header.stamp = ros::Time::now();
       // marker.id = num;
       marker.ns = names[i];
@@ -917,7 +917,7 @@ void TebVisualization::pubGoalLineList(ros::Publisher publisher, mapProcess* map
     int num = 0;
     for (auto goal_line:map_obj->getGoalLineList()){
       visualization_msgs::Marker marker;
-      marker.header.frame_id = "/map";
+      marker.header.frame_id = "map";
       marker.header.stamp = ros::Time::now();
       marker.ns = "goal lines";
       marker.id = num++;
@@ -944,7 +944,7 @@ void TebVisualization::pubGoalLineList(ros::Publisher publisher, mapProcess* map
     }
 
     visualization_msgs::Marker marker;
-    marker.header.frame_id = "/map";
+    marker.header.frame_id = "map";
     marker.header.stamp = ros::Time::now();
     marker.ns = "goals";
     marker.type = visualization_msgs::Marker::POINTS;
@@ -982,7 +982,7 @@ void TebVisualization::pubMarkerArray(std::map<int, std::vector<Point2D>> points
     for (auto points:points_list){
       float color[3] = {1,0,0};
       visualization_msgs::Marker marker;
-      marker.header.frame_id = "/map";
+      marker.header.frame_id = "map";
       marker.header.stamp = ros::Time::now();
       marker.ns = std::to_string(num);
       num++;
@@ -1056,7 +1056,7 @@ void TebVisualization::pubLinList(std::map<int, std::vector<Point2D>> points_lis
         }
         
         visualization_msgs::Marker marker;
-        marker.header.frame_id = "/map";
+        marker.header.frame_id = "map";
         marker.header.stamp = ros::Time::now();
         // marker.ns = "points_and_lins";
         marker.action = visualization_msgs::Marker::ADD;
@@ -1088,7 +1088,7 @@ void TebVisualization::pubLinList(std::map<int, std::vector<Point2D>> points_lis
     for (auto poi:points.second){
       if (poi.can_connect_goal){
         visualization_msgs::Marker marker;
-        marker.header.frame_id = "/map";
+        marker.header.frame_id = "map";
         marker.header.stamp = ros::Time::now();
         // marker.ns = "points_and_lins";
         marker.action = visualization_msgs::Marker::ADD;
@@ -1137,7 +1137,7 @@ void TebVisualization::pubLinList(std::map<std::pair<int,int>, std::map<std::str
       auto p1 = pois.second[types[i]].first;
       auto p2 = pois.second[types[i]].second;
       visualization_msgs::Marker marker;
-      marker.header.frame_id = "/map";
+      marker.header.frame_id = "map";
       marker.header.stamp = ros::Time::now();
       marker.ns = types[i];
       marker.action = visualization_msgs::Marker::ADD;
@@ -1206,7 +1206,7 @@ void TebVisualization::pubHomoPaths(const std::vector<std::vector<Eigen::Vector2
   for (int num=0; num<paths.size(); num++){
     auto path = paths[num];
     visualization_msgs::Marker marker;
-    marker.header.frame_id = "/map";
+    marker.header.frame_id = "map";
     marker.header.stamp = ros::Time::now();
     marker.action = visualization_msgs::Marker::ADD;
     marker.type = visualization_msgs::Marker::LINE_STRIP;

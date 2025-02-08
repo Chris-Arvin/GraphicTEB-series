@@ -74,66 +74,66 @@ teb_local_planner/CMakeFiles/teb_local_planner_generate_messages_nodejs: /home/a
 
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/FeedbackMsg.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point32.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleMsg.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Polygon.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryMsg.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleArrayMsg.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Polygon.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryPointMsg.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleMsg.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point32.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/TwistWithCovariance.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleArrayMsg.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/FeedbackMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from teb_local_planner/FeedbackMsg.msg"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/FeedbackMsg.msg -Iteb_local_planner:/home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p teb_local_planner -o /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg
 
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleArrayMsg.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point32.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleMsg.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Polygon.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/TwistWithCovariance.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleMsg.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point32.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleArrayMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/TwistWithCovariance.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from teb_local_planner/ObstacleArrayMsg.msg"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleArrayMsg.msg -Iteb_local_planner:/home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p teb_local_planner -o /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg
 
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleMsg.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point32.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Polygon.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/TwistWithCovariance.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point32.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/ObstacleMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/TwistWithCovariance.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from teb_local_planner/ObstacleMsg.msg"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/ObstacleMsg.msg -Iteb_local_planner:/home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p teb_local_planner -o /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg
 
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryMsg.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryPointMsg.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryMsg.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from teb_local_planner/TrajectoryMsg.msg"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryMsg.msg -Iteb_local_planner:/home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p teb_local_planner -o /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg
 
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryPointMsg.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Twist.msg
 /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg/TrajectoryPointMsg.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/arvin/Documents/pedsim_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Javascript code from teb_local_planner/TrajectoryPointMsg.msg"
 	cd /home/arvin/Documents/pedsim_ws/build/teb_local_planner && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg/TrajectoryPointMsg.msg -Iteb_local_planner:/home/arvin/Documents/pedsim_ws/src/teb_local_planner/msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p teb_local_planner -o /home/arvin/Documents/pedsim_ws/devel/share/gennodejs/ros/teb_local_planner/msg
 
