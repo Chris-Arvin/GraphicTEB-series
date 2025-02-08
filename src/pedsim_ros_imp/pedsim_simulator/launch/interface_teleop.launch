@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="pedsim_simulator" name="pedsim_interface_teleop" type="interface_teleop.py" output="screen" />
+</launch>

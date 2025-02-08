@@ -1,0 +1,36 @@
+<package format="2">
+    <name>mbf_simple_nav</name>
+    <version>0.4.0</version>
+    <description>
+        The mbf_simple_nav package contains a simple navigation server implementation of Move Base Flex (MBF). The simple navigation server is bound to no map representation. It provides actions for planning, controlling and recovering. MBF loads all defined plugins which are defined in the lists *planners*, *controllers* and *recovery_behaviors*. Each list holds a pair of a *name* and a *type*. The *type* defines which kind of plugin to load. The *name* defines under which name the plugin should be callable by the actions. 
+
+        It tries to load the defined plugins which implements the defined interfaces in <a href="wiki.ros.org/mbf_abstract_core">mbf_abstract_core</a>.
+    </description>
+    <url>http://wiki.ros.org/move_base_flex</url>
+    <author email="spuetz@uos.de">Sebastian Pütz</author>
+    <maintainer email="spuetz@uos.de">Sebastian Pütz</maintainer>
+    <maintainer email="santos@magazino.eu">Jorge Santos</maintainer>
+    <license>BSD-3</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <depend>tf</depend>
+    <depend>roscpp</depend>
+    <depend>pluginlib</depend>
+    <depend>actionlib</depend>
+    <depend>actionlib_msgs</depend>
+    <depend>dynamic_reconfigure</depend>
+    <depend>std_msgs</depend>
+    <depend>std_srvs</depend>
+    <depend>nav_msgs</depend>
+    <depend>geometry_msgs</depend>
+    <depend>mbf_abstract_nav</depend>
+    <depend>mbf_abstract_core</depend>
+    <depend>mbf_msgs</depend>
+
+    <depend>tf2</depend>
+    <depend>tf2_ros</depend>
+    <export>
+      <rosdoc config="rosdoc.yaml" />
+    </export>
+</package>

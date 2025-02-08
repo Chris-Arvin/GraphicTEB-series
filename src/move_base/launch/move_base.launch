@@ -1,0 +1,21 @@
+<launch>
+  <!-- fake amcl -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="fake_localization" args="0 0 0 0 0 0 1 /map /odom"/>
+  <!-- translate topic type -->
+  <include file="$(find teb_local_planner)/launch/dynamic_obstacle_trans.launch"/>
+  <!-- move_base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <!-- graphic_teb -->
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <rosparam file="$(find move_base)/param/teb_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find move_base)/param/robot_constrains.yaml" command="load" ns="TebLocalPlannerROS"/>
+    <rosparam file="$(find move_base)/param/static_local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find move_base)/param/dynamic_global_costmap_params.yaml" command="load" />
+    <!-- costmap -->
+    <rosparam file="$(find move_base)/param/costmap_common_params_water.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find move_base)/param/costmap_common_params_water.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find move_base)/param/robot_constrains.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find move_base)/param/robot_constrains.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find move_base)/param/move_base_params.yaml" command="load" />
+  </node>
+</launch>

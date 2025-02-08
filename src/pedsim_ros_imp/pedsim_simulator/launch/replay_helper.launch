@@ -1,0 +1,4 @@
+<launch>
+<include file="$(find water_description)/launch/water_description.launch"/>
+<node pkg="rviz" type="rviz" name="rviz" args="-d $(find pedsim_simulator)/rviz/pedsim_simulator.rviz"/>
+</launch>

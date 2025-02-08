@@ -1,0 +1,46 @@
+<package>
+    <name>mbf_abstract_nav</name>
+    <version>0.4.0</version>
+    <description>
+      The mbf_abstract_nav package contains the abstract navigation server implementation of Move Base Flex (MBF). The abstract navigation server is not bound to any map representation. It provides the actions for planning, controlling and recovering. MBF loads all defined plugins at the program start. Therefor, it loads all plugins which are defined in the lists *planners*, *controllers* and *recovery_behaviors*. Each list holds a pair of a *name* and a *type*. The *type* defines which kind of plugin to load. The *name* defines under which name the plugin should be callable by the actions.
+    </description>
+    <url>http://wiki.ros.org/move_base_flex</url>
+    <author email="spuetz@uos.de">Sebastian Pütz</author>
+    <maintainer email="spuetz@uos.de">Sebastian Pütz</maintainer>
+    <maintainer email="santos@magazino.eu">Jorge Santos</maintainer>
+    <license>BSD-3</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>tf</build_depend>
+    <build_depend>roscpp</build_depend>
+    <build_depend>actionlib</build_depend>
+    <build_depend>actionlib_msgs</build_depend>
+    <build_depend>dynamic_reconfigure</build_depend>
+    <build_depend>std_msgs</build_depend>
+    <build_depend>std_srvs</build_depend>
+    <build_depend>nav_msgs</build_depend>
+    <build_depend>geometry_msgs</build_depend>
+    <build_depend>mbf_abstract_core</build_depend>
+    <build_depend>mbf_msgs</build_depend>
+    <build_depend>mbf_utility</build_depend>
+    <build_depend>xmlrpcpp</build_depend>
+
+    <run_depend>tf</run_depend>
+    <run_depend>roscpp</run_depend>
+    <run_depend>actionlib</run_depend>
+    <run_depend>actionlib_msgs</run_depend>
+    <run_depend>dynamic_reconfigure</run_depend>
+    <run_depend>std_msgs</run_depend>
+    <run_depend>std_srvs</run_depend>
+    <run_depend>nav_msgs</run_depend>
+    <run_depend>geometry_msgs</run_depend>
+    <run_depend>mbf_abstract_core</run_depend>
+    <run_depend>mbf_msgs</run_depend>
+    <run_depend>mbf_utility</run_depend>
+    <run_depend>xmlrpcpp</run_depend>
+
+    <export>
+      <rosdoc config="rosdoc.yaml" />
+    </export>
+</package>

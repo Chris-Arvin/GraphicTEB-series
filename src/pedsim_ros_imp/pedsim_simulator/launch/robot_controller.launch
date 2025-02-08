@@ -1,0 +1,14 @@
+<launch>
+  <arg name="pose_initial_x" default="5.0"/>
+  <arg name="pose_initial_y" default="5.0"/>
+  <arg name="pose_initial_theta" default="0.0"/>
+  <arg name="robot_mode" default="1"/>
+
+  <!-- robot driving controller -->
+  <node name="driving_controller" type="simulate_diff_drive_robot" pkg="pedsim_simulator" output="screen">
+    <param name="robot_mode" value="$(arg robot_mode)"/>
+    <param name="pose_initial_x" value="$(arg pose_initial_x)"/>
+    <param name="pose_initial_y" value="$(arg pose_initial_y)"/>
+    <param name="pose_initial_theta" value="$(arg pose_initial_theta)"/>
+  </node>
+</launch>

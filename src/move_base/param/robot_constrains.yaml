@@ -1,0 +1,14 @@
+# Robot
+max_vel_x: 1.0 # [m/s]
+max_vel_y: 0.0 # [m/s]
+max_vel_x_backwards: 0.2 # [m/s]
+max_vel_theta: 1.5 # [rad/s]
+
+acc_lim_x: 0.5 # [m/s^2]
+acc_lim_y: 0.0 # [m/s^2]
+acc_lim_theta: 1.0 # [rad/s^2]
+
+cmd_angle_instead_rotvel: False
+robot_radius: 0.3 # [m]
+min_turning_radius: 0.0 # diff-drive robot (can turn on place!)
+wheel_based: 0.0 # 前轮与后轮的间距 [m]
