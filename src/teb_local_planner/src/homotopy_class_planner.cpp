@@ -72,6 +72,7 @@ void HomotopyClassPlanner::initialize(costmap_2d::Costmap2D* costmap2d, const Te
 
   initialized_ = true;
   global_goal_ = {0,0};
+  last_start_ = {0,0};
 
   setVisualization(visual);
 }
@@ -175,7 +176,9 @@ bool HomotopyClassPlanner::plan(const PoseSE2& start, const PoseSE2& goal, const
   ROS_INFO("");
   ROS_INFO("================= start =====================");
   // ROS_INFO("0. teb sizes: [%d] vs [%d]", tebs_.size(), equivalence_classes_.size());
-  updateAllTEBs(&start, &goal, start_vel, global_goal);
+  // 如果收到新的initialPose，则清空上一时刻的结果并直接返回！
+  if(updateAllTEBs(&start, &goal, start_vel, global_goal))
+    return false;
   // ROS_INFO("1. teb sizes: [%d] vs [%d], time: [%f] s", tebs_.size(), equivalence_classes_.size(), (ros::Time::now() - t).toSec());
   auto t = ros::Time::now();
   // Init new TEBs based on newly explored homotopy classes
@@ -516,7 +519,7 @@ int HomotopyClassPlanner::numTebsInBestTebClass() const
   return count;
 }
 
-void HomotopyClassPlanner::updateAllTEBs(const PoseSE2* start, const PoseSE2* goal, const geometry_msgs::Twist* start_velocity, std::pair<double,double> global_goal)
+bool HomotopyClassPlanner::updateAllTEBs(const PoseSE2* start, const PoseSE2* goal, const geometry_msgs::Twist* start_velocity, std::pair<double,double> global_goal)
 {
   // If new goal is too far away, clear all existing trajectories to let them reinitialize later.
   // Since all Tebs are sharing the same fixed goal pose, just take the first candidate:
@@ -528,10 +531,18 @@ void HomotopyClassPlanner::updateAllTEBs(const PoseSE2* start, const PoseSE2* go
       equivalence_classes_.clear();
   }
 
-  // tebs_.clear();
-  // equivalence_classes_.clear();  
+  // 如果重设了初始点initialPose，则清空所有候选轨迹并返回ture
+  if (hypot(last_start_.first-start->x(),last_start_.second-start->y())>0.5){
+    ROS_INFO("New initialpose is set!");
+    tebs_.clear();
+    equivalence_classes_.clear();
+    last_start_ = {start->x(), start->y()};
+    return true;
+  }
+
 
   global_goal_ = global_goal;
+  last_start_ = {start->x(), start->y()};
 
   // hot-start from previous solutions
   // 遍历teb_ 删除机器人已经cover的轨迹
@@ -541,6 +552,7 @@ void HomotopyClassPlanner::updateAllTEBs(const PoseSE2* start, const PoseSE2* go
     if (start_velocity)
       it_teb->get()->setVelocityStart(*start_velocity);
   }
+  return false;
 }
 
 
@@ -743,7 +755,8 @@ TebOptimalPlannerPtr HomotopyClassPlanner::selectBestTeb()
     auto it_teb = tebs_.begin();
     while (it_teb!=tebs_.end())
     {
-      if (it_teb->get()->getCurrentCost()>999){
+      // 如果tebs_.size()==1的话，就别删除了，要不就没轨迹啦。。
+      if (it_teb->get()->getCurrentCost()>999 && tebs_.size()>1){
         it_teb = removeTeb(*it_teb);
       }
       else{
@@ -764,26 +777,6 @@ TebOptimalPlannerPtr HomotopyClassPlanner::selectBestTeb()
       }
     }
     
-    // for (TebOptPlannerContainer::iterator it_teb = tebs_.begin(); it_teb != tebs_.end(); ++it_teb)
-    // {
-    //     double teb_cost;
-
-    //     if (*it_teb == last_best_teb_)
-    //         teb_cost = min_cost_last_best; // skip already known cost value of the last best_teb
-    //     else
-    //         teb_cost = it_teb->get()->getCurrentCost();
-
-    //     if (teb_cost < min_cost)
-    //     {
-    //       // check if this candidate is currently not selected
-    //       best_teb_ = *it_teb;
-    //       min_cost = teb_cost;
-    //     }
-    // }
-
-    // ROS_INFO("==================================================================================== min_cost: %f", min_cost);
-
-
     // check if we are allowed to change
     // switching_blocking_period（默认为0.0），这个参数要求 每次switch轨迹时要有一定的时间间隔，防止机器人抖动
     if (last_best_teb_ && best_teb_ != last_best_teb_)

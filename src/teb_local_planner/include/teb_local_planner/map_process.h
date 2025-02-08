@@ -17,6 +17,9 @@
 #include <costmap_2d/costmap_2d.h>
 #include <teb_local_planner/dynamicvoronoi.h>
 
+#include <rl_planner/rl_state.h>
+#include <rl_planner/rl_stateRequest.h>
+#include <rl_planner/rl_stateResponse.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <geometry_msgs/Point.h>
@@ -110,6 +113,8 @@ class mapProcess{
     std::pair<Point2D, Point2D> getCounterClockwiseConsistentPathBetweenObs(int ID1, int ID2);
     std::pair<Point2D, Point2D> getClockwise2CounterClockwisePathBetweenObs(int ID1, int ID2);
     std::pair<Point2D, Point2D> getCounterClockwise2ClockwisePathBetweenObs(int ID1, int ID2);
+    rl_planner::rl_stateRequest getState();
+    rl_planner::rl_stateRequest getStateAndReward();
 
   public:
     int width_large_;

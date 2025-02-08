@@ -391,6 +391,17 @@ void mapProcess::initialize(costmap_2d::Costmap2D* costmap, const teb_local_plan
   map_cv_ = convertVector2Mat(map_char, 1, height_);
   cv::Mat kernel = (cv::Mat_<uchar>(3,3) << 0,1,0,1,1,1,0,1,0);
   cv::erode(map_cv_, map_cv_, kernel);
+  // 对应地，腐蚀一下map_obs_occupied_without_ignore_
+  for (int y=0; y<height_; y++){
+    for (int x=0; x<width_; x++){
+      if (x<=ignore_dis_ || x>=width_-ignore_dis_-1 || y<=ignore_dis_ || y>=height_-ignore_dis_-1)
+        continue;
+      else if (map_cv_.at<uchar>(y,x)!=(char)0 && map_obs_occupied_without_ignore_[x][y])
+        map_obs_occupied_without_ignore_[x][y] = true;
+      else
+        map_obs_occupied_without_ignore_[x][y] = false;
+    }
+  }
 
   // 2. 同样的 计算一个不包含行人的、包括大large map中所有静态障碍物的map，用于给teb提供static obstacle gourps的polygons
   std::vector<uint8_t> map_int_without_pedestrians;
@@ -1460,13 +1471,6 @@ std::vector<std::vector<Eigen::Vector2d>> mapProcess::findHomoPaths(std::vector<
   visited.push_back(startID_);
   depthFirst(visited, res);
   ROS_INFO("    !!! Finding [%d]/[%d] general trajectories during depthFirst", res.size(), max_path_explore_number_for_GraphicTEB_);
-  // for (int i=0; i<res.size(); i++){
-  //   auto path = res[i];
-  //   std::cout<<i<<" path: ";
-  //   for (auto id:path)
-  //     std::cout<<id<<" ";
-  //   std::cout<<std::endl;
-  // }
   std::vector<std::vector<Point2D>> homo_paths_in_map;
 
   // 起点的vec形式
@@ -1977,6 +1981,7 @@ std::vector<std::vector<Eigen::Vector2d>> mapProcess::findHomoPaths(std::vector<
     auto edge_robot2goal = Point2D(goal_in_map_x_-start_in_map_x_, goal_in_map_y_-start_in_map_y_);
     // auto edge_robot2goal = Point2D(path.back().x-path.front().x, path.back().y-path.front().y);
     bool is_delete = false;
+    double dis = 0;
     for (int i=1; i<path.size()-1; i++){
       // 只考虑connection的连接
       if (temp_map[path[i].x][path[i].y] == temp_map[path[i-1].x][path[i-1].y])
@@ -1988,35 +1993,22 @@ std::vector<std::vector<Eigen::Vector2d>> mapProcess::findHomoPaths(std::vector<
         break;
       }
     }
-    double dis_append = 0;
     if (is_delete)
-      dis_append = dis_appened_threshold;
+      dis += dis_appened_threshold;
 
     bool is_cover_obs = false;
     auto path_shortened = shortenPath(path, is_cover_obs);
     auto goal_endpoints = getGoalLineEnds(path.back());
-
     // 如果path_shortened压到了原始障碍物，则删掉
     if (is_cover_obs)
-      continue;
+      dis += 2*dis_appened_threshold;
+      // continue;
 
-    double dis = 0;
     for (int i=0; i<path_shortened.size()-1; i++){
       dis += hypot(path_shortened[i].x-path_shortened[i+1].x, path_shortened[i].y-path_shortened[i+1].y);
     }
-    dis += dis_append;
-
-    // 按照dis升序插入homo_paths_
-    for(int i=0; i<dis_list.size(); i++){
-      if (dis<dis_list[i]){
-        dis_list.insert(dis_list.begin()+i, dis);
-        homo_paths_.insert(homo_paths_.begin()+i, transPoint2DinMapToVector2dinWorld(path_shortened));
-        // 保存original path
-        homo_paths_origin_.insert(homo_paths_origin_.begin()+i, transPoint2DinMapToVector2dinWorld(path));
-        goal_endpoints_list.insert(goal_endpoints_list.begin()+i, goal_endpoints);
-        break;
-      }
-    }
+    // 按照dis升序插入homo_paths_:
+    // 空
     if (dis_list.size()==0)
     {
       dis_list.push_back(dis);
@@ -2025,31 +2017,54 @@ std::vector<std::vector<Eigen::Vector2d>> mapProcess::findHomoPaths(std::vector<
       homo_paths_origin_.push_back(transPoint2DinMapToVector2dinWorld(path));
       goal_endpoints_list.push_back(goal_endpoints);
     }
-    else if (dis>dis_list.back()){
+    // 新的dis比现有的都大
+    else if (dis>=dis_list.back()){
       dis_list.push_back(dis);
       homo_paths_.push_back(transPoint2DinMapToVector2dinWorld(path_shortened));
       // 保存original path
       homo_paths_origin_.push_back(transPoint2DinMapToVector2dinWorld(path));
       goal_endpoints_list.push_back(goal_endpoints);
     }
+    // 插入到中间
+    else{
+      for(int i=0; i<dis_list.size(); i++){
+        if (dis<dis_list[i]){
+          dis_list.insert(dis_list.begin()+i, dis);
+          homo_paths_.insert(homo_paths_.begin()+i, transPoint2DinMapToVector2dinWorld(path_shortened));
+          // 保存original path
+          homo_paths_origin_.insert(homo_paths_origin_.begin()+i, transPoint2DinMapToVector2dinWorld(path));
+          goal_endpoints_list.insert(goal_endpoints_list.begin()+i, goal_endpoints);
+          break;
+        }
+      }
+    }
   }
   // 如果存在满足cos_limitation的轨迹，则仅保留他们；若都不满足，否则保留最短的那个
-  int index_path_satisfy_cos_limitation = 0;
+  int reserve_num = 1;
+  int index_path_satisfy_cos_limitation_and_collision = 0;
   for(auto dis:dis_list){
     if (dis<dis_appened_threshold)
-      index_path_satisfy_cos_limitation++;
+      index_path_satisfy_cos_limitation_and_collision++;
   }
-  int num_delete_path = homo_paths_.size()-index_path_satisfy_cos_limitation;
+  int num_delete_path = homo_paths_.size()-index_path_satisfy_cos_limitation_and_collision;
   // 开始删除
-  if (index_path_satisfy_cos_limitation>0){
-    homo_paths_.erase(homo_paths_.begin()+index_path_satisfy_cos_limitation, homo_paths_.end());
-    goal_endpoints_list.erase(goal_endpoints_list.begin()+index_path_satisfy_cos_limitation, goal_endpoints_list.end());
+  if (index_path_satisfy_cos_limitation_and_collision>0){
+    homo_paths_.erase(homo_paths_.begin()+index_path_satisfy_cos_limitation_and_collision, homo_paths_.end());
+    goal_endpoints_list.erase(goal_endpoints_list.begin()+index_path_satisfy_cos_limitation_and_collision, goal_endpoints_list.end());
+    ROS_INFO("    Finding [%d + %d]/[%d] normal trajectories during findHomoPaths", homo_paths_.size(), num_delete_path, max_path_remained_for_GraphicTEB_);
   }
   else{
-    homo_paths_.erase(homo_paths_.end()-num_delete_path, homo_paths_.end());
-    goal_endpoints_list.erase(goal_endpoints_list.end()-num_delete_path, goal_endpoints_list.end());
+    if (homo_paths_.size()>=index_path_satisfy_cos_limitation_and_collision+reserve_num){
+      homo_paths_.erase(homo_paths_.begin()+index_path_satisfy_cos_limitation_and_collision+reserve_num, homo_paths_.end());
+      goal_endpoints_list.erase(goal_endpoints_list.begin()+index_path_satisfy_cos_limitation_and_collision+reserve_num, goal_endpoints_list.end());
+      // homo_paths_.erase(homo_paths_.end()-num_delete_path, homo_paths_.end());
+      // goal_endpoints_list.erase(goal_endpoints_list.end()-num_delete_path, goal_endpoints_list.end());
+      ROS_INFO("    Finding [%d + %d + %d]/[%d] normal trajectories during findHomoPaths", homo_paths_.size()-reserve_num, reserve_num, num_delete_path-reserve_num, max_path_remained_for_GraphicTEB_);
+    }
+    else{
+      ROS_INFO("    Finding [%d]/[%d] normal trajectories during findHomoPaths, without deleting trajectory. reserve_num: [%d], index_path_satisfy_cos_limitation_and_collision: [%d]", homo_paths_.size(), max_path_remained_for_GraphicTEB_, reserve_num, index_path_satisfy_cos_limitation_and_collision);
+    }
   }
-  ROS_INFO("    Finding [%d + %d]/[%d] normal trajectories during findHomoPaths", homo_paths_.size(), num_delete_path, max_path_remained_for_GraphicTEB_);
   return homo_paths_;
 }
 
@@ -2549,15 +2564,16 @@ std::vector<Point2D_float> mapProcess::shortenPath (std::vector<Point2D> path, b
     index++;
   }
 
+  // check collision
   int count = 0;
   for (auto p:path_float){
-    if (p.x<=ignore_dis_ || p.x>=width_-ignore_dis_ || p.y<=ignore_dis_ || p.y>=height_-ignore_dis_){
+    if (p.x<=ignore_dis_+1 || p.x>=width_-ignore_dis_-1 || p.y<=ignore_dis_+1 || p.y>=height_-ignore_dis_-1){
       std::vector<std::pair<float,float>> around_points = {{floor(p.x), floor(p.y)}, {floor(p.x), ceil(p.y)}, {ceil(p.x), floor(p.y)}, {ceil(p.x), ceil(p.y)} };
       int temp_count = 0;
       for (auto poi:around_points){
         int x = int(poi.first);
         int y = int(poi.second);
-        if (!(x>0 && x<width_ && y>0 && y<height_))
+        if (!(x>=0 && x<width_ && y>=0 && y<height_))
           temp_count++;
         else if (map_obs_occupied_without_ignore_[x][y])
           temp_count++;

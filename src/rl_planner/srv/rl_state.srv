@@ -1,0 +1,13 @@
+# Request 部分
+int32[]  map_static_position
+float32[]  map_dynamic_velocity_x
+float32[]  map_dynamic_velocity_y
+visualization_msgs/MarkerArray trajectories
+float32 vx
+float32 vy
+float32 last_static_safety_margin
+float32 last_dynamic_safety_margin
+---
+# Response 部分
+float32 static_safety_margin
+float32 dynamic_safety_margin

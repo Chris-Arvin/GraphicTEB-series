@@ -8,7 +8,7 @@ import numpy as np
 
 class Obstacle_Trans:
     def __init__(self):
-        self.gaze_sub = rospy.Subscriber("/persons", TrackedPersons, self.pubDynamicObstaclesFromPerson, queue_size=3)
+        rospy.Subscriber("/persons", TrackedPersons, self.pubDynamicObstaclesFromPerson, queue_size=3)
         self.pub_obs_from_person = rospy.Publisher('dynamic_obstacles', PoseArray, queue_size=1)        
         self.person_diameter = 0.6
         if rospy.has_param("pedsim_fakemap/person_diameter")==True:

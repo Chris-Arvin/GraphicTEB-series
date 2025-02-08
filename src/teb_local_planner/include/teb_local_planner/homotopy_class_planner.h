@@ -326,7 +326,7 @@ public:
    * @param goal New goal pose (optional)
    * @param start_velocity start velocity (optional)
    */
-  void updateAllTEBs(const PoseSE2* start, const PoseSE2* goal, const geometry_msgs::Twist* start_velocity, std::pair<double,double> global_goal);
+  bool updateAllTEBs(const PoseSE2* start, const PoseSE2* goal, const geometry_msgs::Twist* start_velocity, std::pair<double,double> global_goal);
 
 
   /**
@@ -568,6 +568,7 @@ protected:
   double rob_radius_, obs_radius_;
 
   std::pair<double, double> global_goal_;
+  std::pair<double, double> last_start_;
 
 
 

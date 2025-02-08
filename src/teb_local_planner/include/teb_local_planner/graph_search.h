@@ -67,6 +67,8 @@
 #include <teb_local_planner/map_process.h>
 #include <time.h>
 
+#include <rl_planner/rl_state.h>
+
 namespace teb_local_planner
 {
 
