@@ -126,7 +126,8 @@ MeshPersonVisual::MeshPersonVisual(const PersonVisualDefaultArgs& args) : Person
 
     // set up material
     ss << "Material";
-    Ogre::MaterialPtr default_material = Ogre::MaterialManager::getSingleton().create( ss.str(), "rviz" );
+    // Ogre::MaterialPtr default_material = Ogre::MaterialManager::getSingleton().create( ss.str(), "rviz" );
+    Ogre::MaterialPtr default_material = Ogre::MaterialManager::getSingleton().create(ss.str(), Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     default_material->setReceiveShadows(false);
     default_material->getTechnique(0)->setLightingEnabled(true);
     default_material->getTechnique(0)->setAmbient( 0.5, 0.5, 0.5 );

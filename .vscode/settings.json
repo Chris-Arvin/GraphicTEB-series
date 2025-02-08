@@ -28,6 +28,7 @@
         "initializer_list": "cpp",
         "regex": "cpp",
         "numbers": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "thread": "cpp"
     }
 }
