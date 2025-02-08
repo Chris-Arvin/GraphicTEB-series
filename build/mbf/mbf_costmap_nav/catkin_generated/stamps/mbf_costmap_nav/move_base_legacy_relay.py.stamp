@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # @author Jorge Santos
 # License: 3-Clause BSD
