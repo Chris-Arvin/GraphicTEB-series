@@ -3,6 +3,7 @@
 ObstacleProcess::ObstacleProcess(ros::NodeHandle nh){
   nh_ = nh;
   is_map_initialized = false;
+  is_have_pedestrian = false;
   xMin=10000;
   xMax=-10000;
   yMin=10000;
@@ -32,6 +33,7 @@ void ObstacleProcess::MatchMap(){
 
 
 void ObstacleProcess::PersonCallback(const pedsim_msgs::TrackedPersons::ConstPtr& persons) {
+  is_have_pedestrian = true;
   // remap the topic into /persons
   pub_person.publish(persons);
   // publish the map with obstacles as well as persons
@@ -116,5 +118,8 @@ void ObstacleProcess::ObstacleCallback(const visualization_msgs::Marker::ConstPt
     map.info.map_load_time = ros::Time::now();
     map.header.stamp = ros::Time::now();
     pub_map.publish(map);
+  }
+  if (!is_have_pedestrian){
+    pub_map_with_people.publish(map);
   }
 }

@@ -39,5 +39,6 @@ class ObstacleProcess{
     double resolution;
     double person_diameter;
     bool is_map_initialized;
+    bool is_have_pedestrian;
     double xMin, xMax, yMin, yMax;
 };
