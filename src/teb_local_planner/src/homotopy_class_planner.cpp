@@ -448,20 +448,9 @@ void HomotopyClassPlanner::renewAndAnalyzeOldTebs(bool delete_detours)
   // std::cout<<std::endl<<"------------------"<<std::endl;
 }
 
-void HomotopyClassPlanner::updateSafetyMargin(std::vector<double> signature_value, std::map<int, double> safety_margin){
-  for (auto iter=tebs_.begin(); iter!=tebs_.end(); ++iter){
-    auto current_value = iter->get()->getHsignature3DValue();
-    if (signature_value.size() == current_value.size()){
-      bool is_equal = true;
-      for (int i=0; i<signature_value.size(); ++i){
-        if (signature_value[i] * current_value[i] < 0){
-          is_equal = false;
-          break;
-        }
-      }
-      if (is_equal)
-        iter->get()->SetSafetyMargins(safety_margin);
-    }
+void HomotopyClassPlanner::updateSafetyMargin(double static_safety_margin, double dynamic_safety_margin){
+  for (auto iter=tebs_.begin(); iter!=tebs_.end(); ++iter){      
+    iter->get()->SetSafetyMargins(static_safety_margin, dynamic_safety_margin);
   }
 }
 
@@ -753,6 +742,7 @@ TebOptimalPlannerPtr HomotopyClassPlanner::selectBestTeb()
     best_teb_.reset(); // reset pointer
 
     auto it_teb = tebs_.begin();
+    // int idx = 0;
     while (it_teb!=tebs_.end())
     {
       // 如果tebs_.size()==1的话，就别删除了，要不就没轨迹啦。。
@@ -766,7 +756,8 @@ TebOptimalPlannerPtr HomotopyClassPlanner::selectBestTeb()
             teb_cost = min_cost_last_best; // skip already known cost value of the last best_teb
         else
             teb_cost = it_teb->get()->getCurrentCost();
-
+        // ROS_INFO("  %d ====== cost: %f", idx, teb_cost);
+        // idx++;
         if (teb_cost < min_cost)
         {
           // check if this candidate is currently not selected

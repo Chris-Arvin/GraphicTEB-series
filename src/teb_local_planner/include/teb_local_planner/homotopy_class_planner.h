@@ -338,7 +338,7 @@ public:
    */
   void optimizeAllTEBs(int iter_innerloop, int iter_outerloop);
 
-  void updateSafetyMargin(std::vector<double> signature_value, std::map<int, double> safety_margin);
+  void updateSafetyMargin(double static_safety_margin, double dynamic_safety_margin);
 
   /**
    * @brief Returns a shared pointer to the TEB related to the initial plan

@@ -519,8 +519,7 @@ public:
   void unsetEndpointAppended() {endpoint_appended_ = false;};
   bool getEndpointAppended() {return endpoint_appended_;};
   void setEndLines (std::pair<std::pair<double,double>, std::pair<double,double>> goal_endpoints) {goal_endpoints_=goal_endpoints;};
-  void SetSafetyMargins(std::map<int, double> safety_margins){ safety_margins_ = safety_margins; };
-  
+  void SetSafetyMargins(double static_safety_margin, double dynamic_safety_margin){ static_safety_margin_=static_safety_margin; dynamic_safety_margin_=dynamic_safety_margin; };
 protected:
   
   /** @name Hyper-Graph creation and optimization */
@@ -709,6 +708,8 @@ protected:
   std::vector<double> dynamic_obstacle_old_alpha_;        // 记录每个人的alpha值
   bool endpoint_appended_;
   std::pair<std::pair<double,double>, std::pair<double,double>> goal_endpoints_;
+  double static_safety_margin_;
+  double dynamic_safety_margin_;
   std::map<int, double> safety_margins_;
 
 public:

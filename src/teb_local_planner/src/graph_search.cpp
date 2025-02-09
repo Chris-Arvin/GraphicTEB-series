@@ -150,21 +150,13 @@ void graphicProcess::addPaths(const PoseSE2& start, const PoseSE2& goal, const s
   else
     ROS_ERROR("Failed to call service my_service");
 
-  // static_safety_margin_ = 0.1;
-  // dynamic_safety_margin_ = 0.2;    
+  static_safety_margin_ = 0.1;
+  dynamic_safety_margin_ = 0.2;
   // ROS_INFO("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx static_dis=%.2f", static_safety_margin_);
   // ROS_INFO("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx dynamic_dis=%.2f", dynamic_safety_margin_);  
 
   // test
-  for (auto signature_value:signature_value_list){
-    std::map<int,double> safety_margin;
-    for (auto idx:map_cv_obj_.label_static_list_)
-      safety_margin[idx] = static_safety_margin_;
-    for (auto idx:map_cv_obj_.label_dynamic_list_)
-      safety_margin[idx] = dynamic_safety_margin_;
-    hcp_->updateSafetyMargin(signature_value, safety_margin);
-  }
-
+  hcp_->updateSafetyMargin(static_safety_margin_, dynamic_safety_margin_);
 
 }
 

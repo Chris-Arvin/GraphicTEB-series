@@ -88,6 +88,8 @@ void TebOptimalPlanner::initialize(const TebConfig& cfg, ObstContainer* obstacle
 {    
   // init optimizer (set solver and block ordering settings)
   optimizer_ = initOptimizer();
+  static_safety_margin_ = 0;
+  dynamic_safety_margin_ = 0;
   
   cfg_ = &cfg;
   obstacles_ = obstacles;
@@ -577,7 +579,7 @@ void TebOptimalPlanner::AddEdgesObstacles(double weight_multiplier)
   int width = obs_map_labeled_.size();
   int height = obs_map_labeled_.front().size();
   int half_dis = int(cfg_->obstacles.min_obstacle_dist*3/costmap2d_->getResolution());
-
+  // ROS_INFO("++++++++++++++++ static safety margin: %f", static_safety_margin_);
   // 遍历所有路径点
   for (int i = 1; i < teb_.sizePoses() - 1; ++i)
   {    
@@ -598,11 +600,7 @@ void TebOptimalPlanner::AddEdgesObstacles(double weight_multiplier)
     for (auto idx:index_list){
       for (const ObstaclePtr obst : *obstacles_){ 
         if(obst->getIndex()==idx){
-          if (safety_margins_.find(idx) != safety_margins_.end()){
-            create_edge_Graphic(i, obst.get(),costmap2d_,obs_map_labeled_, safety_margins_[idx]);
-          }
-          else
-            create_edge_Graphic(i, obst.get(),costmap2d_,obs_map_labeled_, 0);
+          create_edge_Graphic(i, obst.get(),costmap2d_,obs_map_labeled_, static_safety_margin_);
         }
       }
     }
@@ -613,6 +611,7 @@ void TebOptimalPlanner::AddEdgesObstacles(double weight_multiplier)
 // 这里也体现了一个点是，只要把障碍物设置成dynamic，那么teb会在xyt空间，针对同一个time，进行距离的计算了。。
 void TebOptimalPlanner::AddEdgesDynamicObstacles(std::vector<double>& dynamic_obstacle_current_alpha, std::vector<double>& dynamic_obstacle_old_alpha, const std::vector<bool>& detour_dynamic_obstacle_method, double weight_multiplier)
 {
+  // ROS_INFO("++++++++++++++++++++ dynamic safety margin: %f", dynamic_safety_margin_);
   if (cfg_->optim.weight_dynamic_obstacle==0 && cfg_->optim.weight_dynamic_obstacle_inflation==0 || weight_multiplier==0 || obstacles_==NULL )
     return; // if weight equals zero skip adding edges!
 
@@ -640,8 +639,7 @@ void TebOptimalPlanner::AddEdgesDynamicObstacles(std::vector<double>& dynamic_ob
       dynobst_edge->setAnchor(teb_.PoseVertex(i)->x(), teb_.PoseVertex(i)->y());
       // std::cout<<"a a a "<<detour_dynamic_obstacle_method[dynamic_obstacle_index]<<", "<<i<<": "<<teb_.PoseVertex(i)->x()<<","<<teb_.PoseVertex(i)->y()<<"; "<<obst->get()->getCentroid().x()<<","<<obst->get()->getCentroid().y()<<std::endl;
       dynobst_edge->setInformation(information);
-      if (safety_margins_.find(safety_margins_[obst->get()->getIndex()])!=safety_margins_.end())
-        dynobst_edge->setSafetyMargin(safety_margins_[obst->get()->getIndex()]);
+      dynobst_edge->setSafetyMargin(dynamic_safety_margin_);
       dynobst_edge->setDetourDir(detour_dynamic_obstacle_method[dynamic_obstacle_index]); //设置绕行策略和alpha
       dynobst_edge->setAlpha(dynamic_obstacle_current_alpha[dynamic_obstacle_index], dynamic_obstacle_old_alpha[dynamic_obstacle_index]);
       dynobst_edge->setParameters(*cfg_, robot_model_.get(), obst->get());
@@ -1058,12 +1056,16 @@ void TebOptimalPlanner::computeCurrentCost(double obst_cost_scale, double goal_l
       }
     }
     // 首先是min_dist1 + min_dist2很小，接下来再考虑障碍物间的距离。实际上 理想情况下min_dist1 + min_dist2<0就不能走了，但是因为轨迹是离散点，所以这里有误差，需要一个额外阈值dt_ref * v
-    double small_epsilon = 0.1; // 理论上这里应该是0，但是我们给一些额外的裕度
-    if (min_dist1 + min_dist2 <= cfg_->trajectory.dt_ref * cfg_->robot.max_vel_x){
+    double small_epsilon = 0.05; // 理论上这里应该是0，但是我们给一些额外的裕度
+    double threshold = std::max(std::max(static_safety_margin_*2, dynamic_safety_margin_*2), static_safety_margin_ + dynamic_safety_margin_);
+    if (min_dist1 + min_dist2 <= threshold + small_epsilon + cfg_->trajectory.dt_ref * cfg_->robot.max_vel_x){
       // 计算两个 离当前点最近的 障碍物间的距离：
       // 1. 如果两个障碍物都是静态的，那不用算，肯定能走
-      if (!min_obs1->get()->isDynamic() && !min_obs2->get()->isDynamic())
-        continue;
+      if (!min_obs1->get()->isDynamic() && !min_obs2->get()->isDynamic()){
+        double dis = min_dist1 + min_dist2;
+        if (dis<=static_safety_margin_*2+small_epsilon)
+          cost_ += 999;        
+      }
       // 2. 如果是两个动态，则计算他们的时空距离，看是否大于机器人半径*2+人半径*2
       else if (min_obs1->get()->isDynamic() && min_obs2->get()->isDynamic()){
         Eigen::Vector2d obs_position1;
@@ -1075,7 +1077,7 @@ void TebOptimalPlanner::computeCurrentCost(double obst_cost_scale, double goal_l
         CircularObstacle* index_obs2 = dynamic_cast<CircularObstacle*>(const_cast<Obstacle*>(min_obs2->get()));
 
         double dis = hypot(obs_position1.x()-obs_position2.x(), obs_position1.y()-obs_position2.y()) - (2*cfg_->robot.robot_radius + index_obs1->radius() + index_obs2->radius());      
-        if (dis<=small_epsilon)
+        if (dis<=dynamic_safety_margin_*2 + small_epsilon)
           cost_ += 999;
       }
       // 3. 如果是一个动态，一个是静态的，则计算静态障碍物到动态障碍物的距离，看是否大于机器人半径*2+人半径
@@ -1085,7 +1087,7 @@ void TebOptimalPlanner::computeCurrentCost(double obst_cost_scale, double goal_l
         CircularObstacle* index_obs1 = dynamic_cast<CircularObstacle*>(const_cast<Obstacle*>(min_obs1->get()));
         
         double dis = min_obs2->get()->getMinimumDistance(obs_position1) - (2*cfg_->robot.robot_radius+index_obs1->radius());
-        if (dis<=small_epsilon)
+        if (dis<=static_safety_margin_+dynamic_safety_margin_+small_epsilon)
           cost_ += 999;
       }
       else if (!min_obs1->get()->isDynamic() && min_obs2->get()->isDynamic()){
@@ -1094,7 +1096,7 @@ void TebOptimalPlanner::computeCurrentCost(double obst_cost_scale, double goal_l
         CircularObstacle* index_obs2 = dynamic_cast<CircularObstacle*>(const_cast<Obstacle*>(min_obs2->get()));
         
         double dis = min_obs1->get()->getMinimumDistance(obs_position2) - (2*cfg_->robot.robot_radius+index_obs2->radius());
-        if (dis<=small_epsilon)
+        if (dis<=static_safety_margin_+dynamic_safety_margin_+small_epsilon)
           cost_ += 999;
       }
     }
