@@ -148,10 +148,10 @@ void graphicProcess::addPaths(const PoseSE2& start, const PoseSE2& goal, const s
     ROS_INFO("------------ Service call print end! ---------------");
   }
   else
-    ROS_ERROR("Failed to call service my_service");
+    ROS_ERROR("Failed to call service my_service, using old params: %.2f, %.2f", static_safety_margin_, dynamic_safety_margin_);
 
-  static_safety_margin_ = 0.1;
-  dynamic_safety_margin_ = 0.2;
+  // static_safety_margin_ = 0.1;
+  // dynamic_safety_margin_ = 0.2;
   // ROS_INFO("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx static_dis=%.2f", static_safety_margin_);
   // ROS_INFO("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx dynamic_dis=%.2f", dynamic_safety_margin_);  
 

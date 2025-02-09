@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import sys
@@ -46,6 +46,8 @@ class env_gazebo:
         self.robot_pos = []
         self.collision_time = rospy.Time.now().to_sec()-1
         self.reach_goal_time = rospy.Time.now().to_sec()-1
+        self.last_decision_time = rospy.Time.now().to_sec()-1
+        self.is_save_sample_to_buffer = True
 
         self.current_state_ = None
         self.last_state_ = None
@@ -82,32 +84,45 @@ class env_gazebo:
         self.current_action_ = self.get_action(self.current_state_)
         print("    ======== {} ========".format(self.current_action_))
         done, info, self.current_reward_ = self.get_current_reward()
-        if self.last_state_ is not None:
+        # save sample to buffer if the last action is valid
+        if self.last_state_ is not None and not self.is_save_sample_to_buffer:
             self.memory.push(self.last_state_, self.last_action_, self.last_reward_, self.current_state_, done)
+            self.is_save_sample_to_buffer = True
+        decision_interval = 0.5
+        # make a decision each interval time.
+        if self.last_state_ is not None and self.last_decision_time + decision_interval < rospy.Time.now().to_sec():
+            # self.memory.push(self.last_state_, self.last_action_, self.last_reward_, self.current_state_, done)
             # test start
-            if len(self.memory)<10:
-                for i in range(5*self.args.batch_size):
-                    self.memory.push(self.last_state_, self.last_action_, self.last_reward_, self.current_state_, done)
-            self.memory.sample(batch_size=self.args.batch_size)
+            # if len(self.memory)<10:
+            #     for i in range(5*self.args.batch_size):
+            #         self.memory.push(self.last_state_, self.last_action_, self.last_reward_, self.current_state_, done)
             # test end
-        self.train_policy()
-        print("    info:", info, "done:", done, "action:", self.current_action_, "reward:", self.current_reward_)
-        res = rl_stateResponse()
-        res.static_safety_margin = self.current_action_[0]
-        res.dynamic_safety_margin = self.current_action_[1]
+            self.memory.sample(batch_size=self.args.batch_size)
+            self.is_save_sample_to_buffer = False
+            print("    info:", info, "done:", done, "action:", self.current_action_, "reward:", self.current_reward_)
+            res = rl_stateResponse()
+            res.static_safety_margin = self.current_action_[0]
+            res.dynamic_safety_margin = self.current_action_[1]
+            print("    rl state server has been responsed in {} s".format(rospy.Time.now().to_sec()-current_time))
+            print("-"*50)
+            print("")
+        else:
+            res = rl_stateResponse()
+            res.static_safety_margin = 0
+            res.dynamic_safety_margin = 0
+
         # self.publish_states()
-        print("    rl state server has been responsed in {} s".format(rospy.Time.now().to_sec()-current_time))
-        print("-"*50)
-        print("")
+        self.train_policy()
         return res
     
     def get_action(self, state):
         action = self.agent.select_action(state)[0]
-        action_clip_bound = [[0.0, 0.0], [0.3, 0.3]] #### Action maximum, minimum values 
+        action_clip_bound = [[0.0, 0.0], [0.2, 0.2]] #### Action maximum, minimum values 
         cliped_action = np.clip(action, a_min=action_clip_bound[0], a_max=action_clip_bound[1])
         return cliped_action
 
     def get_current_reward(self):
+        # @TODO: add case1: recovery; case2: jitter (rotate in place)
         done = -1
         info = ""
         reward = -1

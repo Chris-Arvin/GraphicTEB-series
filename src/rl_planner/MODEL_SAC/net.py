@@ -409,8 +409,8 @@ class GaussianPolicy(nn.Module):
         self.apply(weights_init_)
 
         # action rescaling
-        scale = [0.15, 0.15]
-        bias = [0.15, 0.15]
+        scale = [0.1, 0.1]
+        bias = [0.1, 0.1]
         self.action_scale = torch.FloatTensor(scale)
         self.action_bias = torch.FloatTensor(bias)
 
