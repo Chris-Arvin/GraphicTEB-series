@@ -41,3 +41,12 @@ sudo ln -s /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.12.0 /usr/local/lib/lib
 location of g2o: ~/g2o
 location of opencv: ~/opencv_build/opencv
 ```
+
+### adaptation in UCL Operator PC3
+```bash
+1. g2o+shared_ptr related work
+```
+
+
+
+ped_agent.cpp

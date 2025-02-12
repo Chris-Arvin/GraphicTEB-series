@@ -139,7 +139,7 @@ bool Simulator::initializeSimulation() {
 
 void Simulator::runSimulation() {
   ros::Rate r(CONFIG.updateRate);
-
+  auto current_time = ros::Time::now();
   while (ros::ok()) {
     if (!robot_) {
       // setup the robot
@@ -165,6 +165,8 @@ void Simulator::runSimulation() {
     }
     ros::spinOnce();
     r.sleep();
+    ROS_INFO(" Simulation frequency %f / %f", 1/(ros::Time::now().toSec() - current_time.toSec()), CONFIG.updateRate);
+    current_time = ros::Time::now();
   }
 }
 

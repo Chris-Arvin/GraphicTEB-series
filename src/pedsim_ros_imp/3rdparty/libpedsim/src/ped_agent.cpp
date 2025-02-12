@@ -268,7 +268,7 @@ void Ped::Tagent::computeForces() {
   desiredforce = desiredForce();
   // 计算人与人之间的斥力
   if (forceFactorSocial > 0) socialforce = socialForce();
-  if (forceFactorObstacle > 0) obstacleforce = obstacleForce();
+  // if (forceFactorObstacle > 0) obstacleforce = obstacleForce();
   myforce = myForce(desiredDirection);
 }
 

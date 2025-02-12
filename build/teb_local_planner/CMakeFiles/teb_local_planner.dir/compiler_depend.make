@@ -2281,7 +2281,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/graph_search.cpp.o: /home
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -4200,7 +4199,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/homotopy_class_planner.cp
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -6739,7 +6737,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process.cpp.o: /home/
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -8869,7 +8866,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_rl_support.cp
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -10999,7 +10995,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/map_process_utilizes.cpp.
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -13200,7 +13195,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/obstacles.cpp.o: /home/ar
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -14939,7 +14933,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/optimal_planner.cpp.o: /h
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -17452,7 +17445,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/recovery_behaviors.cpp.o:
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -18705,7 +18697,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/teb_config.cpp.o: /home/a
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -20128,7 +20119,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/teb_local_planner_ros.cpp
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -22989,7 +22979,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/timed_elastic_band.cpp.o:
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -24845,7 +24834,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/visualization.cpp.o: /hom
   /usr/include/boost/thread/pthread/mutex.hpp \
   /usr/include/boost/thread/detail/config.hpp \
   /usr/include/boost/thread/detail/thread_safety.hpp \
-  /usr/include/boost/config/auto_link.hpp \
   /usr/include/boost/core/ignore_unused.hpp \
   /usr/include/boost/thread/exceptions.hpp \
   /usr/include/boost/system/system_error.hpp \
@@ -27000,10 +26988,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/visualization.cpp.o: /hom
 
 /usr/include/boost/atomic/detail/type_traits/is_integral.hpp:
 
-/home/arvin/opencv_build/opencv/modules/stitching/include/opencv2/stitching/detail/warpers.hpp:
-
-/usr/include/boost/atomic/detail/classify.hpp:
-
 /usr/include/boost/multi_index/detail/promotes_arg.hpp:
 
 /usr/include/c++/11/bits/stl_vector.h:
@@ -28433,6 +28417,8 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/visualization.cpp.o: /hom
 /usr/include/boost/type_traits/is_scalar.hpp:
 
 /usr/include/c++/11/cfloat:
+
+/usr/include/boost/range/begin.hpp:
 
 /usr/include/boost/predef/architecture/riscv.h:
 
@@ -29935,10 +29921,6 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/visualization.cpp.o: /hom
 /usr/include/boost/predef/compiler/borland.h:
 
 /usr/include/boost/iterator/iterator_concepts.hpp:
-
-/usr/include/boost/range/begin.hpp:
-
-/usr/include/boost/config/auto_link.hpp:
 
 /usr/include/boost/predef/architecture/sys390.h:
 
@@ -32131,3 +32113,7 @@ teb_local_planner/CMakeFiles/teb_local_planner.dir/src/visualization.cpp.o: /hom
 /usr/include/boost/mpl/aux_/reverse_fold_impl.hpp:
 
 /usr/include/boost/atomic/detail/wait_caps_futex.hpp:
+
+/home/arvin/opencv_build/opencv/modules/stitching/include/opencv2/stitching/detail/warpers.hpp:
+
+/usr/include/boost/atomic/detail/classify.hpp:

@@ -4,14 +4,10 @@
 import sys
 sys.path.append("../MODEL_SAC")
 
-import time
 import rospy
-import rospkg 
-
 import math
-
-import copy
 import numpy as np
+import threading
 
 from geometry_msgs.msg import Twist, Pose, Point
 from nav_msgs.msg import Odometry, Path
@@ -21,7 +17,6 @@ from visualization_msgs.msg import MarkerArray, Marker
 from geometry_msgs.msg import PoseArray
 from rl_planner.srv import rl_state, rl_stateRequest, rl_stateResponse
 import os
-from torch._C import is_anomaly_enabled
 import torch
 import torch.nn as nn
 import argparse
@@ -33,7 +28,6 @@ from utils import hard_update
 from sac import SAC
 from replay_memory import ReplayMemory
 
-# todo: 结束的可能：与行人碰撞、与静态障碍物碰撞、找不到轨迹、error
 class env_gazebo:
     def __init__(self):
         rospy.init_node("rl_interface", anonymous=None)
@@ -60,6 +54,7 @@ class env_gazebo:
 
         self.writer = SummaryWriter('policy_events/')
         self.memory = ReplayMemory(self.args.replay_size, self.args.seed)
+        self.memory_lock = threading.Lock()
         self.updates = 0
 
         rospy.Service('/rl_state_service', rl_state, self.rl_state_server)
@@ -86,18 +81,12 @@ class env_gazebo:
         done, info, self.current_reward_ = self.get_current_reward()
         # save sample to buffer if the last action is valid
         if self.last_state_ is not None and not self.is_save_sample_to_buffer:
-            self.memory.push(self.last_state_, self.last_action_, self.last_reward_, self.current_state_, done)
+            with self.memory_lock:
+                self.memory.push(self.last_state_, self.last_action_, self.last_reward_, self.current_state_, done)
             self.is_save_sample_to_buffer = True
         decision_interval = 0.5
-        # make a decision each interval time.
+        # 每个时间间隔做出一次决策
         if self.last_state_ is not None and self.last_decision_time + decision_interval < rospy.Time.now().to_sec():
-            # self.memory.push(self.last_state_, self.last_action_, self.last_reward_, self.current_state_, done)
-            # test start
-            # if len(self.memory)<10:
-            #     for i in range(5*self.args.batch_size):
-            #         self.memory.push(self.last_state_, self.last_action_, self.last_reward_, self.current_state_, done)
-            # test end
-            self.memory.sample(batch_size=self.args.batch_size)
             self.is_save_sample_to_buffer = False
             print("    info:", info, "done:", done, "action:", self.current_action_, "reward:", self.current_reward_)
             res = rl_stateResponse()
@@ -110,9 +99,8 @@ class env_gazebo:
             res = rl_stateResponse()
             res.static_safety_margin = 0
             res.dynamic_safety_margin = 0
-
+        
         # self.publish_states()
-        self.train_policy()
         return res
     
     def get_action(self, state):
@@ -122,7 +110,8 @@ class env_gazebo:
         return cliped_action
 
     def get_current_reward(self):
-        # @TODO: add case1: recovery; case2: jitter (rotate in place)
+        # @TODO: 添加 case1: 恢复；case2: 抖动（原地旋转）
+        # todo: 结束的可能：与行人碰撞、与静态障碍物碰撞、找不到轨迹、error
         done = -1
         info = ""
         reward = -1
@@ -144,7 +133,7 @@ class env_gazebo:
         assert(done is not -1)
         return done, info, reward
 
-    def goal_callback(self):
+    def goal_callback(self, msg=None):
         self.reach_goal_time = rospy.Time.now().to_sec()
 
     def init_parameters(self):
@@ -229,30 +218,39 @@ class env_gazebo:
 
     def train_policy(self):
         for i in range(self.args.updates_per_step):
-            # Update parameters of all the networks
-            if len(self.memory) > self.args.batch_size:
-                current_time = rospy.Time.now().to_sec()
-                critic_1_loss, critic_2_loss, policy_loss, ent_loss, alpha = self.agent.update_parameters(self.memory, self.args.batch_size, self.updates)
-                self.writer.add_scalar('loss/critic_1', critic_1_loss, self.updates)
-                self.writer.add_scalar('loss/critic_2', critic_2_loss, self.updates)
-                self.writer.add_scalar('loss/policy', policy_loss, self.updates)
-                self.writer.add_scalar('loss/entropy_loss', ent_loss, self.updates)
-                self.writer.add_scalar('entropy_temprature/alpha', alpha, self.updates)
-                self.updates += 1
-                print("train: {}->{}/{} {}".format(self.updates, i, self.args.updates_per_step, rospy.Time.now().to_sec()-current_time))
+            # 先对 memory 长度判断加锁
+            with self.memory_lock:
+                mem_len = len(self.memory)
+                if mem_len > self.args.batch_size:
+                    start_time = rospy.Time.now().to_sec()
+                    # 对 memory 采样和更新操作加锁
+                    with self.memory_lock:
+                        critic_1_loss, critic_2_loss, policy_loss, ent_loss, alpha = self.agent.update_parameters(self.memory, self.args.batch_size, self.updates)
+                    self.writer.add_scalar('loss/critic_1', critic_1_loss, self.updates)
+                    self.writer.add_scalar('loss/critic_2', critic_2_loss, self.updates)
+                    self.writer.add_scalar('loss/policy', policy_loss, self.updates)
+                    self.writer.add_scalar('loss/entropy_loss', ent_loss, self.updates)
+                    self.writer.add_scalar('entropy_temprature/alpha', alpha, self.updates)
+                    self.updates += 1
+                    print("train: {}->{}/{} {}".format(self.updates, i, self.args.updates_per_step, rospy.Time.now().to_sec()-start_time))
+
+    def train_policy_loop(self):
+        rate = rospy.Rate(10)  # 训练循环频率为 10 Hz，可根据需要调整
+        while not rospy.is_shutdown():
+            self.train_policy()
+            rate.sleep()
 
     def analyze_current_state(self, req):
         current_state = []
-
         self.width_ = int(math.sqrt(len(req.map_static_position)))
         assert(self.width_ == 120)
         # 0. map static position
-        map_statc_position = [[0 for _ in range(self.width_)] for _ in range(self.width_)]
+        map_static_position = [[0 for _ in range(self.width_)] for _ in range(self.width_)]
         for i in range(len(req.map_static_position)):
             x = math.floor(i/self.width_)
             y = i%self.width_
-            map_statc_position[x][y] = req.map_static_position[i]
-        current_state.append(map_statc_position)
+            map_static_position[x][y] = req.map_static_position[i]
+        current_state.append(map_static_position)
         # 1/2. map dynamic velocity_x && map dynamic velocity_y
         map_dynamic_velocity_x = [[0 for _ in range(self.width_)] for _ in range(self.width_)]
         map_dynamic_velocity_y = [[0 for _ in range(self.width_)] for _ in range(self.width_)]
@@ -409,8 +407,11 @@ class env_gazebo:
 
 def main():
     env = env_gazebo()
-    rospy.spin()  # 等待调用
-
+    # start independent training thread
+    training_thread = threading.Thread(target=env.train_policy_loop)
+    training_thread.daemon = True  # 设置为守护线程，主程序结束时线程也会结束
+    training_thread.start()
+    rospy.spin()  # 保持 ROS 节点运行
 
 if __name__ == '__main__':
     main()
