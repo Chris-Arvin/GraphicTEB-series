@@ -613,24 +613,24 @@ namespace move_base {
       }
       //if we didn't get a plan and we are in the planning state (the robot isn't moving)
       else if(state_==PLANNING){
-        ROS_DEBUG_NAMED("move_base_plan_thread","No Plan...");
+        ROS_INFO(" ++++ move_base_plan_thread, No Plan...");
         ros::Time attempt_end = last_valid_plan_ + ros::Duration(planner_patience_);
 
         //check if we've tried to make a plan for over our time limit or our maximum number of retries
         //issue #496: we stop planning when one of the conditions is true, but if max_planning_retries_
         //is negative (the default), it is just ignored and we have the same behavior as ever
-        lock.lock();
-        planning_retries_++;
-        if(runPlanner_ &&
-           (ros::Time::now() > attempt_end || planning_retries_ > uint32_t(max_planning_retries_))){
-          //we'll move into our obstacle clearing mode
-          state_ = CLEARING;
-          runPlanner_ = false;  // proper solution for issue #523
-          publishZeroVelocity();
-          recovery_trigger_ = PLANNING_R;
-        }
+        // lock.lock();
+        // planning_retries_++;
+        // if(runPlanner_ &&
+        //    (ros::Time::now() > attempt_end || planning_retries_ > uint32_t(max_planning_retries_))){
+        //   //we'll move into our obstacle clearing mode
+        //   state_ = CLEARING;
+        //   runPlanner_ = false;  // proper solution for issue #523
+        //   publishZeroVelocity();
+        //   recovery_trigger_ = PLANNING_R;
+        // }
 
-        lock.unlock();
+        // lock.unlock();
       }
 
       //take the mutex for the next iteration
@@ -881,7 +881,7 @@ namespace move_base {
           runPlanner_ = true;
           planner_cond_.notify_one();
         }
-        ROS_DEBUG_NAMED("move_base","Waiting for plan, in the planning state.");
+        ROS_ERROR(" ++++ Waiting for plan, in the planning state.");
         break;
 
       //if we're controlling, we'll attempt to find valid velocity commands
@@ -890,7 +890,7 @@ namespace move_base {
 
         //check to see if we've reached our goal
         if(tc_->isGoalReached()){
-          ROS_DEBUG_NAMED("move_base","Goal reached!");
+          ROS_INFO(" ++++ Goal reached!");
           resetState();
 
           //disable the planner thread
