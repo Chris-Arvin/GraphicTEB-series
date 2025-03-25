@@ -1156,6 +1156,7 @@ void mapProcess::connectObstacleGroups(){
     int ID1_index_res=-1, ID2_index_res=-1;
     int ID1_index_temp = ID1_start_index;
     int ID2_index_temp = ID2_start_index;
+    int counter_ID1 = 0;
     while(true){
       // ROS_INFO("+++++ %d, %d", ID1_index_temp, ID2_index_temp);
       // 成功连接
@@ -1173,14 +1174,20 @@ void mapProcess::connectObstacleGroups(){
       }
       if (ID1_index_temp==ID1_end_index && ID2_index_temp==ID2_end_index)
         break;
+      counter_ID1++;
+      if (counter_ID1>=100)
+        break;
     }
     if (ID1_index_res!=-1 && ID2_index_res!=-1)
       connection_graph_[{ID1, ID2}]["clockwise2counterclockwise"] = std::make_pair(border_list_[ID1][ID1_index_res], border_list_[ID2][ID2_index_res]);
+    else
+      connection_graph_[{ID1, ID2}]["clockwise2counterclockwise"] = connection_graph_[{ID1, ID2}]["shortest"];
 
     // 4.3.2 考虑counterclockwise2clockwise, 最理想的情况是两个end能无collision地连接
     ID1_index_res=-1; ID2_index_res=-1;
     ID1_index_temp = ID1_end_index;
     ID2_index_temp = ID2_end_index;
+    int counter_ID2 = 0;
     while(true){
       auto vec_line = Bresenham(border_list_[ID1][ID1_index_temp], border_list_[ID2][ID2_index_temp]);
       bool is_collision = checkCollision(vec_line, ID1, ID2);
@@ -1199,9 +1206,14 @@ void mapProcess::connectObstacleGroups(){
       }
       if (ID1_index_temp==ID1_start_index && ID2_index_temp==ID2_start_index)
         break;
+      counter_ID2++;
+      if(counter_ID2>=100)
+        break;
     }
     if (ID1_index_res!=-1 && ID2_index_res!=-1)
       connection_graph_[{ID1, ID2}]["counterclockwise2clockwise"] = std::make_pair(border_list_[ID1][ID1_index_res], border_list_[ID2][ID2_index_res]);    
+    else
+      connection_graph_[{ID1, ID2}]["counterclockwise2clockwise"] = connection_graph_[{ID1, ID2}]["shortest"];
   }
 }
 
